@@ -1,0 +1,17 @@
+
+
+/******************************************************************************/
+/* #login-form */
+
+#login-form {
+  font: 250% sans-serif;
+  text-align: center;
+  margin: 3em auto;
+}
+
+#login-form input {
+  font: inherit;
+  margin: 0 0.1em;
+}
+
+

@@ -1,8 +1,17 @@
 
-(function ($) {
+(function ($, undefined) {
 "use strict";
 
+
+function log() {
+  Log.push(Array.prototype.slice.call(arguments));
+  if (window.console && console.log) console.log.apply(console, arguments);
+}
+
+
 function init() {
+  window.Log = [];
+
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
     doLogin($('#login-form input.id').val());
@@ -17,30 +26,34 @@ function init() {
   // FINISH button (a UI okolo "are you sure")
 
   // inicializujeme HTML
-  $('#content').html(velky_html_obsah);
+  $('body').append(Templates.main);
   $('#login-form').show();
+  $('#login-form input.id').focus();
 }
+
 
 function ajax(data, success, error) {
   $.ajax({
-    type: 'POST', url: 'action.php', dataType: 'json',
+    type: 'POST', url: '?', dataType: 'json',
     data: data, success: success, error: error
   });
 }
 
+
 function doLogin(id) {
   function success(data, textStatus, jqXHR) {
+    log('success', data, textStatus, jqXHR);
     // TODO
     // zapamataj si id, defocusni submit ak treba, stiahni a zobraz otazky.
     // chceme si aj zapamatat ze sme prihlaseni a druhykrat sa neprihlasovat?
   }
   function error(jqXHR, textStatus, errorThrown) {
-    // TODO
-    // ak je zly kod, povedz ze zly kod.
-    // ak je problem s komunikaciou so serverom, povedz to.
+    log('error', textStatus, errorThrown, jqXHR);
+    alert('Chyba pri komunikácii so serverom. Skúste prosím znova.\nAk problém pretrváva, kontaktujte technickú podporu.\nFakt dúfam, že niekto vymyslí lepšiu hlášku.');
   }
   ajax({ action: 'login', id: id }, success, error);
 }
+
 
 $(init);
 
