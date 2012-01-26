@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Language" content="sk">
-<title>Príjmačky</title>
+<title><?php print htmlspecialchars($config->title); ?></title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" type="text/css" href="style.css">
 <!-- TODO shortcut icon? -->
