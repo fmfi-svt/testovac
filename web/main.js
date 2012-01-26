@@ -32,7 +32,7 @@ function init() {
 }
 
 
-function ajax(data, success, error) {
+function ajaj(data, success, error) {
   $.ajax({
     type: 'POST', url: '?', dataType: 'json',
     data: data, success: success, error: error
@@ -51,7 +51,7 @@ function doLogin(id) {
     log('error', textStatus, errorThrown, jqXHR);
     alert('Chyba pri komunikácii so serverom. Skúste prosím znova.\nAk problém pretrváva, kontaktujte technickú podporu.\nFakt dúfam, že niekto vymyslí lepšiu hlášku.');
   }
-  ajax({ action: 'login', id: id }, success, error);
+  ajaj({ action: 'login', id: id }, success, error);
 }
 
 
