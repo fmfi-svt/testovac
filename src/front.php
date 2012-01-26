@@ -18,7 +18,7 @@
 </head>
 <body>
 <noscript>
-<p>Na zobrazenie tohto obsahu je potrebný JavaScript.</p>
+<p>Na zobrazenie tohto obsahu je potrebný zapnutý JavaScript.</p>
 </noscript>
 <script type="text/javascript">
 DemoMode = <?php print json_encode($config->demo_mode); ?>;
@@ -26,6 +26,5 @@ Templates = <?php print json_encode($client_templates); ?>;
 </script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="main.js"></script>
-<div id="content"></div>
 </body>
 </html>

@@ -5,9 +5,13 @@ chdir('..');
 require 'config.php';
 
 
-function json_die($errtype) {
+function json_out($data) {
   header('Content-Type: application/json');
-  die(json_encode(array('error' => $errtype)));
+  print json_encode($data);
+}
+function json_die($errtype) {
+  json_out(array('error' => $errtype));
+  die();
 }
 
 

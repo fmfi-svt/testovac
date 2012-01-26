@@ -14,7 +14,7 @@ function init() {
 
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
-    doLogin($('#login-form input.id').val());
+    doLogin($('#login-form input.uid').val());
     return false;
   });
   // TOC open
@@ -28,30 +28,55 @@ function init() {
   // inicializujeme HTML
   $('body').append(Templates.main);
   $('#login-form').show();
-  $('#login-form input.id').focus();
+  $('#login-form input.uid').focus();
 }
 
 
-function ajaj(data, success, error) {
+function ajaj(requestData, callback) {
+  function success(data, textStatus, jqXHR) {
+    log('ajax success', data, textStatus, jqXHR);
+    callback(data || { error: 'empty response' });
+  }
+  function error(jqXHR, textStatus, errorThrown) {
+    log('ajax error', textStatus, errorThrown, jqXHR);
+    callback({ error: 'ajax error', textStatus: textStatus, errorThrown: errorThrown, jqXHR: jqXHR });
+  }
   $.ajax({
     type: 'POST', url: '?', dataType: 'json',
-    data: data, success: success, error: error
+    data: requestData, success: success, error: error
   });
 }
 
 
-function doLogin(id) {
-  function success(data, textStatus, jqXHR) {
-    log('success', data, textStatus, jqXHR);
-    // TODO
-    // zapamataj si id, defocusni submit ak treba, stiahni a zobraz otazky.
-    // chceme si aj zapamatat ze sme prihlaseni a druhykrat sa neprihlasovat?
-  }
-  function error(jqXHR, textStatus, errorThrown) {
-    log('error', textStatus, errorThrown, jqXHR);
-    alert('Chyba pri komunikácii so serverom. Skúste prosím znova.\nAk problém pretrváva, kontaktujte technickú podporu.\nFakt dúfam, že niekto vymyslí lepšiu hlášku.');
-  }
-  ajaj({ action: 'login', id: id }, success, error);
+var loginBusy = false;
+function doLogin(uid) {
+  if (loginBusy) return;
+  loginBusy = true;
+
+  ajaj({ action: 'login', uid: uid }, function (data) {
+    loginBusy = false;
+    if (data.error == 'invalid id') {
+      alert('Nesprávne ID, uáá.');
+    }
+    else if (data.error == 'closed') {
+      alert('Váš test už je ukončený, uáá.');
+    }
+    else if (data.error) {
+      alert('Chyba pri komunikácii so serverom, uáá.');
+    }
+    else {
+      $('#login-form *').blur();
+      $('#login-form').hide();
+      loginBusy = true;
+
+      data.uid = uid;
+      window.UserInfo = data;
+
+      // TODO zobrazit otazky a TOC
+      // (zatial proste dumpneme json)
+      $('body').append(document.createTextNode(JSON.stringify(data)));
+    }
+  });
 }
 
 
