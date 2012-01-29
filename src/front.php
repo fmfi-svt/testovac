@@ -13,6 +13,7 @@
 <meta http-equiv="Content-Language" content="sk">
 <title><?php print htmlspecialchars($config->title); ?></title>
 <meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" type="text/css" href="base.css">
 <link rel="stylesheet" type="text/css" href="style.css">
 <!-- TODO shortcut icon? -->
 </head>

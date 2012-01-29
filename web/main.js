@@ -3,15 +3,15 @@
 "use strict";
 
 
-function log() {
-  Log.push(Array.prototype.slice.call(arguments));
-  if (window.console && console.log) console.log.apply(console, arguments);
+window.log = function () {
+  var args = Array.prototype.slice.call(arguments);
+  log.history.push(args);
+  if (window.console) console.log(args);
 }
+window.log.history = [];
 
 
 function init() {
-  window.Log = [];
-
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
     doLogin($('#login-form input.uid').val());
@@ -50,7 +50,7 @@ function ajaj(requestData, callback) {
 
 var loginBusy = false;
 function doLogin(uid) {
-  if (loginBusy) return;
+  if (loginBusy || window.UserInfo) return;
   loginBusy = true;
 
   ajaj({ action: 'login', uid: uid }, function (data) {
@@ -67,14 +67,32 @@ function doLogin(uid) {
     else {
       $('#login-form *').blur();
       $('#login-form').hide();
-      loginBusy = true;
 
       data.uid = uid;
+      data.events = [];
+      data.localSerial = data.serverSerial;
       window.UserInfo = data;
 
-      // TODO zobrazit otazky a TOC
-      // (zatial proste dumpneme json)
-      $('body').append(document.createTextNode(JSON.stringify(data)));
+      showQuestions();
+    }
+  });
+}
+
+
+function showQuestions() {
+  var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
+  var $status = $('<div/>', { id: 'status' }).appendTo('body');
+  var $main = $('<div/>', { id: 'main' }).appendTo('body');
+  var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
+  $.each(UserInfo.questions, function (i, q) {
+    var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
+    $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q[0] }).appendTo($question);
+    var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
+    for (var j = 1; j < q.length; j++) {
+      var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
+      $('<div/>', { 'class': 'text', text: String.fromCharCode(96+j)+') '+q[j] }).appendTo($option);
+      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" value="y"> ÁNO </span>').appendTo($option);
+      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" value="n"> NIE </span>').appendTo($option);
     }
   });
 }

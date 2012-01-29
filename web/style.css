@@ -1,17 +1,81 @@
 
+/******************************************************************************/
+/* zaklad */
+
+body {
+  font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+  text-align: justify;
+}
+
+
 
 /******************************************************************************/
 /* #login-form */
 
 #login-form {
-  font: 250% sans-serif;
+  font-size: 300%;
   text-align: center;
-  margin: 3em auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
 }
 
 #login-form input {
-  font: inherit;
   margin: 0 0.1em;
 }
 
+
+
+/******************************************************************************/
+/* otazky */
+
+#toc {
+  position: fixed;
+  left: 0;
+  width: 30%;
+  top: 0;
+  bottom: 6em;
+  background: #EEE;
+  overflow-y: auto;
+}
+
+#status {
+  position: fixed;
+  left: 0;
+  width: 30%;
+  height: 6em;
+  bottom: 0;
+  background: #CCC;
+  overflow: hidden;
+}
+
+#main {
+  margin-left: 30%;
+  padding: 1em 1.5em;
+  font-size: 1.0769em;   /* 14/13 */
+}
+
+#main .question {
+  padding: 2em 0;
+  border-bottom: solid #DDD 1px;
+}
+
+#main .question h3 {
+  font-size: 1.286em;   /* 18/14 */
+  font-weight: normal;
+  margin: 0 0 1em;
+}
+
+#main .question .option {
+  margin-top: 0.9em;
+}
+
+#main .question .option .text {
+  margin-bottom: 0.2em;
+}
+
+#main .question .option .control {
+  margin-left: 1em;
+}
 
