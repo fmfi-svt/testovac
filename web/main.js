@@ -11,13 +11,33 @@ window.log = function () {
 window.log.history = [];
 
 
+function fakelink() {
+  return $('<span class="fakelink" tabindex="0" role="button"></span>');
+}
+
+
 function init() {
+  // namiesto ozajstnych <a> pouzivame falosne odkazy, aby sa neotvarali
+  // v novom tabe pri kliknuti strednym tlacitkom. lenze co s klavesnicou? pri
+  // <a> staci dat onclick a zavola sa to aj, ked sa stlaci enter. HTML5 spec
+  // tvrdi, ze elementy, co maju tabindex, to maju robit tiez, ale nerobia.
+  // nejaky W3C clanok <http://www.w3.org/TR/WCAG20-TECHS/SCR29> poradil toto:
+  $(document).on('keypress', '.fakelink', function (event) {
+    if (event.which == 13) {
+      $(this).click();
+      return false;
+    }
+    return true;
+  });
+
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
     doLogin($('#login-form input.uid').val());
     return false;
   });
-  // TOC open
+  $(document).on('click', '.toclink', function (event) {
+    goToQuestion($(this).data('question'));
+  });
   // mozno TOC starred button
   // mozno NEXT button
   // mozno PREV button
@@ -81,7 +101,19 @@ function doLogin(uid) {
 
 function showQuestions() {
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
+  var $ul = $('<ul/>').appendTo($toc);
+  $.each(UserInfo.questions, function (i, q) {
+    var $li = $('<li/>').appendTo($ul);
+    fakelink().
+      addClass('toclink').
+      text((i+1)+'. '+q[0]).
+      data('question', i).
+      appendTo($li);
+  });
+
   var $status = $('<div/>', { id: 'status' }).appendTo('body');
+  $('<div/>', { 'class': 'uid', text: UserInfo.uid }).appendTo($status);
+
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
   $.each(UserInfo.questions, function (i, q) {
@@ -91,10 +123,15 @@ function showQuestions() {
     for (var j = 1; j < q.length; j++) {
       var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
       $('<div/>', { 'class': 'text', text: String.fromCharCode(96+j)+') '+q[j] }).appendTo($option);
-      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" value="y"> ÁNO </span>').appendTo($option);
-      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" value="n"> NIE </span>').appendTo($option);
+      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'y" value="y"><label for="q'+i+'o'+j+'y"> ÁNO </label></span>').appendTo($option);
+      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'n" value="n"><label for="q'+i+'o'+j+'n"> NIE </label></span>').appendTo($option);
     }
   });
+}
+
+
+function goToQuestion(question) {
+  window.scrollTo(0, $('.question').eq(question).offset().top);
 }
 
 
