@@ -1,7 +1,7 @@
 /*******************************************************************************
  * oproti povodnemu HTML5 Boilerplate stylu sa zmenilo toto:
  * - vyhodeny ::selection a ::-moz-selection
- * - vyhodeny label { cursor: pointer; }
+ * - vyhodeny "cursor: pointer" zo stylu labelov, inputov a buttonov
  * tiez vid h5bp.com/css kde je pre kazdy riadok zdokumentovane co robi.
  ******************************************************************************/
 
@@ -178,7 +178,7 @@ table button, table input { *overflow: auto; }
  * 2. Allow styling of clickable form elements in iOS
  */
 
-button, input[type="button"], input[type="reset"], input[type="submit"] { cursor: pointer; -webkit-appearance: button; }
+button, input[type="button"], input[type="reset"], input[type="submit"] { /*cursor: pointer;*/ -webkit-appearance: button; }
 
 /*
  * Consistent box sizing and appearance
