@@ -14,7 +14,8 @@
 <p>Na zobrazenie tohto obsahu je potrebný zapnutý JavaScript.</p>
 </noscript>
 <script type="text/javascript">
-DemoMode = <?php print json_encode($config->demo_mode); ?>;
+Tester = {};
+Tester.config = <?php print json_encode($config); ?>;
 </script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="main.js"></script>

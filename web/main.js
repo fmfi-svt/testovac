@@ -71,7 +71,7 @@ function ajaj(requestData, callback) {
 
 var loginBusy = false;
 function doLogin(uid) {
-  if (loginBusy || window.UserInfo) return;
+  if (loginBusy || Tester.userInfo) return;
   loginBusy = true;
 
   ajaj({ action: 'login', uid: uid }, function (data) {
@@ -92,7 +92,7 @@ function doLogin(uid) {
       data.uid = uid;
       data.events = [];
       data.localSerial = data.serverSerial;
-      window.UserInfo = data;
+      Tester.userInfo = data;
 
       showQuestions();
     }
@@ -103,7 +103,7 @@ function doLogin(uid) {
 function showQuestions() {
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
   var $ul = $('<ul/>').appendTo($toc);
-  $.each(UserInfo.questions, function (i, q) {
+  $.each(Tester.userInfo.questions, function (i, q) {
     var $li = $('<li/>').appendTo($ul);
     fakelink().
       addClass('toclink').
@@ -113,11 +113,11 @@ function showQuestions() {
   });
 
   var $status = $('<div/>', { id: 'status' }).appendTo('body');
-  $('<div/>', { 'class': 'uid', text: UserInfo.uid }).appendTo($status);
+  $('<div/>', { 'class': 'uid', text: Tester.userInfo.uid }).appendTo($status);
 
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
-  $.each(UserInfo.questions, function (i, q) {
+  $.each(Tester.userInfo.questions, function (i, q) {
     var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
     $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q[0] }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
