@@ -4,15 +4,7 @@ ini_set('display_errors', FALSE);
 chdir('..');
 require 'config.php';
 
-
-function json_out($data) {
-  header('Content-Type: application/json; charset=UTF-8');
-  print json_encode($data);
-}
-function json_die($errtype) {
-  json_out(array('error' => $errtype));
-  die();
-}
+require 'src/util.php';
 
 
 if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
@@ -21,14 +13,21 @@ if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
 }
 
 
-$action = empty($_POST['action']) ? 'front' : $_POST['action'];
-$actions = array(
-  'front' => 'src/front.php',
-  'login' => 'src/login.php',
-  'save' => 'src/save.php',
-  'close' => 'src/close.php',
-);
-if (!isset($actions[$action])) {
-  json_die('unknown action');
+if (!isset($_POST['action'])) {
+  require 'src/front.php';
 }
-require $actions[$action];
+else if ($_POST['action'] === 'login') {
+  require 'src/login.php';
+  login_jsonapi();
+}
+else if ($_POST['action'] === 'save') {
+  require 'src/update.php';
+  save_jsonapi();
+}
+else if ($_POST['action'] === 'close') {
+  require 'src/update.php';
+  close_jsonapi();
+}
+else {
+  json_out(array('error' => 'unknown action'));
+}
