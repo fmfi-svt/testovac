@@ -50,6 +50,9 @@ function init() {
   $('<label/>', { 'for': 'login-form-uid', text: 'Zadajte ID: ' }).appendTo($form);
   $('<input type="text" />').attr({ id: 'login-form-uid', name: 'uid', maxlength: '16' }).appendTo($form).focus();
   $('<input type="submit" />').attr('value', 'OK').appendTo($form);
+  if (Tester.config.demo_mode) {
+    $('<p/>').addClass('demo-message').text(Tester.config.demo_message).appendTo($form);
+  }
 }
 
 
@@ -76,7 +79,7 @@ function doLogin(uid) {
 
   ajaj({ action: 'login', uid: uid }, function (data) {
     loginBusy = false;
-    if (data.error == 'invalid id') {
+    if (data.error == 'invalid uid') {
       alert('Nesprávne ID, uáá.');
     }
     else if (data.error == 'closed') {

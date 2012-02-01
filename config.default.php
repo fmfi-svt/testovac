@@ -6,4 +6,18 @@ $config = (object)array(
 
   // <title>
   'title' => 'Prijímacia skúška',
+
+  // co sa vypise pod prihlasovacim formularom v demo rezime
+  'demo_message' => 'Demo – použite ID 1234123412341234',
 );
+
+
+// nastavenie checksumu, ktorym sa overuje validnost UID
+function config_validate_uid($uid) {
+  global $config;
+  if ($config->demo_mode) return ($uid === '1234123412341234');
+
+  // example config: checksum je ze posledna cifra musi byt 7
+  // (v ostrom configu sa odporuca mat nejaku lepsiu funkciu)
+  return (preg_match('/^[1-9][0-9]{15}$/', $uid) && ($uid[15] == '7'));
+}

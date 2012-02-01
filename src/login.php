@@ -1,5 +1,9 @@
 <?php
 
+if (!isset($_POST['uid']) || !is_string($_POST['uid']) || !config_validate_uid($_POST['uid'])) {
+  json_die('invalid uid');
+}
+
 $questions = array();
 for ($i = 1; $i <= 30; $i++) {
   $question = array('Zadanie otázky číslo '.$i);
