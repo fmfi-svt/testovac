@@ -38,12 +38,15 @@ function init() {
   $(document).on('click', '.toclink', function (event) {
     goToQuestion($(this).data('question'));
   });
-  // mozno TOC starred button
-  // mozno NEXT button
-  // mozno PREV button
-  // mozno TOGGLE-MODE button (continuous vs per-page)
+  // TOC starred button
   // zakliknutie jednotlivych moznosti
   // FINISH button (a UI okolo "are you sure")
+  if (Tester.config.disable_refresh) {
+    $(document).on('keydown', function (event) {
+      if (event.which == 116 && !event.altKey && !event.shiftKey) return false;
+      if (event.which == 82 && event.ctrlKey && !event.altKey && !event.shiftKey) return false;
+    });
+  }
 
   // inicializujeme HTML
   var $form = $('<form/>', { id: 'login-form' }).appendTo('body');
