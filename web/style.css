@@ -1,0 +1,102 @@
+
+/******************************************************************************/
+/* zaklad */
+
+body {
+  font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+  text-align: justify;
+  font-size: 14px;
+}
+
+
+
+/******************************************************************************/
+/* linky a fakelinky */
+
+a, .fakelink {
+  color: #00A;
+  cursor: pointer;
+  text-decoration: none;
+}
+a:hover, .fakelink:hover {
+  color: #00E;
+  text-decoration: underline;
+}
+
+
+
+/******************************************************************************/
+/* #login-form */
+
+#login-form {
+  font-size: 2.857em;   /* 40/14 */
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+}
+
+#login-form input {
+  margin: 0 0.1em;
+}
+
+
+
+/******************************************************************************/
+/* otazky */
+
+#toc {
+  position: fixed;
+  left: 0;
+  width: 30%;
+  top: 0;
+  bottom: 6em;
+  background: #EEE;
+  overflow-y: auto;
+}
+
+#status {
+  position: fixed;
+  left: 0;
+  width: 30%;
+  height: 6em;
+  bottom: 0;
+  background: #CCC;
+  overflow: hidden;
+}
+
+#status .uid {
+  margin: 0.5em;
+  font-size: 3em;
+  line-height: 1;
+}
+
+#main {
+  margin-left: 30%;
+  padding: 1em 1.5em;
+}
+
+#main .question {
+  padding: 2em 0;
+  border-bottom: solid #DDD 1px;
+}
+
+#main .question h3 {
+  font-size: 1.286em;   /* 18/14 */
+  font-weight: normal;
+  margin: 0 0 1em;
+}
+
+#main .question .option {
+  margin-top: 0.9em;
+}
+
+#main .question .option .text {
+  margin-bottom: 0.2em;
+}
+
+#main .question .option .control {
+  margin-left: 1em;
+}
+
