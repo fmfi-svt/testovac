@@ -1,0 +1,16 @@
+
+Databaza
+--------
+
+Zatial netreba nic.
+
+
+Webserver - HTTPS
+-----------------
+
+Su viacere moznosti, ako nakonfigurovat webserver:
+
+- aplikaciu spristupnit len cez http
+- aplikaciu spristupnit len cez https
+- aplikaciu spristupnit len cez https, a plus "GET /" presmerovavat z http na https (ale POST nepresmerovavat)
+
