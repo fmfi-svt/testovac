@@ -10,5 +10,5 @@ $config = (object)array(
   'demo_mode' => FALSE,
 
   // <title>
-  'title' => 'Príjmačky',
+  'title' => 'Prijímacia skúška',
 );
