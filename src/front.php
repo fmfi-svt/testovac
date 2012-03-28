@@ -1,11 +1,3 @@
-<?php
-  $client_templates = array();
-  foreach (scandir('templates/') as $template) {
-    if (substr($template, -5) == '.html') {
-      $client_templates[substr($template, 0, -5)] = file_get_contents('templates/'.$template);
-    }
-  }
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +15,6 @@
 </noscript>
 <script type="text/javascript">
 DemoMode = <?php print json_encode($config->demo_mode); ?>;
-Templates = <?php print json_encode($client_templates); ?>;
 </script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="main.js"></script>

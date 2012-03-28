@@ -32,7 +32,7 @@ function init() {
 
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
-    doLogin($('#login-form input.uid').val());
+    doLogin($('#login-form-uid').val());
     return false;
   });
   $(document).on('click', '.toclink', function (event) {
@@ -46,9 +46,10 @@ function init() {
   // FINISH button (a UI okolo "are you sure")
 
   // inicializujeme HTML
-  $('body').append(Templates.main);
-  $('#login-form').show();
-  $('#login-form input.uid').focus();
+  var $form = $('<form/>', { id: 'login-form' }).appendTo('body');
+  $('<label/>', { 'for': 'login-form-uid', text: 'Zadajte ID: ' }).appendTo($form);
+  $('<input type="text" />').attr({ id: 'login-form-uid', name: 'uid', maxlength: '16' }).appendTo($form).focus();
+  $('<input type="submit" />').attr('value', 'OK').appendTo($form);
 }
 
 
