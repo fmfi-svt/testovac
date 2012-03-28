@@ -6,13 +6,6 @@ require 'config.php';
 
 require 'src/util.php';
 
-
-if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-  // http://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security
-  header('Strict-Transport-Security: max-age=500');
-}
-
-
 if (!isset($_POST['action'])) {
   require 'src/front.php';
 }

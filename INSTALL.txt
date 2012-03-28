@@ -14,3 +14,5 @@ Su viacere moznosti, ako nakonfigurovat webserver:
 - aplikaciu spristupnit len cez https
 - aplikaciu spristupnit len cez https, a plus "GET /" presmerovavat z http na https (ale POST nepresmerovavat)
 
+Pri https sa este patri nastavit webserver, aby pouzival HTTP Strict Transport Security.
+
