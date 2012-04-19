@@ -5,7 +5,8 @@ function login_jsonapi() {
 }
 
 function login_action($pid) {
-  if (!config_validate_pid($pid)) return array('error' => 'invalid pid');
+  global $pid_checker;
+  if (!$pid_checker->check($pid)) return array('error' => 'invalid pid');
 
   $questions = array();
   for ($i = 1; $i <= 30; $i++) {

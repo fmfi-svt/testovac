@@ -9,18 +9,7 @@ $config = (object)array(
 
   // <title>
   'title' => 'Prijímacia skúška',
-
-  // co sa vypise pod prihlasovacim formularom v demo rezime
-  'demo_message' => 'Demo – použite ID 1234123412341234',
 );
 
-
-// nastavenie checksumu, ktorym sa overuje validnost UID
-function config_validate_pid($pid) {
-  global $config;
-  if ($config->demo_mode) return ($pid === '1234123412341234');
-
-  // example config: checksum je ze posledna cifra musi byt 7
-  // (v ostrom configu sa odporuca mat nejaku lepsiu funkciu)
-  return (preg_match('/^[1-9][0-9]{15}$/', $pid) && ($pid[15] == '7'));
-}
+require 'src/checkpid/VerhoeffChecker.php';
+$pid_checker = new VerhoeffChecker();

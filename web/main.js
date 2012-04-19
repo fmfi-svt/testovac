@@ -53,8 +53,8 @@ function init() {
   $('<label/>', { 'for': 'login-form-pid', text: 'Zadajte ID: ' }).appendTo($form);
   $('<input type="text" />').attr({ id: 'login-form-pid', name: 'pid', maxlength: '16' }).appendTo($form).focus();
   $('<input type="submit" />').attr('value', 'OK').appendTo($form);
-  if (Tester.config.demo_mode) {
-    $('<p/>').addClass('demo-message').text(Tester.config.demo_message).appendTo($form);
+  if (Tester.config.demo_pid) {
+    $('<p/>').addClass('demo-message').text('Demo – použite ID '+Tester.config.demo_pid).appendTo($form);
   }
 }
 
@@ -84,6 +84,7 @@ function doLogin(pid) {
     loginBusy = false;
     if (data.error == 'invalid pid') {
       alert('Nesprávne ID, uáá.');
+      $('#login-form-pid').val('');
     }
     else if (data.error == 'closed') {
       alert('Váš test už je ukončený, uáá.');

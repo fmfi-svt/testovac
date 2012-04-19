@@ -1,3 +1,9 @@
+<?php
+if ($config->demo_mode) {
+  $config->demo_pid = $pid_checker->generateDemoPid();
+  // TODO if demo data will be saved, we might want to check pid uniqueness
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
