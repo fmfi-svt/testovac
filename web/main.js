@@ -32,7 +32,7 @@ function init() {
 
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
-    doLogin($('#login-form-uid').val());
+    doLogin($('#login-form-pid').val());
     return false;
   });
   $(document).on('click', '.toclink', function (event) {
@@ -50,8 +50,8 @@ function init() {
 
   // inicializujeme HTML
   var $form = $('<form/>', { id: 'login-form' }).appendTo('body');
-  $('<label/>', { 'for': 'login-form-uid', text: 'Zadajte ID: ' }).appendTo($form);
-  $('<input type="text" />').attr({ id: 'login-form-uid', name: 'uid', maxlength: '16' }).appendTo($form).focus();
+  $('<label/>', { 'for': 'login-form-pid', text: 'Zadajte ID: ' }).appendTo($form);
+  $('<input type="text" />').attr({ id: 'login-form-pid', name: 'pid', maxlength: '16' }).appendTo($form).focus();
   $('<input type="submit" />').attr('value', 'OK').appendTo($form);
   if (Tester.config.demo_mode) {
     $('<p/>').addClass('demo-message').text(Tester.config.demo_message).appendTo($form);
@@ -76,13 +76,13 @@ function ajaj(requestData, callback) {
 
 
 var loginBusy = false;
-function doLogin(uid) {
+function doLogin(pid) {
   if (loginBusy || Tester.userInfo) return;
   loginBusy = true;
 
-  ajaj({ action: 'login', uid: uid }, function (data) {
+  ajaj({ action: 'login', pid: pid }, function (data) {
     loginBusy = false;
-    if (data.error == 'invalid uid') {
+    if (data.error == 'invalid pid') {
       alert('Nesprávne ID, uáá.');
     }
     else if (data.error == 'closed') {
@@ -95,7 +95,7 @@ function doLogin(uid) {
       $('#login-form *').blur();
       $('#login-form').hide();
 
-      data.uid = uid;
+      data.pid = pid;
       data.events = [];
       data.localSerial = data.serverSerial;
       Tester.userInfo = data;
@@ -119,7 +119,7 @@ function showQuestions() {
   });
 
   var $status = $('<div/>', { id: 'status' }).appendTo('body');
-  $('<div/>', { 'class': 'uid', text: Tester.userInfo.uid }).appendTo($status);
+  $('<div/>', { 'class': 'pid', text: Tester.userInfo.pid }).appendTo($status);
 
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);

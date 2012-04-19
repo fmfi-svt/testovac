@@ -16,11 +16,11 @@ $config = (object)array(
 
 
 // nastavenie checksumu, ktorym sa overuje validnost UID
-function config_validate_uid($uid) {
+function config_validate_pid($pid) {
   global $config;
-  if ($config->demo_mode) return ($uid === '1234123412341234');
+  if ($config->demo_mode) return ($pid === '1234123412341234');
 
   // example config: checksum je ze posledna cifra musi byt 7
   // (v ostrom configu sa odporuca mat nejaku lepsiu funkciu)
-  return (preg_match('/^[1-9][0-9]{15}$/', $uid) && ($uid[15] == '7'));
+  return (preg_match('/^[1-9][0-9]{15}$/', $pid) && ($pid[15] == '7'));
 }

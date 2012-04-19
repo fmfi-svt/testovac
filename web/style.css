@@ -70,7 +70,7 @@ a:hover, .fakelink:hover {
   overflow: hidden;
 }
 
-#status .uid {
+#status .pid {
   margin: 0.5em;
   font-size: 3em;
   line-height: 1;

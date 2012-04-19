@@ -7,18 +7,18 @@
 // TODO etc...
 
 function save_jsonapi() {
-  json_out(save_action(getarg('uid', 'string'), getarg('sessid', 'int'),
+  json_out(save_action(getarg('pid', 'string'), getarg('sessid', 'int'),
       getarg('saved', 'int'), getarg('events', 'array')));
 }
 
-function save_action($uid, $sessid, $savedBefore, $events) {
+function save_action($pid, $sessid, $savedBefore, $events) {
   return array('saved' => $savedBefore + count($events));
 }
 
 function close_jsonapi() {
-  json_out(close_action(getarg('uid', 'string'), getarg('sessid', 'int')));
+  json_out(close_action(getarg('pid', 'string'), getarg('sessid', 'int')));
 }
 
-function close_action($uid, $sessid) {
+function close_action($pid, $sessid) {
   return (object)array();
 }

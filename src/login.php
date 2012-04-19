@@ -1,11 +1,11 @@
 <?php
 
 function login_jsonapi() {
-  json_out(login_action(getarg('uid', 'string')));
+  json_out(login_action(getarg('pid', 'string')));
 }
 
-function login_action($uid) {
-  if (!config_validate_uid($uid)) return array('error' => 'invalid uid');
+function login_action($pid) {
+  if (!config_validate_pid($pid)) return array('error' => 'invalid pid');
 
   $questions = array();
   for ($i = 1; $i <= 30; $i++) {
