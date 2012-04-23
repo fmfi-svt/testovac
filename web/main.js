@@ -84,7 +84,7 @@ function ajaj(requestData, callback) {
 
 var loginBusy = false;
 function doLogin(pid) {
-  if (loginBusy || Tester.userInfo) return;
+  if (loginBusy || Tester.pid) return;
   loginBusy = true;
 
   ajaj({ action: 'login', pid: pid }, function (data) {
@@ -103,22 +103,24 @@ function doLogin(pid) {
       $('#login-form *').blur();
       $('#login-form').hide();
 
-      data.pid = pid;
-      data.events = {};
-      data.eventsBegin = data.savedEvents;
-      data.eventsEnd = data.savedEvents;
-      Tester.userInfo = data;
+      Tester.pid = pid;
+      Tester.sessid = data.sessid;
+      Tester.beginTime = data.beginTime;
+      Tester.questions = data.questions;
+      Tester.events = {};
+      Tester.eventsBegin = data.savedEvents;
+      Tester.eventsEnd = data.savedEvents;
 
-      showQuestions();
+      showQuestions(data.state);
     }
   });
 }
 
 
-function showQuestions() {
+function showQuestions(state) {
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
   var $ul = $('<ul/>').appendTo($toc);
-  $.each(Tester.userInfo.questions, function (i, q) {
+  $.each(Tester.questions, function (i, q) {
     var $li = $('<li/>').appendTo($ul);
     fakelink().
       addClass('toclink').
@@ -128,11 +130,11 @@ function showQuestions() {
   });
 
   var $status = $('<div/>', { id: 'status' }).appendTo('body');
-  $('<div/>', { 'class': 'pid', text: Tester.userInfo.pid }).appendTo($status);
+  $('<div/>', { 'class': 'pid', text: Tester.pid }).appendTo($status);
 
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
-  $.each(Tester.userInfo.questions, function (i, q) {
+  $.each(Tester.questions, function (i, q) {
     var $question = $('<div/>', { 'class': 'question', 'data-qorder': i }).appendTo($questions);
     $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
@@ -145,8 +147,8 @@ function showQuestions() {
     }
   });
 
-  for (var i = 0; i < Tester.userInfo.state.length; i++) {
-    var entry = Tester.userInfo.state[i];
+  for (var i = 0; i < state.length; i++) {
+    var entry = state[i];
     document.getElementById('q' + entry.qorder +
       'o' + entry.qsubord +
       (entry.value == 'true' ? 'y' : 'n')).checked = true;
@@ -160,18 +162,17 @@ function goToQuestion(question) {
 
 
 function saveEvents() {
-  var user = Tester.userInfo;
-  if (user.eventsBegin == user.eventsEnd) return;
+  if (Tester.eventsBegin == Tester.eventsEnd) return;
   if (Tester.sendingEvents) return;
   Tester.sendingEvents = true;
-  log('sending event range', user.eventsBegin, user.eventsEnd);
+  log('sending event range', Tester.eventsBegin, Tester.eventsEnd);
   var sentEvents = [];
-  for (var i = user.eventsBegin; i < user.eventsEnd; i++) {
-    sentEvents[i - user.eventsBegin] = user.events[i];
+  for (var i = Tester.eventsBegin; i < Tester.eventsEnd; i++) {
+    sentEvents[i - Tester.eventsBegin] = Tester.events[i];
   }
   var request = {
-    action: 'save', pid: user.pid, sessid: user.sessid,
-    savedEvents: user.eventsBegin, events: sentEvents
+    action: 'save', pid: Tester.pid, sessid: Tester.sessid,
+    savedEvents: Tester.eventsBegin, events: sentEvents
   };
   ajaj(request, function (data) {
     Tester.sendingEvents = false;
@@ -193,19 +194,19 @@ function saveEvents() {
       alert('Chyba pri komunikácii so serverom, uáá.');
     }
     else {
-      while (user.eventsBegin < data.savedEvents) {
-        delete user.events[user.eventsBegin++];
+      while (Tester.eventsBegin < data.savedEvents) {
+        delete Tester.events[Tester.eventsBegin++];
       }
-      user.eventsEnd = Math.max(user.eventsBegin, user.eventsEnd);
-      if (user.eventsBegin != user.eventsEnd) saveEvents();
+      Tester.eventsEnd = Math.max(Tester.eventsBegin, Tester.eventsEnd);
+      if (Tester.eventsBegin != Tester.eventsEnd) saveEvents();
     }
   });
 }
 
 
 function emitEvent(event) {
-  log('event', Tester.userInfo.eventsEnd, event);
-  Tester.userInfo.events[Tester.userInfo.eventsEnd++] = event;
+  log('event', Tester.eventsEnd, event);
+  Tester.events[Tester.eventsEnd++] = event;
   // TODO: save events immediately or every X seconds?
   saveEvents();
 }
