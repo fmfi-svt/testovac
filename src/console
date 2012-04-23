@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+if (PHP_SAPI != 'cli') die('CLI usage only');
+
+ini_set('display_errors', FALSE);
+chdir(dirname(__FILE__).'/..');
+require 'config.php';
+
+require 'src/util.php';
+
+if (!isset($_SERVER['argv'][1])) $_SERVER['argv'][1] = null;
+if ($_SERVER['argv'][1] === 'initschema') {
+  require 'src/initschema.php';
+  initschema_cli();
+}
+else {
+  print 'usage: php '.$_SERVER['argv'][0].' <action>'."\n";
+  print 'actions:'."\n";
+  print '  initschema'."\n";
+}

@@ -39,7 +39,14 @@ function init() {
     goToQuestion($(this).data('question'));
   });
   // TOC starred button
-  // zakliknutie jednotlivych moznosti
+  $(document).on('change', '#questions input:radio', function (event) {
+    emitEvent({
+      qorder: $(this).closest('.question').data('qorder'),
+      qsubord: $(this).closest('.option').data('qsubord'),
+      value: $(this).val(),
+      time: +new Date()
+    });
+  });
   // FINISH button (a UI okolo "are you sure")
   if (Tester.config.disable_refresh) {
     $(document).on('keydown', function (event) {
@@ -97,8 +104,9 @@ function doLogin(pid) {
       $('#login-form').hide();
 
       data.pid = pid;
-      data.events = [];
-      data.localSerial = data.serverSerial;
+      data.events = {};
+      data.eventsBegin = data.savedEvents;
+      data.eventsEnd = data.savedEvents;
       Tester.userInfo = data;
 
       showQuestions();
@@ -114,7 +122,7 @@ function showQuestions() {
     var $li = $('<li/>').appendTo($ul);
     fakelink().
       addClass('toclink').
-      text((i+1)+'. '+q[0]).
+      text((i+1)+'. '+q.body).
       data('question', i).
       appendTo($li);
   });
@@ -125,21 +133,81 @@ function showQuestions() {
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
   $.each(Tester.userInfo.questions, function (i, q) {
-    var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
-    $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q[0] }).appendTo($question);
+    var $question = $('<div/>', { 'class': 'question', 'data-qorder': i }).appendTo($questions);
+    $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
-    for (var j = 1; j < q.length; j++) {
-      var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
-      $('<div/>', { 'class': 'text', text: String.fromCharCode(96+j)+') '+q[j] }).appendTo($option);
-      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'y" value="y"><label for="q'+i+'o'+j+'y"> ÁNO </label></span>').appendTo($option);
-      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'n" value="n"><label for="q'+i+'o'+j+'n"> NIE </label></span>').appendTo($option);
+    for (var jc = 97; q[String.fromCharCode(jc)]; jc++) {
+      var j = String.fromCharCode(jc);
+      var $option = $('<div/>', { 'class': 'option', 'data-qsubord': j }).appendTo($options);
+      $('<div/>', { 'class': 'text', text: j+') '+q[j] }).appendTo($option);
+      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'y" value="true"><label for="q'+i+'o'+j+'y"> ÁNO </label></span>').appendTo($option);
+      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'n" value="false"><label for="q'+i+'o'+j+'n"> NIE </label></span>').appendTo($option);
     }
   });
+
+  for (var i = 0; i < Tester.userInfo.state.length; i++) {
+    var entry = Tester.userInfo.state[i];
+    document.getElementById('q' + entry.qorder +
+      'o' + entry.qsubord +
+      (entry.value == 'true' ? 'y' : 'n')).checked = true;
+  }
 }
 
 
 function goToQuestion(question) {
   window.scrollTo(0, $('.question').eq(question).offset().top);
+}
+
+
+function saveEvents() {
+  var user = Tester.userInfo;
+  if (user.eventsBegin == user.eventsEnd) return;
+  if (Tester.sendingEvents) return;
+  Tester.sendingEvents = true;
+  log('sending event range', user.eventsBegin, user.eventsEnd);
+  var sentEvents = [];
+  for (var i = user.eventsBegin; i < user.eventsEnd; i++) {
+    sentEvents[i - user.eventsBegin] = user.events[i];
+  }
+  var request = {
+    action: 'save', pid: user.pid, sessid: user.sessid,
+    savedEvents: user.eventsBegin, events: sentEvents
+  };
+  ajaj(request, function (data) {
+    Tester.sendingEvents = false;
+    if (data.error == 'invalid pid') {
+      alert('Nesprávne ID, uáá.');
+    }
+    else if (data.error == 'invalid sessid') {
+      alert('Tento užívateľ sa medzitým prihlásil z iného počítača. Z tohto počítača bude odhlásený.');
+      location.reload();
+    }
+    else if (data.error == 'invalid savedEvents') {
+      alert('Chyba v časopriestorovej kontinuite, uáá.');
+      location.reload();
+    }
+    else if (data.error == 'closed') {
+      alert('Váš test už je ukončený, uáá.');
+    }
+    else if (data.error) {
+      alert('Chyba pri komunikácii so serverom, uáá.');
+    }
+    else {
+      while (user.eventsBegin < data.savedEvents) {
+        delete user.events[user.eventsBegin++];
+      }
+      user.eventsEnd = Math.max(user.eventsBegin, user.eventsEnd);
+      if (user.eventsBegin != user.eventsEnd) saveEvents();
+    }
+  });
+}
+
+
+function emitEvent(event) {
+  log('event', Tester.userInfo.eventsEnd, event);
+  Tester.userInfo.events[Tester.userInfo.eventsEnd++] = event;
+  // TODO: save events immediately or every X seconds?
+  saveEvents();
 }
 
 

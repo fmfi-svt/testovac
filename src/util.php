@@ -29,3 +29,20 @@ function getarg($var, $type) {
   }
   json_out(array('error' => 'bad request'));
 }
+
+function user_closed($user) {
+  global $exam;
+  return $user->submitted ||
+    time() > $user->begintime + $exam->getServerTimeLimit();
+}
+
+function build_query($query_template, $fields) {
+  return preg_replace_callback('/{([^|]+)\|([^|]+)\|([^}]+)}/',
+    function ($matches) use ($fields) {
+      $chunks = array();
+      foreach ($fields[$matches[1]] as $field) {
+        $chunks[] = str_replace('%', $field, $matches[2]);
+      }
+      return implode($matches[3], $chunks);
+    }, $query_template);
+}
