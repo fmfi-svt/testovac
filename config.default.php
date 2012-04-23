@@ -6,10 +6,10 @@ $config = (object)array(
 
   // ci sa ma zakazat refreshovanie testovaca klavesovymi skratkami
   'disable_refresh' => TRUE,
-
-  // <title>
-  'title' => 'Prijímacia skúška',
 );
+
+require 'src/exam/FlawExam.php';
+$exam = new FlawExam();
 
 require 'src/checkpid/VerhoeffChecker.php';
 $pid_checker = new VerhoeffChecker();

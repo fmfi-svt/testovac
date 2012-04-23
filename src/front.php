@@ -9,7 +9,7 @@ if ($config->demo_mode) {
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="Content-Language" content="sk">
-<title><?php print htmlspecialchars($config->title); ?></title>
+<title><?php print htmlspecialchars($exam->getTitle()); ?></title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="stylesheet" type="text/css" href="base.css">
 <link rel="stylesheet" type="text/css" href="style.css">
