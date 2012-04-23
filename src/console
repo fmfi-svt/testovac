@@ -14,8 +14,13 @@ if ($_SERVER['argv'][1] === 'initschema') {
   require 'src/initschema.php';
   initschema_cli();
 }
+else if ($_SERVER['argv'][1] === 'import') {
+  require 'src/import.php';
+  import_cli();
+}
 else {
   print 'usage: php '.$_SERVER['argv'][0].' <action>'."\n";
   print 'actions:'."\n";
   print '  initschema'."\n";
+  print '  import questions.xml'."\n";
 }

@@ -64,7 +64,7 @@ class FlawExam {
 
     $sth = $dbh->prepare('INSERT INTO user_questions VALUES (:pid, :qorder, :qid)');
 
-    $numQuestions = 30;
+    $numQuestions = min(count($qids), 30);
     for ($i = 0; $i < $numQuestions; $i++) {
       do {
         $j = rand(0, count($qids)-1);
@@ -75,6 +75,48 @@ class FlawExam {
     }
 
     return $this->getUserQuestions($pid);
+  }
+
+  public function importQuestions($filename) {
+    global $dbh;
+
+    $dbh->beginTransaction();
+
+    $doc = new DOMDocument();
+    $doc->load($filename);
+    $xpath = new DOMXPath($doc);
+
+    $questions = array();
+
+    $sth = $dbh->query('SELECT MAX(qid) + 1 FROM questions');
+    $qid = $sth->fetchColumn();
+    if ($qid === null) $qid = 0;
+
+    $question_sth = $dbh->prepare('INSERT INTO questions VALUES (:qid, 0, :body)');
+    $subquestion_sth = $dbh->prepare('INSERT INTO subquestions VALUES (:qid, :qsubord, :body, :value)');
+
+    $xml_questions = $xpath->query('//question');
+    if ($xml_questions) foreach ($xml_questions as $xml_question) {
+      $id = $xml_question->getAttribute('id');   // TODO use it?
+      $sample = $xml_question->getAttribute('sample') == 'true';   // TODO use it!
+      $body = $xpath->query('body', $xml_question)->item(0)->firstChild->nodeValue;
+      $question_sth->execute(array(':qid' => $qid, ':body' => $body));
+
+      $xml_answers = $xpath->query('answer', $xml_question);
+      $qsubord = 96;
+      if ($xml_answers) foreach ($xml_answers as $xml_answer) {
+        $qsubord++;
+        $subquestion_sth->execute(array(
+          ':qid' => $qid,
+          ':qsubord' => chr($qsubord),
+          ':body' => $xml_answer->firstChild->nodeValue,
+          ':value' => $xml_answer->getAttribute('val'),
+        ));
+      }
+      $qid++;
+    }
+
+    $dbh->commit();
   }
 
   public function getEventKeyFields() {
