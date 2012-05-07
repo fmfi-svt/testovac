@@ -25,3 +25,10 @@
 *.maf
 *.mtc
 *.mtc0
+output.txt
+result.txt
+stickers.aux
+stickers.log
+stickers.pdf
+stickers-pics.pdf
+.stickers.tex.swp
