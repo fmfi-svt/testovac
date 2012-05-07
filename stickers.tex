@@ -1,0 +1,322 @@
+\documentclass[16pt]{minimal}
+\usepackage[papersize={500mm,300mm},top=0cm,bottom=0cm,left=-7.5mm,right=0cm,nohead,nofoot]{geometry}
+\usepackage{tikz}
+\usepackage{tabls}
+\usepackage{verbatim}
+\usepackage{array,amsmath,longtable,ragged2e,pstricks,varwidth}
+\usepackage{pst-barcode}
+\usepackage{auto-pst-pdf}
+\usepackage{eqparbox}
+
+\renewcommand{\familydefault}{pcr}
+
+\begin{document}
+\newsavebox\TBox
+\tabcolsep=0pt
+\arrayrulewidth=1pt
+\newenvironment{saveTBox}
+  {\begin{lrbox}{\TBox}\varwidth{\linewidth}}
+  {\endvarwidth\end{lrbox}%
+   \fboxrule=0pt\fboxsep=5pt\fbox{\usebox\TBox}}
+
+\newcolumntype{B}{@{}>{\saveTBox}c<{\endsaveTBox}@{}}
+\newcolumntype{M}{>{\centering\arraybackslash}c}
+
+\def\padded#1#2{%
+   \setbox0\hbox{#2}%
+   \dimen0=\dp0
+   \setbox2\hbox{\hskip #1\vbox{\vskip #1\box0\vskip#1}\hskip#1}%
+   \advance\dimen0 by #1%
+   \leavevmode\lower\dimen0\box2}
+
+\begin{tabular}{|M|M|M|M|}
+\hline
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=3558937752695928}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{3558937752695928}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		3558 - 9377 - 5269 - 5928
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=8583940418026653}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{8583940418026653}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		8583 - 9404 - 1802 - 6653
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=1599539381229459}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{1599539381229459}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		1599 - 5393 - 8122 - 9459
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=3147111895034320}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{3147111895034320}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		3147 - 1118 - 9503 - 4320
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} \\
+\hline
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=0642332845537123}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{0642332845537123}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		0642 - 3328 - 4553 - 7123
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=1387472490771551}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{1387472490771551}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		1387 - 4724 - 9077 - 1551
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=1789348412227190}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{1789348412227190}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		1789 - 3484 - 1222 - 7190
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=1689457482940559}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{1689457482940559}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		1689 - 4574 - 8294 - 0559
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} \\
+\hline
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=5699107363787929}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{5699107363787929}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		5699 - 1073 - 6378 - 7929
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=4697329305482616}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{4697329305482616}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		4697 - 3293 - 0548 - 2616
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=5182129471739148}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{5182129471739148}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		5182 - 1294 - 7173 - 9148
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=7997545341048410}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{7997545341048410}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		7997 - 5453 - 4104 - 8410
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} \\
+\hline
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=5079624571190215}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{5079624571190215}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		5079 - 6245 - 7119 - 0215
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=1096627327099407}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{1096627327099407}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		1096 - 6273 - 2709 - 9407
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=3175623545017500}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{3175623545017500}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		3175 - 6235 - 4501 - 7500
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=4656774723251242}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{4656774723251242}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		4656 - 7747 - 2325 - 1242
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} \\
+\hline
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=9640095891785866}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{9640095891785866}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		9640 - 0958 - 9178 - 5866
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=5569201671722794}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{5569201671722794}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		5569 - 2016 - 7172 - 2794
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=4587129441598524}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{4587129441598524}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		4587 - 1294 - 4159 - 8524
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} &
+	\begin{tabular}{BBB}
+	\begin{pspicture}
+	\psbarcode{http://svt.fmph.uniba.sk/?id=2738840992102805}{height=0.8 width=0.8}{qrcode}
+	\end{pspicture} &
+		\begin{tabular}{>{\bfseries}c}
+		\begin{pspicture}
+		\psbarcode{2738840992102805}{height=0.5}{interleaved2of5}
+		\end{pspicture} \\
+		2738 - 8409 - 9210 - 2805
+		\end{tabular} &
+	\begin{pspicture}
+	\includegraphics[width=0.8in]{praflogocol}
+	\end{pspicture}
+	\end{tabular} \\
+\hline
+
+\end{tabular}
+
+\end{document}
