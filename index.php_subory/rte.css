@@ -1,0 +1,298 @@
+/* Content tags formating *********************************************************************** */
+
+h1, h2, h3, h4, p, ul, ol, li, table, th, td, .text, dl
+{
+	border: 0;
+	margin: 0;
+	padding: 0;
+	font: normal 12px/15px Verdana, sans-serif;
+	font-size: small;
+	line-height: 120%;
+	color: #000000;
+	/* text-align: justify; */
+	/* font-size: 12px;
+	line-height: 15px; */
+}
+
+h1, h2, h3, h4, p, ul, ol, table, dl,
+.text, p.align-left, p.align-center, p.align-right
+{
+	padding-bottom: 1em;
+}
+
+h1, h2, h3, h4
+{
+	text-align: left;
+}
+
+h1
+{
+	/* font-size: 14px; */
+	font-size: 160%;
+}
+
+h1 a
+{
+	/* font-size: 14px; */
+	font-size: 100%;
+	line-height: 100%;
+	
+}
+
+h2
+{
+	font-size: 140%;
+}
+
+h2 a
+{
+	font-size: 100%;
+	line-height: 100%;
+}
+
+h3
+{
+	font-size: 120%;
+}
+
+h3 a
+{
+	font-size: 100%;
+	line-height: 100%;
+}
+
+h4, h4 a
+{
+	font-size: 100%;
+	line-height: 100%;
+}
+
+table
+{
+	margin-bottom: 1em;
+}
+
+p ul, p ol
+{
+	padding-bottom: 0;
+}
+
+table p
+{
+	padding-bottom: 0;
+}
+
+table img
+{
+	margin: 5px 0;
+}
+
+h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a
+{
+	font-weight: bold;
+	line-height: 100%;
+}
+
+h1 a, h2 a, h3 a, h4 a
+{
+	text-decoration: underline;
+}
+
+
+/* Images *** */
+
+img
+{
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+img.image_left 
+{
+	float: left;
+	margin: 0 10px 10px 0;
+}
+
+img.image_right 
+{
+	float: right;
+	margin: 0 0 10px 10px;
+}
+
+
+table, td, th 
+{
+	border: solid 1px #888888;
+	border-collapse: collapse;
+}
+
+td, th 
+{
+	padding: 3px 8px;
+}
+
+th 
+{
+	font-weight: bold;
+}
+
+ul
+{
+	padding-left: 2em;
+}
+
+ul li
+{
+	padding-left: 0.5em;
+}
+
+ol
+{
+	padding-left: 2.5em;
+}
+
+a {
+	color: black;
+	text-decoration: underline;
+}
+
+p a, #content_left ul a, ol a, dl a {
+	color: black;
+	text-decoration: underline;
+	font-size: 100%;
+	/* font-size: small; */
+}
+
+a:hover, #content_left ul a:hover, #content_left ol a:hover, #content_left dl a:hover {
+	color: #BF9960;
+}
+
+
+/* Table *** */
+
+table.noBorders, table.noBorders td, table.noBorders th {
+	border: none;
+}
+
+td, th {
+	padding: 3px 8px;
+}
+
+
+/* Default CSS from RTE htmlarea editor ********************************************************* */
+
+
+/* Left, center and right alignment of text in paragraphs and cells.*/
+
+p.align-left, h1.align-left, h2.align-left, h3.align-left, 
+h4.align-left, h5.align-left, h6.align-left, td.align-left 
+{ 
+	text-align: left; 
+}
+
+p.align-center, h1.align-center, h2.align-center, h3.align-center, 
+h4.align-center, h5.align-center, h6.align-center, td.align-center 
+{ 
+	text-align: center; 
+}
+
+p.align-right, h1.align-right, h2.align-right, h3.align-right, 
+h4.align-right, h5.align-right, h6.align-right, td.align-right 
+{ 
+	text-align: right; 
+}
+
+
+/* Two frame examples taken from the example CSS file of CSS Styled Content extension and applied to p and table block elements.*/
+
+p.csc-frame-frame1, table.csc-frame-frame1 
+{ 
+	border: 1px solid #888888;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table.csc-frame-frame1 td 
+{ 
+	padding: 2px 8px; 
+	border: 1px solid #888888; 
+	border-collapse: collapse; 
+}
+
+p.csc-frame-frame2, table.csc-frame-frame2 
+{ 
+	border: 1px solid #009BE2; 
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table.csc-frame-frame2 td 
+{ 
+	padding: 2px 8px; 
+	border: 1px solid #009BE2; 
+	border-collapse: collapse; 
+}
+
+
+/* Bullet styles for unordered lists.*/
+
+ul.component-items 
+{ 
+	color: #009BE2; 
+	list-style-type: circle; 
+}
+
+ul.action-items 
+{ 
+	color: #009BE2; 
+	list-style-image: url(img/red_arrow_bullet.gif); 
+}
+
+/* Numbering styles for ordered lists.*/
+
+ol.component-items-ordered 
+{ 
+	color: #009BE2; 
+	list-style-type: lower-roman; 
+}
+
+ol.action-items-ordered 
+{ 
+	color: #009BE2; 
+	list-style-type: lower-greek; 
+}
+
+
+/* Three inline text colors taken from the color scheme of CSS Styled Content extension.*/
+
+span.important 
+{ 
+	color: #009BE2; 
+}
+
+span.name-of-person 
+{ 
+	color: #009BE2; 
+}
+
+span.detail 
+{ 
+	color: #009BE2; 
+}
+
+
+/* Selectors for the default configuration of the link accessibity feature. */
+
+a.linkBold {
+	font-weight: bold;
+}
+
+a.external-link {}
+a.external-link-new-window {}
+a.internal-link {}
+a.internal-link-new-window {}
+a.download {}
+a.mail {}
+
+

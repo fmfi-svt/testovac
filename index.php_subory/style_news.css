@@ -1,0 +1,351 @@
+/*-----------------------------------  clearer  -----------------------------------------------*/
+
+/* prevent floated images from overlapping the div-containers they are wrapped in  */
+
+.news-list-container HR.clearer, .news-single-item HR.clearer, .news-latest-container HR.clearer{
+	clear:right;
+	height:1px;
+	/* border:1px solid #F9FFE5; */
+}
+
+.news-latest-container HR.clearer {
+	clear:left;
+}
+
+.news-latest-container br.clearer {
+	clear:left;
+}
+
+/*-----------------------------------  tt_news LATEST view  -----------------------------------*/
+
+.news-latest-container { }
+
+.news-latest-container h2 {
+	padding: 0.5em 0;
+}
+
+.news-latest-container h2 a {
+	font-size: 12px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.news-latest-gotoarchive {
+	padding: 0px;
+	margin: 0px;
+}
+
+.news-latest-gotoarchive {
+	font-weight:bold;
+	margin-top:0;
+}
+
+.news-latest-gotoarchive A:LINK, 
+.news-latest-gotoarchive A:VISITED, 
+.news-latest-gotoarchive A:HOVER { }
+
+.news-latest-gotoarchive A { }
+
+.news-latest-item {
+	padding-top: 0.5em;
+	padding-bottom: 1em;
+	border-top: solid 2px #BF9960;
+}
+
+.news-latest-item p {
+	padding-bottom: 0.5em;
+}
+
+.news-latest-item IMG {
+	margin-bottom:5px;
+	margin-right:5px;
+	float:left;
+}
+.news-latest-category IMG {
+	float: none;
+	border: none;
+	margin: 0px;
+}
+
+.news-latest-date, .news-latest-morelink, .news-latest-category { }
+
+.news-latest-morelink {
+	text-align: right;
+}
+
+.news-latest-morelink a {
+	float: right;
+	text-decoration: underline;
+}
+
+
+/*--------------------------------- tt_news LIST view  -----------------------------------*/
+
+.news-list-container {
+	/* border:1px solid #000; */
+	/* background-color:#BBE53A; */
+}
+
+.news-list-item {
+	/* IE hack */
+	height: 1%;
+	line-height: 1.3;
+	/* IE hack end */
+	padding:3px;
+	margin:3px;
+	/* border:1px solid #666; */
+	/* background-color:#F9FFE5; */
+}
+
+.news-search-form {
+	padding:3px;
+	margin-bottom:5px;
+	/* border:1px solid #666; */
+	/* background-color:#F9FFE5; */
+}
+.news-search-emptyMsg{
+	margin:0px;
+}
+.news-search-form FORM {
+	margin:0px;
+}
+.news-list-container H3 {
+	margin-bottom: 5px;
+	padding: 2px;
+	/* border-bottom: 1px solid #769024; */
+	/* background-color: #769024; */
+}
+.news-list-container H3 A:LINK,.news-list-container H3 A:VISITED,.news-list-container H3 A:HOVER {
+	color:#fff;
+	padding-left:2px;
+}
+.news-list-container H3 A {
+	color:#fff;
+
+}
+.news-list-container P {
+	padding-left:3px;
+}
+.news-list-date {
+	float: right;
+	color: #3E551C;
+	width: 180px;
+	text-align: right;
+	height: 20px;
+	margin-top: -2px;
+	margin-right: -2px;
+	font-size: 9px;
+	font-weight: normal;
+	/* background-color: #F9FFE5; */
+}
+
+.news-list-imgcaption {
+	float: right;
+	padding-top:3px;
+	padding-right:3px;
+	font-size: 9px;
+}
+
+.news-list-container IMG {
+
+	float: right;
+	/* border:1px solid #666; */
+	margin-bottom:5px;
+	margin-right:2px;
+	margin-left:5px;
+}
+.news-list-category IMG {
+	float: none;
+	border: none;
+	margin: 0;
+}
+
+.news-list-morelink,.news-list-category { }
+
+.news-list-morelink  {
+	margin-bottom: 0;
+}
+
+.news-list-browse {
+	text-align: center;
+}
+
+
+/*---------------------------------  tt_news Page-Browser ---------------------------------*/
+
+.tx-ttnews-browsebox {
+	margin: 3px;
+	padding: 3px;
+	border: 0;
+}
+
+.tx-ttnews-browsebox table, 
+.tx-ttnews-browsebox TD {
+	border: 0;
+}
+
+.tx-ttnews-browsebox-strong, .tx-ttnews-browsebox-SCell {
+	font-weight: bold;
+	border: 0;
+}
+
+.tx-ttnews-browsebox-SCell P, .tx-ttnews-browsebox TD P {
+	margin: 0;
+	border: 0;
+}
+
+.tx-ttnews-browsebox-SCell {
+	border: 0;
+}
+
+.news-search-emptyMsg {
+	margin-left: 10px;
+	border: 0;
+}
+
+
+/*--------------------------------- tt_news SINGLE view  ---------------------------------*/
+
+.news-single-item {
+	padding: 0;
+	margin-bottom:5px;
+}
+
+.news-single-item H1, 
+.news-single-item H2 {
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.news-single-item H3 {
+	margin-bottom: 1em;
+}
+
+.news-single-img {
+	float: right;
+	margin-left: 5px;
+}
+
+.news-single-imgcaption {
+	padding: 3px;
+	clear: both;
+}
+
+.news-single-category {
+	float: right;
+}
+
+.news-single-backlink, .news-single-backlink a {
+	font-weight: bold;
+	/* font-size: 10px; */
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+.news-single-backlink, .news-single-backlink a {
+	text-decoration: underline;
+}
+
+.news-single-timedata {
+	float: right;
+}
+.news-single-timedata, .news-single-author,.news-single-imgcaption {
+	font-size: 11px; 
+}
+.news-single-author {
+	padding-bottom: 3px;
+}
+.news-single-additional-info {
+	/* clear: both; */
+	margin-top: 1em;
+	padding: 0;
+	padding-bottom: 0.5em;
+}
+.news-single-related,.news-single-files,.news-single-links  {
+	/* border: 1px solid #666; */
+	margin: 0;
+	margin-bottom: 3px;
+	padding: 0;
+	/* background-color:#F9FFE5; */
+}
+
+.news-single-related DD, .news-single-links DD, .news-single-files DD {
+	margin-left: 30px;
+}
+
+.news-single-related DT, .news-single-links DT, .news-single-files DT {
+	font-weight: bold;
+	/* font-size: 11px; */
+	margin-left: 0;
+	width: 90%;
+}
+
+
+/*--------------------------------- tt_news Archivemenu (AMENU) --------------------------------- */
+
+.news-amenu-container { }
+
+.news-amenu-container li {
+	padding: 0.1em 0;
+}
+
+.news-amenu-container ul {
+	/* list-style-type: none; */
+}
+
+.news-amenu-container h2 { }
+
+.news-amenu-item-year {
+	font-weight: bold;
+}
+
+
+/*--------------------------------- tt_news Categorymenu (CATMENU) --------------------------------- */
+
+.news-catmenu  {
+	padding:5px;
+	margin:10px 0px 10px 10px;
+	border:1px solid #666;
+	background-color:#F9FFE5;
+}
+.news-catmenu-header  {
+	font-size:11px;
+	font-weight:bold;
+}
+.news-catmenu DIV {
+	font-size:10px;
+	white-space: nowrap;
+}
+.news-catmenu DIV img {
+	margin:0px;
+	padding:0px;
+	vertical-align: middle;
+}
+.news-catmenu-ACT {
+	font-weight:bold;
+}
+
+
+/*  Styles for catmenu mode "nestedWraps" */
+
+.level0 {
+	background-color:#fff;
+}
+.level1 {
+	padding-left:10px;
+	background-color:#eee;
+}
+.level2 {
+	padding-left:10px;
+	background-color:#ddd;
+}
+.level3 {
+	padding-left:10px;
+	background-color:#ccc;
+}
+.level4 {
+	padding-left:10px;
+	background-color:#bbb;
+}
+
+
+
