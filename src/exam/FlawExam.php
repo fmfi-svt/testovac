@@ -54,24 +54,35 @@ class FlawExam {
   }
 
   public function generateUserQuestions($pid) {
-    // TODO buckets support
-
     global $dbh;
 
-    $sth = $dbh->prepare('SELECT qid FROM questions');
+    $sth = $dbh->prepare('SELECT bid, size FROM buckets ORDER BY border ASC');
     $sth->execute();
-    $qids = $sth->fetchAll(PDO::FETCH_COLUMN);
+    $buckets = $sth->fetchAll(PDO::FETCH_OBJ);
 
+    $sth = $dbh->prepare('SELECT bid, qid FROM questions');
+    $sth->execute();
+    $qids = $sth->fetchAll(PDO::FETCH_OBJ);
+    $qidsByBucket = array();
+    foreach ($qids as $row) {
+      $qidsByBucket[$row->bid][] = $row->qid;
+    }
+
+    $qorder = 0;
     $sth = $dbh->prepare('INSERT INTO user_questions VALUES (:pid, :qorder, :qid)');
 
-    $numQuestions = min(count($qids), 30);
-    for ($i = 0; $i < $numQuestions; $i++) {
-      do {
-        $j = rand(0, count($qids)-1);
-      } while ($qids[$j] === false);
-      $qid = $qids[$j];
-      $qids[$j] = false;
-      $sth->execute(array(':pid' => $pid, ':qorder' => $i, ':qid' => $qid));
+    foreach ($buckets as $row) {
+      $qidsHere = $qidsByBucket[$row->bid];
+      $size = min(count($qidsHere), $row->size);
+      for ($i = 0; $i < $size; $i++) {
+        do {
+          $j = rand(0, count($qidsHere)-1);
+        } while ($qidsHere[$j] === false);
+        $qid = $qidsHere[$j];
+        $qidsHere[$j] = false;
+        $sth->execute(array(':pid' => $pid, ':qorder' => $qorder, ':qid' => $qid));
+        $qorder++;
+      }
     }
 
     return $this->getUserQuestions($pid);
@@ -86,34 +97,44 @@ class FlawExam {
     $doc->load($filename);
     $xpath = new DOMXPath($doc);
 
-    $questions = array();
+    $sth = $dbh->query('SELECT MAX(bid) + 1 FROM buckets');
+    $bid = $sth->fetchColumn();
+    if ($bid === null) $bid = 0;
 
     $sth = $dbh->query('SELECT MAX(qid) + 1 FROM questions');
     $qid = $sth->fetchColumn();
     if ($qid === null) $qid = 0;
 
-    $question_sth = $dbh->prepare('INSERT INTO questions VALUES (:qid, 0, :body)');
+    $bucket_sth = $dbh->prepare('INSERT INTO buckets VALUES (:bid, :border, :size, :points)');
+    $question_sth = $dbh->prepare('INSERT INTO questions VALUES (:qid, :bid, :body)');
     $subquestion_sth = $dbh->prepare('INSERT INTO subquestions VALUES (:qid, :qsubord, :body, :value)');
 
-    $xml_questions = $xpath->query('//question');
-    if ($xml_questions) foreach ($xml_questions as $xml_question) {
-      $id = $xml_question->getAttribute('id');   // TODO use it?
-      $sample = $xml_question->getAttribute('sample') == 'true';   // TODO use it!
-      $body = $xpath->query('body', $xml_question)->item(0)->firstChild->nodeValue;
-      $question_sth->execute(array(':qid' => $qid, ':body' => $body));
+    $xml_buckets = $xpath->query('//library');
+    if ($xml_buckets) foreach ($xml_buckets as $xml_bucket) {
+      $order = $xml_bucket->getAttribute('order');
+      $size = $xml_bucket->getAttribute('size');
+      $points = $xml_bucket->getAttribute('points');
+      $bucket_sth->execute(array(':bid' => $bid, ':border' => $order, ':size' => $size, ':points' => $points));
 
-      $xml_answers = $xpath->query('answer', $xml_question);
-      $qsubord = 96;
-      if ($xml_answers) foreach ($xml_answers as $xml_answer) {
-        $qsubord++;
-        $subquestion_sth->execute(array(
-          ':qid' => $qid,
-          ':qsubord' => chr($qsubord),
-          ':body' => $xml_answer->firstChild->nodeValue,
-          ':value' => $xml_answer->getAttribute('val'),
-        ));
+      $xml_questions = $xpath->query('question', $xml_bucket);
+      if ($xml_questions) foreach ($xml_questions as $xml_question) {
+        $body = $xpath->query('body', $xml_question)->item(0)->firstChild->nodeValue;
+        $question_sth->execute(array(':qid' => $qid, ':bid' => $bid, ':body' => $body));
+
+        $xml_answers = $xpath->query('answer', $xml_question);
+        $qsubord = 96;
+        if ($xml_answers) foreach ($xml_answers as $xml_answer) {
+          $qsubord++;
+          $subquestion_sth->execute(array(
+            ':qid' => $qid,
+            ':qsubord' => chr($qsubord),
+            ':body' => $xml_answer->firstChild->nodeValue,
+            ':value' => $xml_answer->getAttribute('val'),
+          ));
+        }
+        $qid++;
       }
-      $qid++;
+      $bid++;
     }
 
     $dbh->commit();
@@ -141,6 +162,12 @@ class FlawExam {
 
   public function getExtraTables() {
     return array(
+      'buckets' => array(
+        'bid' => 'INTEGER NOT NULL',
+        'border' => 'INTEGER NOT NULL',
+        'size' => 'INTEGER NOT NULL',
+        'points' => 'INTEGER NOT NULL',
+      ),
       'user_questions' => array(
         'pid' => 'VARCHAR(255) NOT NULL',
         'qorder' => 'INTEGER NOT NULL',
@@ -148,7 +175,7 @@ class FlawExam {
       ),
       'questions' => array(
         'qid' => 'INTEGER NOT NULL',
-        'bucket' => 'INTEGER NOT NULL',   // TODO or perhaps ENUM?
+        'bid' => 'INTEGER NOT NULL',
         'body' => 'TEXT NOT NULL',
       ),
       'subquestions' => array(
