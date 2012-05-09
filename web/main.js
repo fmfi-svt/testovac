@@ -37,7 +37,16 @@ Tester.fakelink = function () {
 function init() {
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
-    doLogin($('#login-form-pid').val());
+    function loginSuccess(questions, state) {
+      $('#login-form *').blur();
+      $('#login-form').hide();
+      showQuestions(questions, state);
+    }
+    function loginFailure(errorCode, errorMessage) {
+      alert(errorMessage);
+      $('#login-form-pid').focus()[0].select();
+    }
+    Tester.doLogin($('#login-form-pid').val(), loginSuccess, loginFailure);
     return false;
   });
   $(document).on('click', '.toclink', function (event) {
@@ -92,45 +101,42 @@ function ajaj(requestData, callback) {
 }
 
 
-var loginBusy = false;
-function doLogin(pid) {
-  if (loginBusy || Tester.pid) return;
-  loginBusy = true;
+var _doLogin_busy = false;
+Tester.doLogin = function (pid, success, failure) {
+  if (_doLogin_busy || Tester.pid) return;
+  _doLogin_busy = true;
 
   ajaj({ action: 'login', pid: pid }, function (data) {
-    loginBusy = false;
+    _doLogin_busy = false;
     if (data.error == 'invalid pid') {
-      alert('Nesprávne ID, uáá.');
-      $('#login-form-pid').val('');
+      failure(data.error, 'Nesprávne ID, uáá.');
     }
     else if (data.error == 'closed') {
-      alert('Váš test už je ukončený, uáá.');
+      failure(data.error, 'Váš test už je ukončený, uáá.');
     }
     else if (data.error) {
-      alert('Chyba pri komunikácii so serverom, uáá.');
+      failure(data.error, 'Chyba pri komunikácii so serverom, uáá.');
     }
     else {
-      $('#login-form *').blur();
-      $('#login-form').hide();
-
       Tester.pid = pid;
       Tester.sessid = data.sessid;
       Tester.beginTime = data.beginTime;
-      Tester.questions = data.questions;
       Tester.events = {};
       Tester.eventsBegin = data.savedEvents;
       Tester.eventsEnd = data.savedEvents;
 
-      showQuestions(data.state);
+      success(data.questions, data.state);
     }
   });
 }
 
 
-function showQuestions(state) {
+function showQuestions(questions, state) {
+  Tester.questions = questions;
+
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
   var $ul = $('<ul/>').appendTo($toc);
-  $.each(Tester.questions, function (i, q) {
+  $.each(questions, function (i, q) {
     var $li = $('<li/>').appendTo($ul);
     Tester.fakelink().
       addClass('toclink').
@@ -144,7 +150,7 @@ function showQuestions(state) {
 
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
-  $.each(Tester.questions, function (i, q) {
+  $.each(questions, function (i, q) {
     var $question = $('<div/>', { 'class': 'question', 'data-qorder': i }).appendTo($questions);
     $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
