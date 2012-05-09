@@ -54,6 +54,11 @@ function init() {
       if (event.which == 82 && event.ctrlKey && !event.altKey && !event.shiftKey) return false;
     });
   }
+  $(document).on('keydown', function (event) {
+    // Firefox pri stlaceni Esc okamzite zastavi vsetky requesty, aj AJAX
+    // <https://bugzilla.mozilla.org/show_bug.cgi?id=614304>
+    if (event.which == 27) event.preventDefault();
+  });
 
   // inicializujeme HTML
   var $form = $('<form/>', { id: 'login-form' }).appendTo('body');
