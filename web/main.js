@@ -11,25 +11,30 @@ window.log = function () {
 window.log.history = [];
 
 
-function fakelink() {
-  return $('<span class="fakelink" tabindex="0" role="button"></span>');
-}
 
-
-function init() {
+var _fakelink_initialized = false;
+Tester.fakelink = function () {
   // namiesto ozajstnych <a> pouzivame falosne odkazy, aby sa neotvarali
   // v novom tabe pri kliknuti strednym tlacitkom. lenze co s klavesnicou? pri
   // <a> staci dat onclick a zavola sa to aj, ked sa stlaci enter. HTML5 spec
   // tvrdi, ze elementy, co maju tabindex, to maju robit tiez, ale nerobia.
   // nejaky W3C clanok <http://www.w3.org/TR/WCAG20-TECHS/SCR29> poradil toto:
-  $(document).on('keypress', '.fakelink', function (event) {
-    if (event.which == 13) {
-      $(this).click();
-      return false;
-    }
-    return true;
-  });
+  if (!_fakelink_initialized) {
+    $(document).on('keypress', '.fakelink', function (event) {
+      if (event.which == 13) {
+        $(this).click();
+        return false;
+      }
+      return true;
+    });
+    _fakelink_initialized = true;
+  }
 
+  return $('<span class="fakelink" tabindex="0" role="button"></span>');
+}
+
+
+function init() {
   // bindneme vsetky eventy
   $(document).on('submit', '#login-form', function (event) {
     doLogin($('#login-form-pid').val());
@@ -127,7 +132,7 @@ function showQuestions(state) {
   var $ul = $('<ul/>').appendTo($toc);
   $.each(Tester.questions, function (i, q) {
     var $li = $('<li/>').appendTo($ul);
-    fakelink().
+    Tester.fakelink().
       addClass('toclink').
       text((i+1)+'. '+q.body).
       data('question', i).
