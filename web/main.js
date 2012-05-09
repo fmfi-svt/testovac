@@ -3,10 +3,9 @@
 "use strict";
 
 
-window.log = function () {
-  var args = Array.prototype.slice.call(arguments);
-  log.history.push(args);
-  if (window.console) console.log(args);
+window.log = function (message) {
+  log.history.push(message);
+  if (window.console) console.log.apply(console, message);
 }
 window.log.history = [];
 
@@ -94,11 +93,11 @@ function init() {
 
 function ajaj(requestData, callback) {
   function success(data, textStatus, jqXHR) {
-    log('ajax success', data, textStatus, jqXHR);
+    log($.extend(['ajax success', data, textStatus], { jqXHR: jqXHR }));
     callback(data || { error: 'empty response' });
   }
   function error(jqXHR, textStatus, errorThrown) {
-    log('ajax error', textStatus, errorThrown, jqXHR);
+    log($.extend(['ajax error', textStatus, errorThrown], { jqXHR: jqXHR }));
     callback({ error: 'ajax error', textStatus: textStatus, errorThrown: errorThrown, jqXHR: jqXHR });
   }
   $.ajax({
@@ -188,7 +187,7 @@ function saveEvents() {
   if (Tester.eventsBegin == Tester.eventsEnd) return;
   if (Tester.sendingEvents) return;
   Tester.sendingEvents = true;
-  log('sending event range', Tester.eventsBegin, Tester.eventsEnd);
+  log(['sending event range', Tester.eventsBegin, Tester.eventsEnd]);
   var sentEvents = [];
   for (var i = Tester.eventsBegin; i < Tester.eventsEnd; i++) {
     sentEvents[i - Tester.eventsBegin] = Tester.events[i];
@@ -228,7 +227,7 @@ function saveEvents() {
 
 
 function emitEvent(event) {
-  log('event', Tester.eventsEnd, event);
+  log(['event', Tester.eventsEnd, event]);
   Tester.events[Tester.eventsEnd++] = event;
   // TODO: save events immediately or every X seconds?
   saveEvents();
