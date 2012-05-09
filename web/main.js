@@ -34,21 +34,35 @@ Tester.fakelink = function () {
 }
 
 
-function init() {
-  // bindneme vsetky eventy
-  $(document).on('submit', '#login-form', function (event) {
-    function loginSuccess(questions, state) {
-      $('#login-form *').blur();
-      $('#login-form').hide();
-      showQuestions(questions, state);
-    }
-    function loginFailure(errorCode, errorMessage) {
-      alert(errorMessage);
-      $('#login-form-pid').focus()[0].select();
-    }
-    Tester.doLogin($('#login-form-pid').val(), loginSuccess, loginFailure);
+Tester.showLoginForm = function (demoPid, showQuestions) {
+  var $form, $pidInput;
+
+  function loginSuccess(questions, state) {
+    $form.find('*').blur();
+    $form.hide();
+    showQuestions(questions, state);
+  }
+  function loginFailure(errorCode, errorMessage) {
+    alert(errorMessage);
+    $pidInput[0].select();
+  }
+
+  $form = $('<form/>', { id: 'login-form' }).appendTo('body');
+  $('<label/>', { 'for': 'login-form-pid', text: 'Zadajte ID: ' }).appendTo($form);
+  $pidInput = $('<input type="text" />').attr({ id: 'login-form-pid', name: 'pid', maxlength: '16' }).appendTo($form).focus();
+  $('<input type="submit" />').attr('value', 'OK').appendTo($form);
+  if (demoPid) {
+    $('<p/>').addClass('demo-message').text('Demo – použite ID '+demoPid).appendTo($form);
+  }
+  $form.on('submit', function (event) {
+    Tester.doLogin($pidInput.val(), loginSuccess, loginFailure);
     return false;
   });
+}
+
+
+function init() {
+  // bindneme vsetky eventy
   $(document).on('click', '.toclink', function (event) {
     goToQuestion($(this).data('question'));
   });
@@ -74,14 +88,7 @@ function init() {
     if (event.which == 27) event.preventDefault();
   });
 
-  // inicializujeme HTML
-  var $form = $('<form/>', { id: 'login-form' }).appendTo('body');
-  $('<label/>', { 'for': 'login-form-pid', text: 'Zadajte ID: ' }).appendTo($form);
-  $('<input type="text" />').attr({ id: 'login-form-pid', name: 'pid', maxlength: '16' }).appendTo($form).focus();
-  $('<input type="submit" />').attr('value', 'OK').appendTo($form);
-  if (Tester.config.demo_pid) {
-    $('<p/>').addClass('demo-message').text('Demo – použite ID '+Tester.config.demo_pid).appendTo($form);
-  }
+  Tester.showLoginForm(Tester.config.demo_pid, showQuestions);
 }
 
 
