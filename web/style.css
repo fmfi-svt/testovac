@@ -75,11 +75,11 @@ a:hover, .fakelink:hover {
   top: 40%;
 }
 
-#login-form input {
-  margin: 0 0.1em;
+#login-form .pid {
+  font-family: monospace;
 }
 
-#login-form .demo-message {
+#login-form p {
   font-size: 0.625em;   /* 25/40 */
 }
 

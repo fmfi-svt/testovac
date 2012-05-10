@@ -54,11 +54,17 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
 
   var pidInputId = idseq();
   $form = $('<form/>', { id: 'login-form' }).appendTo('body');
-  $('<label/>', { 'for': pidInputId, text: 'Zadajte ID: ' }).appendTo($form);
-  $pidInput = $('<input type="text" />').attr({ id: pidInputId, name: 'pid', maxlength: '16' }).appendTo($form).focus();
+  $('<label/>', { 'for': pidInputId, text: 'Zadajte vaše ID: ' }).appendTo($form);
+  $pidInput = $('<input type="text" class="pid" />').attr({ id: pidInputId, name: 'pid', maxlength: '16' }).appendTo($form).focus();
+  $(document.createTextNode(' ')).appendTo($form);
   $('<input type="submit" />').attr('value', 'OK').appendTo($form);
   if (demoPid) {
-    $('<p/>').addClass('demo-message').text('Demo – použite ID '+demoPid).appendTo($form);
+    $('<p/>').appendTo($form).
+      text('Skúšobná verzia – použite toto ID: ').
+      append($('<span class="pid" />').text(demoPid));
+  }
+  else {
+    $('<p/>').appendTo($form).text('Vaše ID je napísané na vašom náramku.');
   }
   $form.on('submit', function (event) {
     Tester.doLogin($pidInput.val(), loginSuccess, loginFailure);

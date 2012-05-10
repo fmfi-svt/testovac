@@ -1,7 +1,7 @@
 <?php
 
 $config = (object)array(
-  // v demo mode sa prihlasuje umelym kodom a vysledky sa nikam neposielaju
+  // v demo mode sa prihlasuje umelym kodom
   'demo_mode' => FALSE,
 
   // ci sa ma zakazat refreshovanie testovaca klavesovymi skratkami
