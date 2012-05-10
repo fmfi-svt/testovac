@@ -1,11 +1,7 @@
 <?php
 
-function initschema_cli() {
-  initschema_action();
-}
-
-function initschema_action() {
-  global $dbh, $exam;
+function _schema_get() {
+  global $exam;
 
   $schema['users'] = array(
     'pid' => 'VARCHAR(255) NOT NULL PRIMARY KEY',
@@ -24,10 +20,34 @@ function initschema_action() {
 
   $schema += $exam->getExtraTables();
 
+  return $schema;
+}
+
+function initschema_cli() {
+  initschema_action();
+}
+
+function initschema_action() {
+  global $dbh;
+  $schema = _schema_get();
+
   foreach ($schema as $table_name => $fields) {
     $columns = array();
     foreach ($fields as $name => $type) $columns[] = $name . ' ' . str_replace('BOOLEAN','INTEGER',$type);
     $dbh->query('CREATE TABLE ' . $table_name .
         ' (' . implode(',', $columns) . ')');
+  }
+}
+
+function droptables_cli() {
+  droptables_action();
+}
+
+function droptables_action() {
+  global $dbh;
+  $schema = _schema_get();
+
+  foreach ($schema as $table_name => $fields) {
+    $dbh->query('DROP TABLE IF EXISTS ' . $table_name);
   }
 }

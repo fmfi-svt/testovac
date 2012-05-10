@@ -11,16 +11,21 @@ require 'src/util.php';
 
 if (!isset($_SERVER['argv'][1])) $_SERVER['argv'][1] = null;
 if ($_SERVER['argv'][1] === 'initschema') {
-  require 'src/initschema.php';
+  require 'src/schema.php';
   initschema_cli();
 }
 else if ($_SERVER['argv'][1] === 'import') {
   require 'src/import.php';
   import_cli();
 }
+else if ($_SERVER['argv'][1] === 'droptables' && isset($_SERVER['argv'][2]) && $_SERVER['argv'][2] == '--delete-everything') {
+  require 'src/schema.php';
+  droptables_cli();
+}
 else {
   print 'usage: php '.$_SERVER['argv'][0].' <action>'."\n";
   print 'actions:'."\n";
   print '  initschema'."\n";
   print '  import questions.xml'."\n";
+  print '  droptables --delete-everything'."\n";
 }
