@@ -179,6 +179,17 @@ function showQuestions(questions, state) {
   var $status = $('<div/>', { id: 'status' }).appendTo('body');
   $('<div/>', { 'class': 'pid', text: Tester.pid }).appendTo($status);
 
+  var $submit = $('<input type="button" />').attr({ value: 'Odovzdať test' }).appendTo($('<div />', { 'class': 'submit' }).appendTo($status));
+  $submit.on('click', function () {
+    saveEvents();
+    var incomplete = $toc.find('.incomplete').length;
+    var message = 'Ste si istí, že chcete ukončiť vypĺňanie testu?';
+    if (incomplete == 1) message += '\n\n1 otázka ešte nie je zodpovedaná!';
+    if (incomplete > 1 && incomplete < 5) message += '\n\n'+incomplete+' otázky ešte nie sú zodpovedané!';
+    if (incomplete >= 5) message += '\n\n'+incomplete+' otázok ešte nie je zodpovedaných!';
+    if (confirm(message)) doClose();
+  });
+
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
   $.each(questions, function (i, q) {
@@ -270,6 +281,41 @@ function emitEvent(event) {
   Tester.events[Tester.eventsEnd++] = event;
   // TODO: save events immediately or every X seconds?
   saveEvents();
+}
+
+
+function doClose() {
+  $('#main').hide();
+  $('#toc').hide();
+  $('#status').hide();
+  var $closing = $('<div />').attr('class', 'global-message').appendTo('body');
+  $closing.text('Prosím čakajte...');
+
+  function attemptClose() {
+    if (Tester.eventsBegin != Tester.eventsEnd) {
+      sendEvents();
+      setTimeout(attemptClose, 500);
+      return;
+    }
+
+    var request = { action: 'close', pid: Tester.pid, sessid: Tester.sessid };
+    ajaj(request, function (data) {
+      if (data.error == 'invalid pid') {
+        alert('Nesprávne ID, uáá.');
+      }
+      else if (data.error == 'invalid sessid') {
+        alert('Tento užívateľ sa medzitým prihlásil z iného počítača. Z tohto počítača bude odhlásený.');
+        location.reload();
+      }
+      else if (data.error) {
+        alert('Chyba pri komunikácii so serverom, uáá.');
+      }
+      else {
+        $closing.text('Test bol úspešne ukončený.');
+      }
+    });
+  }
+  attemptClose();
 }
 
 

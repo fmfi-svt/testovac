@@ -28,7 +28,7 @@ a:hover, .fakelink:hover {
 /******************************************************************************/
 /* #login-form */
 
-#login-form {
+#login-form, .global-message {
   font-size: 2.857em;   /* 40/14 */
   text-align: center;
   position: absolute;
@@ -55,7 +55,7 @@ a:hover, .fakelink:hover {
   left: 0;
   width: 30%;
   top: 0;
-  bottom: 6em;
+  bottom: 8em;
   background: #EEE;
   overflow-y: auto;
 }
@@ -79,23 +79,35 @@ a:hover, .fakelink:hover {
 
 #toc .incomplete {
   font-weight: bold;
-  text-shadow: 0 0 4px gray;
+  text-shadow: 0 0 2px gray;
 }
 
 #status {
   position: fixed;
   left: 0;
   width: 30%;
-  height: 6em;
+  height: 8em;
   bottom: 0;
   background: #CCC;
   overflow: hidden;
 }
 
 #status .pid {
-  margin: 0.5em;
-  font-size: 3em;
+  margin: 0.5em 0.2em 0;
+  font-size: 2.3em;
   line-height: 1;
+  text-align: center;
+}
+
+#status .submit {
+  margin: 0.5em;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+#status .submit input {
+  padding: 0 0.5em;
+  text-transform: uppercase;
 }
 
 #main {
