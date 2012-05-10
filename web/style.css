@@ -52,8 +52,8 @@ a:hover, .fakelink:hover {
 
 #toc {
   position: fixed;
-  left: 0;
-  width: 30%;
+  right: 0;
+  width: 30em;
   top: 0;
   bottom: 8em;
   background: #EEE;
@@ -83,8 +83,8 @@ a:hover, .fakelink:hover {
 
 #status {
   position: fixed;
-  left: 0;
-  width: 30%;
+  right: 0;
+  width: 30em;
   height: 8em;
   bottom: 0;
   background: #CCC;
@@ -110,8 +110,18 @@ a:hover, .fakelink:hover {
 }
 
 #main {
-  margin-left: 30%;
+  position: fixed;
+  left: 0;
+  right: 30em;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
   padding: 1em 1.5em;
+}
+
+#main #questions {
+  max-width: 60em;
+  margin: auto;
 }
 
 #main .question {

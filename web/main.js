@@ -229,7 +229,7 @@ function showQuestions(questions, state) {
 
 
 function goToQuestion(question) {
-  window.scrollTo(0, $('.question').eq(question).offset().top);
+  $('#main').animate({ scrollTop: $('.question')[question].offsetTop }, 'fast');
 }
 
 
