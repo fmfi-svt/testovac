@@ -48,7 +48,7 @@ a:hover, .fakelink:hover {
 
 
 /******************************************************************************/
-/* otazky */
+/* #toc */
 
 #toc {
   position: fixed;
@@ -81,6 +81,11 @@ a:hover, .fakelink:hover {
   color: #666;
 }
 
+
+
+/******************************************************************************/
+/* #status */
+
 #status {
   position: fixed;
   right: 0;
@@ -108,6 +113,11 @@ a:hover, .fakelink:hover {
   padding: 0 0.5em;
   text-transform: uppercase;
 }
+
+
+
+/******************************************************************************/
+/* #main */
 
 #main {
   position: fixed;
