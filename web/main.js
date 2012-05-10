@@ -33,6 +33,12 @@ Tester.fakelink = function () {
 }
 
 
+var _idseq_next = 0;
+function idseq() {
+  return 'id'+(_idseq_next++);
+}
+
+
 Tester.showLoginForm = function (demoPid, showQuestions) {
   var $form, $pidInput;
 
@@ -46,9 +52,10 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
     $pidInput[0].select();
   }
 
+  var pidInputId = idseq();
   $form = $('<form/>', { id: 'login-form' }).appendTo('body');
-  $('<label/>', { 'for': 'login-form-pid', text: 'Zadajte ID: ' }).appendTo($form);
-  $pidInput = $('<input type="text" />').attr({ id: 'login-form-pid', name: 'pid', maxlength: '16' }).appendTo($form).focus();
+  $('<label/>', { 'for': pidInputId, text: 'Zadajte ID: ' }).appendTo($form);
+  $pidInput = $('<input type="text" />').attr({ id: pidInputId, name: 'pid', maxlength: '16' }).appendTo($form).focus();
   $('<input type="submit" />').attr('value', 'OK').appendTo($form);
   if (demoPid) {
     $('<p/>').addClass('demo-message').text('Demo – použite ID '+demoPid).appendTo($form);
@@ -66,14 +73,6 @@ function init() {
     goToQuestion($(this).data('question'));
   });
   // TOC starred button
-  $(document).on('change', '#questions input:radio', function (event) {
-    emitEvent({
-      qorder: $(this).closest('.question').data('qorder'),
-      qsubord: $(this).closest('.option').data('qsubord'),
-      value: $(this).val(),
-      time: +new Date()
-    });
-  });
   // FINISH button (a UI okolo "are you sure")
   if (Tester.config.disable_refresh) {
     $(document).on('keydown', function (event) {
@@ -137,6 +136,28 @@ Tester.doLogin = function (pid, success, failure) {
 }
 
 
+var _booleanQuestionWidget_initialized = false;
+Tester.booleanQuestionWidget = function (questionInfo, state) {
+  if (!_booleanQuestionWidget_initialized) {
+    $(document).on('change', '.boolean-widget input:radio', function (domEvent) {
+      var examEvent = { value: $(this).val(), time: +new Date() };
+      $.extend(examEvent, $(this).closest('.boolean-widget').data('question-info'));
+      emitEvent(examEvent);
+    });
+    _booleanQuestionWidget_initialized = true;
+  }
+
+  var id = idseq();
+  var $widget = $('<div/>', { 'class': 'boolean-widget' });
+  $widget.data('question-info', questionInfo);
+  $widget.append('<span><input type="radio" name="'+id+'" id="'+id+'y" value="true"><label for="'+id+'y"> ÁNO </label></span>');
+  $widget.append('<span><input type="radio" name="'+id+'" id="'+id+'n" value="false"><label for="'+id+'n"> NIE </label></span>');
+  $widget.append('<span><input type="radio" name="'+id+'" id="'+id+'x" value=""><label for="'+id+'x"> nezodpovedané </label></span>');
+  $widget.find('#'+id+(state == 'true' ? 'y' : state == 'false' ? 'n' : 'x'))[0].checked = true;
+  return $widget;
+}
+
+
 function showQuestions(questions, state) {
   Tester.questions = questions;
 
@@ -151,30 +172,32 @@ function showQuestions(questions, state) {
       appendTo($li);
   });
 
+  var stateTable = [];
+  for (var i = 0; i < questions.length; i++) {
+    stateTable[i] = {};
+  }
+  for (var i = 0; i < state.length; i++) {
+    var entry = state[i];
+    stateTable[entry.qorder][entry.qsubord] = entry.value;
+  }
+
   var $status = $('<div/>', { id: 'status' }).appendTo('body');
   $('<div/>', { 'class': 'pid', text: Tester.pid }).appendTo($status);
 
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
   $.each(questions, function (i, q) {
-    var $question = $('<div/>', { 'class': 'question', 'data-qorder': i }).appendTo($questions);
+    var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
     $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
     for (var jc = 97; q[String.fromCharCode(jc)]; jc++) {
       var j = String.fromCharCode(jc);
-      var $option = $('<div/>', { 'class': 'option', 'data-qsubord': j }).appendTo($options);
+      var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
       $('<div/>', { 'class': 'text', text: j+') '+q[j] }).appendTo($option);
-      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'y" value="true"><label for="q'+i+'o'+j+'y"> ÁNO </label></span>').appendTo($option);
-      $('<span class="control"><input type="radio" name="q'+i+'o'+j+'" id="q'+i+'o'+j+'n" value="false"><label for="q'+i+'o'+j+'n"> NIE </label></span>').appendTo($option);
+      var questionInfo = { qorder: i, qsubord: j };
+      $option.append(Tester.booleanQuestionWidget(questionInfo, stateTable[i][j]));
     }
   });
-
-  for (var i = 0; i < state.length; i++) {
-    var entry = state[i];
-    document.getElementById('q' + entry.qorder +
-      'o' + entry.qsubord +
-      (entry.value == 'true' ? 'y' : 'n')).checked = true;
-  }
 }
 
 

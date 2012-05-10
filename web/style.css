@@ -100,7 +100,7 @@ a:hover, .fakelink:hover {
   margin-bottom: 0.2em;
 }
 
-#main .question .option .control {
+.boolean-widget span {
   margin-left: 1em;
 }
 
