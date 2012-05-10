@@ -60,13 +60,9 @@ a:hover, .fakelink:hover {
   overflow-y: auto;
 }
 
-#toc ul {
-  margin: 2em 1.5em;
+#toc ol {
+  margin: 2em 1em 2em 3em;
   padding: 0;
-}
-
-#toc li {
-  display: block;
 }
 
 #toc a, #toc .fakelink {
@@ -77,9 +73,12 @@ a:hover, .fakelink:hover {
   padding: 0.05em 0;
 }
 
-#toc .incomplete {
-  font-weight: bold;
-  text-shadow: 0 0 2px gray;
+#toc .complete {
+  color: #AAA;
+}
+
+#toc .complete:hover {
+  color: #666;
 }
 
 #status {

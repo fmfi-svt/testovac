@@ -158,11 +158,11 @@ function showQuestions(questions, state) {
 
   var tocLinks = [];
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
-  var $ul = $('<ul/>').appendTo($toc);
+  var $ol = $('<ol/>').appendTo($toc);
   $.each(questions, function (i, q) {
-    var $li = $('<li/>').appendTo($ul);
+    var $li = $('<li/>').appendTo($ol);
     tocLinks[i] = Tester.fakelink().
-      text((i+1)+'. '+q.body).
+      text(q.body).
       on('click', function (event) { goToQuestion(i); }).
       appendTo($li);
   });
@@ -182,7 +182,7 @@ function showQuestions(questions, state) {
   var $submit = $('<input type="button" />').attr({ value: 'Odovzdať test' }).appendTo($('<div />', { 'class': 'submit' }).appendTo($status));
   $submit.on('click', function () {
     saveEvents();
-    var incomplete = $toc.find('.incomplete').length;
+    var incomplete = questions.length - $toc.find('.complete').length;
     var message = 'Ste si istí, že chcete ukončiť vypĺňanie testu?';
     if (incomplete == 1) message += '\n\n1 otázka ešte nie je zodpovedaná!';
     if (incomplete > 1 && incomplete < 5) message += '\n\n'+incomplete+' otázky ešte nie sú zodpovedané!';
@@ -198,7 +198,7 @@ function showQuestions(questions, state) {
       for (var j in stateTable[i]) {
         if (stateTable[i][j] === '') complete = false;
       }
-      tocLinks[i].toggleClass('incomplete', !complete);
+      tocLinks[i].toggleClass('complete', complete);
     }
     function addSub(j) {
       function valueChanged(value) {
