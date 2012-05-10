@@ -68,12 +68,7 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
 
 
 function init() {
-  // bindneme vsetky eventy
-  $(document).on('click', '.toclink', function (event) {
-    goToQuestion($(this).data('question'));
-  });
-  // TOC starred button
-  // FINISH button (a UI okolo "are you sure")
+  // bindneme vseobecne eventy
   if (Tester.config.disable_refresh) {
     $(document).on('keydown', function (event) {
       if (event.which == 116 && !event.altKey && !event.shiftKey) return false;
@@ -136,44 +131,24 @@ Tester.doLogin = function (pid, success, failure) {
 }
 
 
-var _booleanQuestionWidget_initialized = false;
-Tester.booleanQuestionWidget = function (questionInfo, state) {
-  if (!_booleanQuestionWidget_initialized) {
-    $(document).on('change', '.boolean-widget input:radio', function (domEvent) {
-      var examEvent = { value: $(this).val(), time: +new Date() };
-      $.extend(examEvent, $(this).closest('.boolean-widget').data('question-info'));
-      emitEvent(examEvent);
-    });
-    _booleanQuestionWidget_initialized = true;
-  }
-
+Tester.booleanQuestionWidget = function (valueChanged, state) {
   var id = idseq();
   var $widget = $('<div/>', { 'class': 'boolean-widget' });
-  $widget.data('question-info', questionInfo);
   $widget.append('<span><input type="radio" name="'+id+'" id="'+id+'y" value="true"><label for="'+id+'y"> ÁNO </label></span>');
   $widget.append('<span><input type="radio" name="'+id+'" id="'+id+'n" value="false"><label for="'+id+'n"> NIE </label></span>');
   $widget.append('<span><input type="radio" name="'+id+'" id="'+id+'x" value=""><label for="'+id+'x"> nezodpovedané </label></span>');
   $widget.find('#'+id+(state == 'true' ? 'y' : state == 'false' ? 'n' : 'x'))[0].checked = true;
+  $widget.on('change', 'input:radio', function (event) { valueChanged($(this).val()); });
   return $widget;
 }
 
 
-var _textQuestionWidget_initialized = false;
-Tester.textQuestionWidget = function (questionInfo, state) {
-  if (!_textQuestionWidget_initialized) {
-    $(document).on('change', '.text-widget input', function (domEvent) {
-      var examEvent = { value: $(this).val(), time: +new Date() };
-      $.extend(examEvent, $(this).closest('.text-widget').data('question-info'));
-      emitEvent(examEvent);
-    });
-    _textQuestionWidget_initialized = true;
-  }
-
+Tester.textQuestionWidget = function (valueChanged, state) {
   var id = idseq();
   var $widget = $('<div/>', { 'class': 'text-widget' });
-  $widget.data('question-info', questionInfo);
   $widget.append('<span><input type="text" name="'+id+'" id="'+id+'"></span>');
-  if (state !== undefined) $widget.find('input').val(state);
+  $widget.find('input').val(state);
+  $widget.on('change', 'input', function (event) { valueChanged($(this).val()); })
   return $widget;
 }
 
@@ -181,14 +156,14 @@ Tester.textQuestionWidget = function (questionInfo, state) {
 function showQuestions(questions, state) {
   Tester.questions = questions;
 
+  var tocLinks = [];
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
   var $ul = $('<ul/>').appendTo($toc);
   $.each(questions, function (i, q) {
     var $li = $('<li/>').appendTo($ul);
-    Tester.fakelink().
-      addClass('toclink').
+    tocLinks[i] = Tester.fakelink().
       text((i+1)+'. '+q.body).
-      data('question', i).
+      on('click', function (event) { goToQuestion(i); }).
       appendTo($li);
   });
 
@@ -207,21 +182,37 @@ function showQuestions(questions, state) {
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
   var $questions = $('<div/>', { id: 'questions' }).appendTo($main);
   $.each(questions, function (i, q) {
+    function updateToc() {
+      var complete = true;
+      for (var j in stateTable[i]) {
+        if (stateTable[i][j] === '') complete = false;
+      }
+      tocLinks[i].toggleClass('incomplete', !complete);
+    }
+    function addSub(j) {
+      function valueChanged(value) {
+        stateTable[i][j] = value;
+        emitEvent({ qorder: i, qsubord: j, value: value, time: +new Date() });
+        updateToc();
+      }
+      var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
+      $('<div/>', { 'class': 'text', text: j+') '+q[j].body }).appendTo($option);
+      if (stateTable[i][j] === undefined) stateTable[i][j] = '';
+      if (q[j].type == 'bool') {
+        $option.append(Tester.booleanQuestionWidget(valueChanged, stateTable[i][j]));
+      }
+      else {
+        $option.append(Tester.textQuestionWidget(valueChanged, stateTable[i][j]));
+      }
+    }
+
     var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
     $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
     for (var jc = 97; q[String.fromCharCode(jc)]; jc++) {
-      var j = String.fromCharCode(jc);
-      var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
-      $('<div/>', { 'class': 'text', text: j+') '+q[j].body }).appendTo($option);
-      var questionInfo = { qorder: i, qsubord: j };
-      if (q[j].type == 'bool') {
-        $option.append(Tester.booleanQuestionWidget(questionInfo, stateTable[i][j]));
-      }
-      else {
-        $option.append(Tester.textQuestionWidget(questionInfo, stateTable[i][j]));
-      }
+      addSub(String.fromCharCode(jc));
     }
+    updateToc();
   });
 }
 

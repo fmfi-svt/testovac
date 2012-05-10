@@ -60,6 +60,28 @@ a:hover, .fakelink:hover {
   overflow-y: auto;
 }
 
+#toc ul {
+  margin: 2em 1.5em;
+  padding: 0;
+}
+
+#toc li {
+  display: block;
+}
+
+#toc a, #toc .fakelink {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.05em 0;
+}
+
+#toc .incomplete {
+  font-weight: bold;
+  text-shadow: 0 0 4px gray;
+}
+
 #status {
   position: fixed;
   left: 0;
