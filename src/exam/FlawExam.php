@@ -29,7 +29,8 @@ class FlawExam {
     $questionBodies = $sth->fetchAll(PDO::FETCH_OBJ);
 
     $sth = $dbh->prepare('
-        SELECT uq.qorder AS qorder, sq.qsubord as qsubord, sq.body AS body
+        SELECT uq.qorder AS qorder, sq.qsubord as qsubord, sq.body AS body,
+        (sq.value = "true" OR sq.value = "false") AS isbool
         FROM user_questions uq, subquestions sq
         WHERE uq.pid = :pid AND uq.qid = sq.qid');
     $sth->execute(array(':pid' => $pid));
@@ -42,7 +43,7 @@ class FlawExam {
       $assocresult[$row->qorder]['body'] = $row->body;
     }
     foreach ($subquestionBodies as $row) {
-      $assocresult[$row->qorder][$row->qsubord] = $row->body;
+      $assocresult[$row->qorder][$row->qsubord] = array('body' => $row->body, 'type' => ($row->isbool ? 'bool' : 'text'));
     }
 
     $numresult = array();

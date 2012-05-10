@@ -104,3 +104,7 @@ a:hover, .fakelink:hover {
   margin-left: 1em;
 }
 
+.text-widget span {
+  margin-left: 2em;
+}
+

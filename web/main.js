@@ -158,6 +158,26 @@ Tester.booleanQuestionWidget = function (questionInfo, state) {
 }
 
 
+var _textQuestionWidget_initialized = false;
+Tester.textQuestionWidget = function (questionInfo, state) {
+  if (!_textQuestionWidget_initialized) {
+    $(document).on('change', '.text-widget input', function (domEvent) {
+      var examEvent = { value: $(this).val(), time: +new Date() };
+      $.extend(examEvent, $(this).closest('.text-widget').data('question-info'));
+      emitEvent(examEvent);
+    });
+    _textQuestionWidget_initialized = true;
+  }
+
+  var id = idseq();
+  var $widget = $('<div/>', { 'class': 'text-widget' });
+  $widget.data('question-info', questionInfo);
+  $widget.append('<span><input type="text" name="'+id+'" id="'+id+'"></span>');
+  if (state !== undefined) $widget.find('input').val(state);
+  return $widget;
+}
+
+
 function showQuestions(questions, state) {
   Tester.questions = questions;
 
@@ -193,9 +213,14 @@ function showQuestions(questions, state) {
     for (var jc = 97; q[String.fromCharCode(jc)]; jc++) {
       var j = String.fromCharCode(jc);
       var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
-      $('<div/>', { 'class': 'text', text: j+') '+q[j] }).appendTo($option);
+      $('<div/>', { 'class': 'text', text: j+') '+q[j].body }).appendTo($option);
       var questionInfo = { qorder: i, qsubord: j };
-      $option.append(Tester.booleanQuestionWidget(questionInfo, stateTable[i][j]));
+      if (q[j].type == 'bool') {
+        $option.append(Tester.booleanQuestionWidget(questionInfo, stateTable[i][j]));
+      }
+      else {
+        $option.append(Tester.textQuestionWidget(questionInfo, stateTable[i][j]));
+      }
     }
   });
 }
