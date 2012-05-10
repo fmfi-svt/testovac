@@ -131,6 +131,22 @@ Tester.doLogin = function (pid, success, failure) {
 }
 
 
+var _overlay_initialized = false;
+Tester.overlay = function () {
+  if (!_overlay_initialized) {
+    $(document).on('keydown', function (event) {
+      if (event.which == 27) $('.overlay').trigger('close');
+    });
+    _overlay_initialized = true;
+  }
+
+  var $overlay = $('<div class="overlay"><div class="dialog-wrapper"><div class="dialog"></div></div></div>');
+  $overlay.appendTo('body');
+  $overlay.on('close', function () { $(this).remove(); });
+  return $overlay;
+}
+
+
 Tester.booleanQuestionWidget = function (valueChanged, state) {
   var id = idseq();
   var $widget = $('<div/>', { 'class': 'boolean-widget' });
@@ -183,11 +199,26 @@ function showQuestions(questions, state) {
   $submit.on('click', function () {
     saveEvents();
     var incomplete = questions.length - $toc.find('.complete').length;
-    var message = 'Ste si istí, že chcete ukončiť vypĺňanie testu?';
-    if (incomplete == 1) message += '\n\n1 otázka ešte nie je zodpovedaná!';
-    if (incomplete > 1 && incomplete < 5) message += '\n\n'+incomplete+' otázky ešte nie sú zodpovedané!';
-    if (incomplete >= 5) message += '\n\n'+incomplete+' otázok ešte nie je zodpovedaných!';
-    if (confirm(message)) doClose();
+
+    var $overlay = Tester.overlay();
+    var $dialog = $overlay.find('.dialog');
+
+    $('input').attr('disabled', 'disabled');
+    $overlay.on('close', function () { $('input').removeAttr('disabled'); });
+
+    $('<p />').text('Ste si istí, že chcete ukončiť vypĺňanie testu?').appendTo($dialog);
+    if (incomplete != 0) {
+      $('<p />').text(
+        incomplete == 1 ? incomplete+' otázka ešte nie je zodpovedaná!' :
+        incomplete <= 4 ? incomplete+' otázky ešte nie sú zodpovedané!' :
+        incomplete+' otázok ešte nie je zodpovedaných!'
+      ).appendTo($dialog);
+    }
+
+    $dialog.append($('<p><input type="button" class="submit" value="Odovzdať test"> <input type="button" class="cancel" value="Storno"></p>'));
+    $dialog.find('.cancel').on('click', function () { $overlay.trigger('close'); });
+    $dialog.find('.submit').on('click', function () { $overlay.trigger('close'); doClose(); });
+    $dialog.find(incomplete ? '.cancel' : '.submit').focus();
   });
 
   var $main = $('<div/>', { id: 'main' }).appendTo('body');
@@ -285,6 +316,7 @@ function emitEvent(event) {
 
 
 function doClose() {
+  $('.overlay').trigger('close');
   $('#main').hide();
   $('#toc').hide();
   $('#status').hide();
@@ -311,7 +343,7 @@ function doClose() {
         alert('Chyba pri komunikácii so serverom, uáá.');
       }
       else {
-        $closing.text('Test bol úspešne ukončený.');
+        $closing.text('Vaše odpovede boli uložené.');
       }
     });
   }

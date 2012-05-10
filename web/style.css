@@ -26,6 +26,44 @@ a:hover, .fakelink:hover {
 
 
 /******************************************************************************/
+/* overlay */
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 30%;
+  z-index: 1000;
+}
+
+.dialog {
+  font-size: 1.143em;   /* 16/14 */
+  width: 40em;
+  margin: auto;
+  background-color: white;
+  border: 0.6em solid #CCC;
+  border-radius: 1.5em;
+  padding: 1em;
+  text-align: center;
+}
+
+.dialog input {
+  margin: 0 0.5em;
+}
+
+
+
+/******************************************************************************/
 /* #login-form */
 
 #login-form, .global-message {
