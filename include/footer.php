@@ -13,13 +13,11 @@
 
 			<div id="content_bottom">
 				<div id="content_bottom_in">
-					Zodpovednosť za obsah: <a href="mailto:nikto@nikde" class="miniLink">Nikto</a>,
 					Posledná aktualizácia: 08.05.2012
 				</div>
 			</div>
 
 			<div id="copyright">
-					<a href="http://svt.fmph.uniba.sk/">Vytvoril ŠVT FMFI, 2012</a>
 			</div>
 
 		</div>
