@@ -38,7 +38,6 @@
 
 		<div id="header_in">
 			<ul id="menu_top">
-				<li><a href="english.php">English</a></li>
 			</ul>
 			<br style="clear: right;">
 
