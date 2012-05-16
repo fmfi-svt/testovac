@@ -115,7 +115,7 @@ Tester.doLogin = function (pid, success, failure) {
   ajaj({ action: 'login', pid: pid }, function (data) {
     _doLogin_busy = false;
     if (data.error == 'invalid pid') {
-      failure(data.error, 'Nesprávne ID. Skontrolujte, či ste správne prepísali kód z náramku.');
+      failure(data.error, 'Nesprávne ID. Skontrolujte, či ste pri prepise nespravili preklep.');
     }
     else if (data.error == 'closed') {
       failure(data.error, 'Váš test už je ukončený.');
@@ -325,7 +325,7 @@ function saveEvents() {
       location.reload();
     }
     else if (data.error) {
-      alert('Chyba pri komunikácii so serverom. Kontaktujte technické dozor.');
+      alert('Chyba pri komunikácii so serverom. Kontaktujte technický dozor.');
     }
     else {
       while (Tester.eventsBegin < data.savedEvents) {
@@ -372,10 +372,7 @@ function doClose(timedOut) {
 
     var request = { action: 'close', pid: Tester.pid, sessid: Tester.sessid };
     ajaj(request, function (data) {
-      if (data.error == 'invalid pid') {
-        alert('Nesprávne ID.');
-      }
-      else if (data.error == 'invalid sessid') {
+      if (data.error == 'invalid sessid') {
         alert('Tento užívateľ sa medzitým prihlásil z iného počítača. Z tohto počítača bude odhlásený.');
         location.reload();
       }
