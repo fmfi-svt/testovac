@@ -1,6 +1,11 @@
 <?php
+$client_config = (object)array(
+  'disableRefresh' => $config->disable_refresh,
+  'softTimeLimit' => $exam->getClientSoftTimeLimit(),
+  'hardTimeLimit' => $exam->getClientHardTimeLimit(),
+);
 if ($config->demo_mode) {
-  $config->demo_pid = $pid_checker->generateDemoPid();
+  $client_config->demoPid = $pid_checker->generateDemoPid();
   // TODO if demo data will be saved, we might want to check pid uniqueness
 }
 ?>
@@ -21,7 +26,7 @@ if ($config->demo_mode) {
 </noscript>
 <script type="text/javascript">
 Tester = {};
-Tester.config = <?php print json_encode($config); ?>;
+Tester.config = <?php print json_encode($client_config); ?>;
 </script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="main.js"></script>

@@ -75,7 +75,7 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
 
 function init() {
   // bindneme vseobecne eventy
-  if (Tester.config.disable_refresh) {
+  if (Tester.config.disableRefresh) {
     $(document).on('keydown', function (event) {
       if (event.which == 116 && !event.altKey && !event.shiftKey) return false;
       if (event.which == 82 && event.ctrlKey && !event.altKey && !event.shiftKey) return false;
@@ -87,7 +87,7 @@ function init() {
     if (event.which == 27) event.preventDefault();
   });
 
-  Tester.showLoginForm(Tester.config.demo_pid, showQuestions);
+  Tester.showLoginForm(Tester.config.demoPid, showQuestions);
 }
 
 
@@ -262,6 +262,35 @@ function showQuestions(questions, state) {
     }
     updateToc();
   });
+
+  var $stopwatch = $('<span/>').addClass('stopwatch').prependTo($submit.parent());
+  var lastTime;
+  function updateStopwatch() {
+    var elapsed = Math.floor((+new Date())/1000) - Tester.beginTime, now;
+    if (elapsed == lastTime) return;
+    lastTime = elapsed;
+    if (elapsed <= Tester.config.softTimeLimit) {
+      now = Tester.config.softTimeLimit - elapsed;
+    }
+    else {
+      now = elapsed - Tester.config.softTimeLimit;
+      $stopwatch.css('color', 'red');
+    }
+    var minutes = ''+Math.floor(now/60);
+    if (minutes.length < 2) minutes = '0' + minutes;
+    var seconds = ''+(now%60);
+    if (seconds.length < 2) seconds = '0' + seconds;
+    var text = minutes+':'+seconds;
+    if (elapsed > Tester.config.softTimeLimit) {
+      $stopwatch.css('color', 'red');
+      text = '-' + text;
+    }
+    $stopwatch.text(text);
+    if (elapsed > Tester.config.hardTimeLimit) {
+      doClose(true);
+    }
+  }
+  Tester.stopwatchInterval = setInterval(updateStopwatch, 250);
 }
 
 
@@ -321,11 +350,15 @@ function emitEvent(event) {
 }
 
 
-function doClose() {
+function doClose(timedOut) {
   $('.overlay').trigger('close');
   $('#main').hide();
   $('#toc').hide();
   $('#status').hide();
+  if (Tester.stopwatchInterval !== undefined) {
+    clearInterval(Tester.stopwatchInterval);
+    Tester.stopwatchInterval = undefined;
+  }
   var $closing = $('<div />').attr('class', 'global-message').appendTo('body');
   $closing.text('Prosím čakajte...');
 
@@ -333,6 +366,11 @@ function doClose() {
     if (Tester.eventsBegin != Tester.eventsEnd) {
       sendEvents();
       setTimeout(attemptClose, 500);
+      return;
+    }
+
+    if (timedOut) {
+      $closing.text('Váš čas vypršal.');
       return;
     }
 
