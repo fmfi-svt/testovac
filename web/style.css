@@ -191,6 +191,14 @@ a:hover, .fakelink:hover {
   margin: 0 0 1em;
 }
 
+#main hr {
+  margin: 0.2em 0;
+  padding: 0;
+  border: 0;
+  border-bottom: solid gray 1px;
+  width: 25%;
+}
+
 #main .question .option {
   margin-top: 0.9em;
 }

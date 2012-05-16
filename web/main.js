@@ -182,9 +182,11 @@ function showQuestions(questions, state) {
   var $toc = $('<div/>', { id: 'toc' }).appendTo('body');
   var $ol = $('<ol/>').appendTo($toc);
   $.each(questions, function (i, q) {
+    var $body = $('<div/>').html(q.body);
+    $body.find('br, hr').replaceWith(' ');   // add a space in place of every <br> and <hr>
     var $li = $('<li/>').appendTo($ol);
     tocLinks[i] = Tester.fakelink().
-      text(q.body).
+      text($body.text()).
       on('click', function (event) { goToQuestion(i); }).
       appendTo($li);
   });
@@ -244,7 +246,7 @@ function showQuestions(questions, state) {
         updateToc();
       }
       var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
-      $('<div/>', { 'class': 'text', text: j+') '+q[j].body }).appendTo($option);
+      $('<div/>', { 'class': 'text', html: j+') '+q[j].body }).appendTo($option);
       if (stateTable[i][j] === undefined) stateTable[i][j] = '';
       if (q[j].type == 'bool') {
         $option.append(Tester.booleanQuestionWidget(valueChanged, stateTable[i][j]));
@@ -255,7 +257,7 @@ function showQuestions(questions, state) {
     }
 
     var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
-    $('<h3/>', { 'class': 'statement', text: (i+1)+'. '+q.body }).appendTo($question);
+    $('<h3/>', { 'class': 'statement', html: (i+1)+'. '+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
     for (var jc = 97; q[String.fromCharCode(jc)]; jc++) {
       addSub(String.fromCharCode(jc));

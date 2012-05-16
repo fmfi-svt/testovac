@@ -89,6 +89,12 @@ class FlawExam {
     return $this->getUserQuestions($pid);
   }
 
+  private function loadBody($doc, $body) {
+    $result = array();
+    foreach ($body->childNodes as $child) $result[] = $doc->saveXML($child);
+    return implode('', $result);
+  }
+
   public function importQuestions($filename) {
     global $dbh;
 
@@ -119,7 +125,7 @@ class FlawExam {
 
       $xml_questions = $xpath->query('question', $xml_bucket);
       if ($xml_questions) foreach ($xml_questions as $xml_question) {
-        $body = $xpath->query('body', $xml_question)->item(0)->firstChild->nodeValue;
+        $body = $this->loadBody($doc, $xpath->query('body', $xml_question)->item(0));
         $question_sth->execute(array(':qid' => $qid, ':bid' => $bid, ':body' => $body));
 
         $xml_answers = $xpath->query('answer', $xml_question);
@@ -129,7 +135,7 @@ class FlawExam {
           $subquestion_sth->execute(array(
             ':qid' => $qid,
             ':qsubord' => chr($qsubord),
-            ':body' => $xml_answer->firstChild->nodeValue,
+            ':body' => $this->loadBody($doc, $xml_answer),
             ':value' => $xml_answer->getAttribute('val'),
           ));
         }
