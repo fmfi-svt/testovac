@@ -115,13 +115,13 @@ Tester.doLogin = function (pid, success, failure) {
   ajaj({ action: 'login', pid: pid }, function (data) {
     _doLogin_busy = false;
     if (data.error == 'invalid pid') {
-      failure(data.error, 'Nesprávne ID, uáá.');
+      failure(data.error, 'Nesprávne ID. Skontrolujte, či ste správne prepísali kód z náramku.');
     }
     else if (data.error == 'closed') {
-      failure(data.error, 'Váš test už je ukončený, uáá.');
+      failure(data.error, 'Váš test už je ukončený.');
     }
     else if (data.error) {
-      failure(data.error, 'Chyba pri komunikácii so serverom, uáá.');
+      failure(data.error, 'Chyba pri komunikácii so serverom. Kontaktujte technický dozor.');
     }
     else {
       Tester.pid = pid;
@@ -316,22 +316,16 @@ function saveEvents() {
   };
   ajaj(request, function (data) {
     Tester.sendingEvents = false;
-    if (data.error == 'invalid pid') {
-      alert('Nesprávne ID, uáá.');
-    }
-    else if (data.error == 'invalid sessid') {
+    if (data.error == 'invalid sessid') {
       alert('Tento užívateľ sa medzitým prihlásil z iného počítača. Z tohto počítača bude odhlásený.');
       location.reload();
     }
-    else if (data.error == 'invalid savedEvents') {
-      alert('Chyba v časopriestorovej kontinuite, uáá.');
+    else if (data.error == 'closed') {
+      alert('Váš test už je ukončený.');
       location.reload();
     }
-    else if (data.error == 'closed') {
-      alert('Váš test už je ukončený, uáá.');
-    }
     else if (data.error) {
-      alert('Chyba pri komunikácii so serverom, uáá.');
+      alert('Chyba pri komunikácii so serverom. Kontaktujte technické dozor.');
     }
     else {
       while (Tester.eventsBegin < data.savedEvents) {
@@ -379,14 +373,14 @@ function doClose(timedOut) {
     var request = { action: 'close', pid: Tester.pid, sessid: Tester.sessid };
     ajaj(request, function (data) {
       if (data.error == 'invalid pid') {
-        alert('Nesprávne ID, uáá.');
+        alert('Nesprávne ID.');
       }
       else if (data.error == 'invalid sessid') {
         alert('Tento užívateľ sa medzitým prihlásil z iného počítača. Z tohto počítača bude odhlásený.');
         location.reload();
       }
       else if (data.error) {
-        alert('Chyba pri komunikácii so serverom, uáá.');
+        alert('Chyba pri komunikácii so serverom. Kontaktujte technický dozor.');
       }
       else {
         $closing.text('Vaše odpovede boli uložené.');
