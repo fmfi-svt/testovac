@@ -67,6 +67,7 @@ function login_action($pid) {
   return array(
     'sessid' => (int)$newSessid,
     'beginTime' => (int)$beginTime,
+    'now' => microtime(true),
     'questions' => $questions,
     'state' => $state,
     'savedEvents' => (int)$savedEvents,

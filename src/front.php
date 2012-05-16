@@ -1,6 +1,7 @@
 <?php
 $client_config = (object)array(
   'disableRefresh' => $config->disable_refresh,
+  'attemptTimeCorrection' => $config->attempt_time_correction,
   'softTimeLimit' => $exam->getClientSoftTimeLimit(),
   'hardTimeLimit' => $exam->getClientHardTimeLimit(),
 );

@@ -126,7 +126,11 @@ Tester.doLogin = function (pid, success, failure) {
     else {
       Tester.pid = pid;
       Tester.sessid = data.sessid;
-      Tester.beginTime = data.beginTime;
+      Tester.timeOffset = 0;
+      if (Tester.config.attemptTimeCorrection) {
+        Tester.timeOffset = (+new Date())/1000 - data.now;
+      }
+      Tester.beginTime = data.beginTime + Tester.timeOffset;
       Tester.events = {};
       Tester.eventsBegin = data.savedEvents;
       Tester.eventsEnd = data.savedEvents;
@@ -268,9 +272,10 @@ function showQuestions(questions, state) {
   var $stopwatch = $('<span/>').addClass('stopwatch').prependTo($submit.parent());
   var lastTime;
   function updateStopwatch() {
-    var elapsed = Math.floor((+new Date())/1000) - Tester.beginTime, now;
+    var elapsed = Math.floor((+new Date())/1000 - Tester.beginTime);
     if (elapsed == lastTime) return;
     lastTime = elapsed;
+    var now;
     if (elapsed <= Tester.config.softTimeLimit) {
       now = Tester.config.softTimeLimit - elapsed;
     }

@@ -4,6 +4,10 @@ $config = (object)array(
   // v demo mode sa prihlasuje umelym kodom
   'demo_mode' => FALSE,
 
+  // ci sa ma pokusat o casovu synchronizaciu so serverom
+  // (samozrejme vsade kde sa da chceme radsej NTP, to je presnejsie)
+  'attempt_time_correction' => FALSE,
+
   // ci sa ma zakazat refreshovanie testovaca klavesovymi skratkami
   'disable_refresh' => TRUE,
 );
