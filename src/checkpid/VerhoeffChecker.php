@@ -30,7 +30,7 @@ class VerhoeffChecker {
   private function computeChecksum($digits) {
     $c = 0;
     $i = 0;
-    foreach ($digits as $digit) {
+    foreach (array_reverse($digits) as $digit) {
       $c = self::$D[$c][self::$P[$i%8][$digit]];
       $i++;
     }
@@ -38,20 +38,28 @@ class VerhoeffChecker {
   }
 
   public function check($pid) {
-    if (!preg_match('/^[1-9][0-9]{15}$/', $pid)) return false;
-    $digits = array();
-    for ($i = 15; $i >= 0; $i--) $digits[] = (int)$pid[$i];
+    if (!preg_match('/^[0-9]{4}(?:-[0-9]{4}){3}$/', $pid)) return false;
+    $digits = str_split(str_replace('-', '', $pid));
     return $this->computeChecksum($digits) === 0;
   }
 
-  public function generateDemoPid() {
+  public function generatePid($demo = false) {
     $digits = array();
     for ($i = 0; $i < 16; $i++) $digits[] = rand(0, 9);
-    $digits[0] = rand(1, 9);
-    $digits[9] = ($digits[3] + 7) % 10;   // demo pid marker
+    if ($demo) {
+      // demo: tretia a osma cifra maju sucet 8
+      $digits[2] = rand(0, 8);
+      $digits[7] = 8 - $digits[2];
+    }
+    else {
+      // rocnik 2012: tretia a osma cifra maju sucet 12
+      $digits[2] = rand(3, 9);
+      $digits[7] = 12 - $digits[2];
+    }
     $digits[15] = 0;
-    $checksum = $this->computeChecksum(array_reverse($digits));
+    $checksum = $this->computeChecksum($digits);
     $digits[15] = self::$INV[$checksum];
-    return implode('', $digits);
+    $str = implode('', $digits);
+    return substr($str, 0, 4).'-'.substr($str, 4, 4).'-'.substr($str, 8, 4).'-'.substr($str, 12, 4);
   }
 }

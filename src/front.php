@@ -5,7 +5,7 @@ $client_config = (object)array(
   'hardTimeLimit' => $exam->getClientHardTimeLimit(),
 );
 if ($config->demo_mode) {
-  $client_config->demoPid = $pid_checker->generateDemoPid();
+  $client_config->demoPid = $pid_checker->generatePid(true);
   // TODO if demo data will be saved, we might want to check pid uniqueness
 }
 ?>

@@ -55,7 +55,7 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
   var pidInputId = idseq();
   $form = $('<form/>', { id: 'login-form' }).appendTo('body');
   $('<label/>', { 'for': pidInputId, text: 'Zadajte vaše ID: ' }).appendTo($form);
-  $pidInput = $('<input type="text" class="pid" />').attr({ id: pidInputId, name: 'pid', maxlength: '16' }).appendTo($form).focus();
+  $pidInput = $('<input type="text" class="pid" />').attr({ id: pidInputId, name: 'pid', maxlength: '19' }).appendTo($form).focus();
   $(document.createTextNode(' ')).appendTo($form);
   $('<input type="submit" />').attr('value', 'OK').appendTo($form);
   if (demoPid) {
