@@ -75,7 +75,7 @@ function save_action($pid, $sessid, $clientSavedEvents, $events) {
 
   $dbh->commit();
 
-  return array('savedEvents' => $newSavedEvents);
+  return array('savedEvents' => $newSavedEvents, 'beginTime' => (int)$user->begintime);
 }
 
 function close_jsonapi() {

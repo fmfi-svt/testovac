@@ -22,10 +22,15 @@ else if ($_SERVER['argv'][1] === 'droptables' && isset($_SERVER['argv'][2]) && $
   require 'src/schema.php';
   droptables_cli();
 }
+else if ($_SERVER['argv'][1] == 'givetime' && isset($_SERVER['argv'][2]) && isset($_SERVER['argv'][3])) {
+  require 'src/givetime.php';
+  givetime_cli();
+}
 else {
   print 'usage: php '.$_SERVER['argv'][0].' <action>'."\n";
   print 'actions:'."\n";
   print '  initschema'."\n";
   print '  import questions.xml'."\n";
   print '  droptables --delete-everything'."\n";
+  print '  givetime <pid> <extra minutes>'."\n";
 }

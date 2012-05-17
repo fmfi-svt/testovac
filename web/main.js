@@ -341,6 +341,7 @@ function saveEvents() {
       }
       Tester.eventsEnd = Math.max(Tester.eventsBegin, Tester.eventsEnd);
       if (Tester.eventsBegin != Tester.eventsEnd) saveEvents();
+      Tester.beginTime = data.beginTime + Tester.timeOffset;
     }
   });
 }
