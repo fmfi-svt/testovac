@@ -272,7 +272,7 @@ function showQuestions(questions, state) {
     updateToc();
   });
 
-  var $stopwatch = $('<span/>').addClass('stopwatch').prependTo($submit.parent());
+  var $stopwatch = $('<span/>').addClass('stopwatch').appendTo($submit.parent());
   var lastTime;
   function updateStopwatch() {
     var elapsed = Math.floor((+new Date())/1000 - Tester.beginTime);

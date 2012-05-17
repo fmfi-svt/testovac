@@ -130,34 +130,33 @@ a:hover, .fakelink:hover {
   width: 30em;
   height: 8em;
   bottom: 0;
-  background: #CCC;
+  background: #E0E0E0;
   overflow: hidden;
   line-height: 1;
 }
 
 #status .pid {
-  margin: 0.5em 0.2em 0;
+  border-top: solid #AAA 1px;
+  padding: 0.5em 0.2em 0;
   font-size: 2.3em;
   text-align: center;
 }
 
 #status .submit {
-  margin: 0.5em;
+  margin: 0.5em 1.6em;
   font-size: 1.3em;
   text-align: center;
 }
 
 #status .submit input {
+  float: left;
   padding: 0 0.5em;
   text-transform: uppercase;
 }
 
 #status .submit .stopwatch {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-right: 1.4em;
-  position: relative;
-  top: 0.1em;
+  font-size: 1.1em;
+  float: right;
 }
 
 
@@ -199,11 +198,11 @@ a:hover, .fakelink:hover {
 }
 
 #main hr {
-  margin: 0.2em 0;
+  margin: 0.2em 0 0.2em 1em;
   padding: 0;
   border: 0;
   border-bottom: solid gray 1px;
-  width: 25%;
+  width: 35%;
 }
 
 #main .question .option {
