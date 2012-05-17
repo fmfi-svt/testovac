@@ -253,7 +253,7 @@ function showQuestions(questions, state) {
         updateToc();
       }
       var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
-      $('<div/>', { 'class': 'text', html: j+') '+q[j].body }).appendTo($option);
+      $('<div/>', { 'class': 'text', html: '<div class="num">'+j+')&nbsp;</div>'+q[j].body }).appendTo($option);
       if (stateTable[i][j] === undefined) stateTable[i][j] = '';
       if (q[j].type == 'bool') {
         $option.append(Tester.booleanQuestionWidget(valueChanged, stateTable[i][j]));
@@ -264,7 +264,7 @@ function showQuestions(questions, state) {
     }
 
     var $question = $('<div/>', { 'class': 'question' }).appendTo($questions);
-    $('<h3/>', { 'class': 'statement', html: (i+1)+'. '+q.body }).appendTo($question);
+    $('<h3/>', { 'class': 'statement', html: '<div class="num">'+(i+1)+'.&nbsp;</div>'+q.body }).appendTo($question);
     var $options = $('<div/>', { 'class': 'options' }).appendTo($question);
     for (var jc = 97; q[String.fromCharCode(jc)]; jc++) {
       addSub(String.fromCharCode(jc));

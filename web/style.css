@@ -181,7 +181,7 @@ a:hover, .fakelink:hover {
 }
 
 #main .question {
-  padding: 2em 0;
+  padding: 2em 0 2em 3em;
   border-bottom: solid #DDD 1px;
 }
 
@@ -189,6 +189,13 @@ a:hover, .fakelink:hover {
   font-size: 1.286em;   /* 18/14 */
   font-weight: normal;
   margin: 0 0 1em;
+  position: relative;
+}
+
+#main .num {
+  position: absolute;
+  right: 100%;
+  text-align: right;
 }
 
 #main hr {
@@ -201,6 +208,7 @@ a:hover, .fakelink:hover {
 
 #main .question .option {
   margin-top: 0.9em;
+  position: relative;
 }
 
 #main .question .option .text {
