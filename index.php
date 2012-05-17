@@ -4,6 +4,19 @@ require 'include/header.php';
 ?>
 
 <h1>Prijímacie konanie</h1>
+<p>    
+Prijímacie konanie sa koná v dňoch 11.6.2012-15.6.2012 v priestoroch 
+    Fakulty matematiky, fyziky a informatiky Univerzity Komenského v Bratislave.
+    Účastníci prijímacieho konania dostali bližšie pokyny o mieste a čase 
+    v ktorom sa treba dostaviť na prijímacie skúšky poštou.
+</p>
+    
+<p>    
+    <iframe width="640" height="480" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.com/maps/ms?msa=0&amp;msid=213107510519027086415.0004c0227e5ff63f4fbe0&amp;ie=UTF8&amp;t=h&amp;ll=48.151886,17.070737&amp;spn=0.013743,0.027466&amp;z=15&amp;output=embed"></iframe><br /><small>Pozrite si <a href="http://maps.google.com/maps/ms?msa=0&amp;msid=213107510519027086415.0004c0227e5ff63f4fbe0&amp;ie=UTF8&amp;t=h&amp;ll=48.151886,17.070737&amp;spn=0.013743,0.027466&amp;z=15&amp;source=embed" style="color:#0000FF;text-align:left">miesto konania prijímačok</a> na väčšej mape. 
+    
+Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zoznam.sk/ba/planovac-cesty-vyhladanie-spojenia.html" target="_blank">imhd.sk</a>.
+    </small>
+</p>
 <h2>Priebeh prijímacieho konania</h2>
 <p>
 <table>
@@ -29,7 +42,7 @@ I. Registrácia (poslucháreň C):
 </ul>
 </p>
 <p>
-II. Presun do počítačovej učebne (miestnosť č. XY):
+II. Presun do počítačovej učebne (miestnosť č. H3):
 <ul>
 <li>uchádzači sa spolu so službukonajúcim personálom presunú do počítačovej miestnosti, v ktorej sa uskutoční prijímacie konanie;</li>
 <li>počítačové miestnosti budú monitorované kamerovým bezpečnostným systémom.</li>
@@ -62,7 +75,7 @@ IV. Prijímacia skúška
 V. Presun do priestorov určených na podpis prijímacích testov
 <ul>
 <li>po odovzdaní testu program bude informovať uchádzača, aby sa dostavil do priestorov určených na podpis vytlačených testov;</li>
-<li>uchádzač po dostavení sa do priestorov určených na podpis testov čaká na vyzvanie, aby skontroloval a podpísal vytlačený test;</li>
+<li>uchádzač po dostavení sa do priestorov určených na podpis testov čaká na vyzvanie, aby po predložení dokladov totožnosti skontroloval a podpísal vytlačený test;</li>
 <li>podpísaním každej strany testu sa skončí prijímacia skúška;</li>
 <li>priebežné a finálne poradie uchádzačov bude zverejnené na webe podľa vnútorného predpisu Univerzity Komenského č. 6/2011.</li>
 </ul>
