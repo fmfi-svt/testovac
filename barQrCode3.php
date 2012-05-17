@@ -3,7 +3,7 @@ $url = 'http://svt.fmph.uniba.sk/?id=';
 
 function generateLatexHeader() {
 	$result = '\documentclass[16pt]{minimal}'."\n".
-'\usepackage[papersize={500mm,300mm},top=0cm,bottom=0cm,left=-7.5mm,right=0cm,nohead,nofoot]{geometry}'."\n".
+'\usepackage[papersize={500mm,1000mm},top=0cm,bottom=0cm,left=-7.5mm,right=0cm,nohead,nofoot]{geometry}'."\n".
 '\usepackage{tikz}'."\n".
 '\usepackage{tabls}'."\n".
 '\usepackage{verbatim}'."\n".
@@ -33,7 +33,7 @@ function generateLatexHeader() {
 '   \advance\dimen0 by #1%'."\n".
 '   \leavevmode\lower\dimen0\box2}'."\n".
 ''."\n".
-'\begin{tabular}{|M|M|M|M|}'. "\n";
+'\begin{tabular}{|M|M|M|M|M|}'. "\n";
 		$result = $result . '\hline' . "\n";
 	return $result;
 }
@@ -58,16 +58,16 @@ function generateLatexQrBarcode($payload) {
 '	\end{pspicture} &'."\n".
 '		\begin{tabular}{>{\bfseries}c}'."\n".
 '		\begin{pspicture}'."\n".
-'		\psbarcode{'."$payload".'}{height=0.5}{interleaved2of5}'."\n".
+'                           \psbarcode{'."$payload".'}{height=0.5}{code128}'."\n".
 '		\end{pspicture} \\\\'."\n".
-'		'.substr($payload,0,4).' - '.substr($payload,4,4).' - '.substr($payload,8,4).' - '.substr($payload,12,4) ."\n".
+'                           '.substr($payload,0,4).'\\,-\\,'.substr($payload,4,4).'\\,-\\,'.substr($payload,8,4).'\\,-\\,'.substr($payload,12,4) ."\n".
 '		\end{tabular} &'."\n".
 '	\begin{pspicture}'."\n".
 '	\includegraphics[width=0.8in]{praflogocol}'."\n".
 '	\end{pspicture}'."\n".
 '	\end{tabular} '
 	;
-	$counter = ($counter + 1) % 4;
+	$counter = ($counter + 1) % 5;
 	if ($counter === 0) {
 		$result = $result . '\\\\' . "\n";
 		$result = $result . '\hline' . "\n";
