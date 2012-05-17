@@ -5,16 +5,10 @@ require 'include/header.php';
 
 <h1>Ukážka testovacieho systému</h1>
 <p>
-Systém, ktorý bude použítý pri testovaní, si môžete dopredu vyskúšať.
-Predídete tým prípadným problémom s jeho správaním.
+<a href="http://prijimacky.flaw.uniba.sk/testovac/">Spustiť testovací systém</a>
 </p>
 <p>
-Správnych odpovedí môže byť 0 až N.
-To neplatí pre logické úlohy, tam je vždy práve jedna.
-</p>
-<p>
-Ako kód náramku zadajte 4747474747447.
-<a href="testovac.demo">Spustiť testovací systém</a>
+Screenshot vysvetlenie.
 </p>
 
 

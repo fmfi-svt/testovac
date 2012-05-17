@@ -1,5 +1,5 @@
 <?php
-	if (empty($page)) $page = 'vitajte';
+	if (empty($page)) $page = 'miesto';
 ?>
 <!--?xml version="1.0" encoding="utf-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -11,7 +11,6 @@
 	<link rel="stylesheet" type="text/css" href="index.php_subory/rte.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="index.php_subory/style_news.css" media="screen">
 	<link rel="stylesheet" type="text/css" href="index.php_subory/print.css" media="print">
-	
 	<meta name="keywords" content="Univerzita Komenského,Bratislava,Právnická fakulta,Prijímačky">
 	<meta name="robots" content="index, follow">
 	<meta name="author" content="SVT FMFI">
@@ -46,8 +45,7 @@
 		<div id="menu_main" style="z-index:99;">
 			<img src="index.php_subory/menu_left.gif" style="float: left; margin-right: 8px;" alt="">
 			<ul>
-				<li><a href="index.php" title="Vitajte" class="<?php echo ($page=="vitajte"?"selected":"")?>">Vitajte</a></li>
-				<li><a href="miesto.php" title="Miesto konania" class="<?php echo ($page=="miesto"?"selected":"")?>">Miesto konania</a></li>
+				<li><a href="index.php" title="Miesto konania" class="<?php echo ($page=="miesto"?"selected":"")?>">Miesto konania</a></li>
 				<li><a href="demo.php" title="Demo" class="<?php echo ($page=="demo"?"selected":"")?>">Demo</a></li>
 				<li><a href="vysledky.php" title="Výsledky" class="<?php echo ($page=="vysledky"?"selected":"")?>">Výsledky</a></li>
 				<li><a href="kontakt.php" title="Kontakt" class="<?php echo ($page=="kontakt"?"selected":"")?>">Kontakt</a></li>
