@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <libraries>
 <library order="1" size="1" points="60" name="L1A">
+<<<<<<< HEAD
+  <question id="1.A.0" sample="true">
+    <body>Ktorý z výrokov je ekvivalentný výroku „Nie je pravda, že a) SR je konštitučná monarchia alebo b) Rakúsko je banánová republika.“?</body>
+    <answer val="false">SR nie je konštitučná monarchia alebo Rakúsko nie je banánová republika.</answer>
+    <answer val="false">SR je konštitučná monarchia, ale Rakúsko nie je banánová republika.</answer>
+    <answer val="true">Nie je pravda, že SR je konštitučná monarchia a nie je pravda, že Rakúsko je banánová republika.</answer>
+  </question>
+=======
  <question>
    <body>Ktorý z výrokov je ekvivalentný výroku <br />„Nie je pravda, že SR je konštitučná monarchia alebo Rakúsko je banánová republika.“ ?</body>
    <answer val="true">SR nie je konštitučná monarchia alebo Rakúsko nie je banánová republika.</answer>
@@ -15,55 +23,100 @@
    <answer val="false"> Nie je pravda, že a) William Harvey je otcom teórie relativity alebo b) Albert Einstein je otcom teórie krvného obehu.</answer>
    <answer val="false"> Nie je pravda, že a) William Harvey je otcom teórie relativity a b) Albert Einstein je otcom teórie krvného obehu. </answer>
  </question>
+>>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
 <library order="3" size="1" points="60" name="L1B">
- <question>
-   <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Niektorí Arabi sú sunniti.“ </body>
-   <answer val="true"> Niektorí Arabi nie sú sunniti.</answer>
-   <answer val="false"> Všetci Arabi sú šiiti.</answer>
-   <answer val="false"> Žiaden Arab nie je sunnita. </answer>
- </question>
+  <question id="1.B.0" sample="true">
+    <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Niektorí Arabi sú sunniti.“</body>
+    <answer val="false">Niektorí Arabi nie sú sunniti.</answer>
+    <answer val="false">Všetci Arabi sú šiiti.</answer>
+    <answer val="true">Žiaden Arab nie je sunnita.</answer>
+  </question>
 </library>
-<library order="4" size="1" points="60" name="L2B">
- <question>
-   <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Žiaden politik nie je fyzik.“</body>
-   <answer val="true"> Žiaden fyzik nie je politik.</answer>
-   <answer val="false"> Aspoň jeden politik je fyzik.</answer>
-   <answer val="false"> Niektorí politici nie sú fyzici.</answer>
- </question>
+<library order="9" size="1" points="90" name="L1C">
+  <question id="1.C.0" sample="true">
+    <body>Predpokladajme, že dva nasledujúce výroky sú pravdivé:<br />
+          <br />
+          „Autor zbierky básní Nox et solitudo študoval v Rumunsku.“<br />
+          „Autor zbierky básní Nox et solitudo je autorom zbierky Verše.“<br />
+          <br />
+          Ktorý z nasledujúcich výrokov z nich vyplýva?</body>
+    <answer val="false">Ivan Krasko je autor zbierky básní Nox et solitudo.</answer>
+    <answer val="false">Ján Botto je autor zbierky básní Verše.</answer>
+    <answer val="true">Autor zbierky Verše študoval v Rumunsku.</answer>
+  </question>
 </library>
-<library order="5" size="1" points="60" name="L3B">
- <question>
-   <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Každý chirurg je lekár.“</body>
-   <answer val="true"> Niektorí chirurgovia nie sú lekári.</answer>
-   <answer val="false"> Niektorí chirurgovia sú lekári.</answer>
-   <answer val="false"> Žiaden chirurg nie je lekár.</answer>
- </question>
+<library order="11" size="1" points="60" name="L1D">
+  <question id="1.D.0" sample="true">
+    <body>Ktorý z nasledujúcich výrokov je ekvivalentný s výrokom „Ak sa zablýska, tak zahrmí.“?</body>
+    <answer val="false">Ak nezahrmí, tak sa nezablýska.</answer>
+    <answer val="true">Nezablýska sa alebo nezahrmí.</answer>
+    <answer val="false">Ak sa nezablýska, tak nezahrmí.</answer>
+  </question>
 </library>
-<library order="6" size="1" points="60" name="L4B">
- <question>
-   <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Niektoré psy nehryzú.“</body>
-   <answer val="true"> Všetky psy hryzú.</answer>
-   <answer val="false"> Niektoré psy hryzú.</answer>
-   <answer val="false"> Žiaden pes nehryzie.</answer>
- </question>
+<library order="13" size="1" points="90" name="L1E">
+  <question id="1.E.0" sample="true">
+    <body>Ktorý z nasledujúcich úsudkov je správny?</body>
+    <answer val="false">Kto neoprávneným zásahom do práva na ochranu osobnosti spôsobí škodu, zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.<br />
+                        Nie je pravda, že Jozef neoprávnených zásahom do práva na ochranu osobnosti spôsobil škodu.
+                        <hr />
+                        Nie je pravda, že Jozef zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.</answer>
+    <answer val="true">Kto neoprávneným zásahom do práva na ochranu osobnosti spôsobí škodu, zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.<br />
+                        Nie je pravda, že Jozef zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.
+                        <hr />
+                        Nie je pravda, že Jozef neoprávnených zásahom do práva na ochranu osobnosti spôsobil škodu.</answer>
+    <answer val="false">Kto neoprávneným zásahom do práva na ochranu osobnosti spôsobí škodu, zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.<br />
+                        Jozef zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu (vo veci práva na ochranu osobnosti).
+                        <hr />
+                        Jozef neoprávneným zásahom do práva na ochranu osobnosti spôsobil škodu.</answer>
+  </question>
 </library>
-<library order="7" size="1" points="60" name="L5B">
- <question>
-   <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Každý pozná každého.“</body>
-   <answer val="true"> Niekto niekoho nepozná.</answer>
-   <answer val="false"> Niekto nepozná každého.</answer>
-   <answer val="false"> Nik nepozná nikoho.</answer>
- </question>
+<library order="16" size="1" points="90" name="L1F">
+  <question id="1.F.0" sample="true">
+    <body>Ktorý úsudok je logicky správny, ak predpokladáme známe vlastnosti vzťahov „byť starší ako”,“byť mladší ako” a“byť rovnako starý ako”:</body>
+    <answer val="true">Mišo je starší ako Ďuro.<br />
+                        Ďuro nie je mladší ako Anna.
+                        <hr />
+                        Mišo je starší ako Anna.</answer>
+    <answer val="false">Mišo nie je starší ako Ďuro.<br />
+                        Ďuro nie je mladší ako Anna.
+                        <hr />
+                        Mišo je rovnako starý ako Anna.</answer>
+    <answer val="false">Mišo nie je starší ako Ďuro.<br />
+                        Ďuro nie je mladší ako Anna.
+                        <hr />
+                        Mišo je mladší ako Anna.</answer>
+  </question>
 </library>
-<library order="8" size="1" points="60" name="L6B">
- <question>
-   <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Každý človek niekedy spí.“</body>
-   <answer val="true"> Niektorí ľudia niekedy nespia.</answer>
-   <answer val="false"> Niektorí ľudia nikdy nespia.</answer>
-   <answer val="false"> Žiaden človek nikdy nespí.</answer>
- </question>
+<library order="17" size="1" points="130" name="L1G">
+  <question id="1.G.0" sample="true">
+    <body>V dedine Horná Maríková bolo spolu rybárov, poľovníkov a filatelistov 37. Niektorí boli len rybármi – tých bolo 12. Tých, ktorí boli aj poľovníci aj rybári aj filatelisti, bolo7. Poľovníkov, ktorí neboli ani rybári ani filatelisti, bolo 4. Filatelistov, ktorí neboli ani rybári ani poľovníci, bolo 5. Poľovníkov bolo o 2 viac ako filatelistov. Rybárov, ktorí boli aj filatelistami, ale neboli poľovníkmi, bolo 3.</body>
+    <answer val="6">Koľko bolo rybárov, ktorí boli aj poľovníkmi, ale neboli filatelistami?</answer>
+    <answer val="0">Koľko bolo poľovníkov, ktorí boli aj filatelistami, ale neboli rybármi?</answer>
+  </question>
 </library>
+<<<<<<< HEAD
+<library order="18" size="1" points="60" name="L1H">
+  <question id="1.H.0" sample="true">
+    <body>Sú dané výroky:<br />
+          <br />
+          „Každý izotop je variant chemického prvku, ktorý sa líši počtom neutrónov v jadre.“<br />
+          „Žiaden izotop nie je variant chemického prvku, ktorý sa líši počtom neutrónov v jadre.“<br />
+          <br />
+          Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
+    <answer val="false">Aspoň jeden z nich je pravdivý.</answer>
+    <answer val="false">Práve jeden z nich je pravdivý.</answer>
+    <answer val="true">Najviac jeden z nich je pravdivý.</answer>
+  </question>
+</library>
+<library order="2" size="1" points="60" name="L2A">
+  <question id="2.A.0" sample="true">
+    <body>Ktorý z výrokov je ekvivalentný výroku „Nie je pravda, že William Harvey je otcom teórie relativity alebo nie je pravda, že Albert Einstein je otcom teórie krvného obehu.“?</body>
+    <answer val="false">William Harvey je otcom teórie relativity, ale Albert Einstein nie je otcom teórie krvného obehu.</answer>
+    <answer val="false">Nie je pravda, že a) William Harvey je otcom teórie relativity alebo b) Albert Einstein je otcom teórie krvného obehu.</answer>
+    <answer val="true">Nie je pravda, že a) William Harvey je otcom teórie relativity a b) Albert Einstein je otcom teórie krvného obehu.</answer>
+  </question>
+=======
 <library order="9" size="1" points="90" name="L1C">
  <question>
    <body>Predpokladajme, že dva nasledujúce výroky sú pravdivé:
@@ -94,24 +147,77 @@
    <answer val="false"> Ivan Krasko je autor zbierky Verše.</answer>
    <answer val="false"> Ján Botto je autor zbierky Nox et solitudo.</answer>
  </question>
+>>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
-<library order="11" size="1" points="60" name="L1D">
- <question>
-   <body>Ktorý z nasledujúcich výrokov je ekvivalentný s výrokom „Ak sa zablýska, tak
-zahrmí.“?</body>
-   <answer val="true"> Ak nezahrmí, tak sa nezablýska.</answer>
-   <answer val="false"> Nezablýska sa alebo nezahrmí.</answer>
-   <answer val="false"> Ak sa nezablýska, tak nezahrmí.</answer>
- </question>
+<library order="4" size="1" points="60" name="L2B">
+  <question id="2.B.0" sample="true">
+    <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Žiaden politik nie je fyzik.“</body>
+    <answer val="false">Žiaden fyzik nie je politik.</answer>
+    <answer val="true">Aspoň jeden politik je fyzik.</answer>
+    <answer val="false">Niektorí politici nie sú fyzici.</answer>
+  </question>
 </library>
+<library order="10" size="1" points="90" name="L2C">
+  <question id="2.C.0" sample="true">
+    <body>Predpokladajme, že všetky nasledujúce výroky sú pravdivé:<br />
+          <br />
+          „Ivan Krasko je autor zbierky Nox et solitudo.“<br />
+          „Autor zbierky Verše študoval v Rumunsku.“<br />
+          „Ivan Krasko je Ján Botto.“<br />
+          <br />
+          Ktorý z nasledujúcich výrokov z nich vyplýva?</body>
+    <answer val="false">Ján Botto študoval v Rumunsku.</answer>
+    <answer val="false">Ivan Krasko je autor zbierky Verše.</answer>
+    <answer val="true">Ján Botto je autor zbierky Nox et solitudo.</answer>
+  </question>
+</library>
+<<<<<<< HEAD
 <library order="12" size="1" points="60" name="L2D">
- <question>
-   <body>Ktorý z nasledujúcich výrokov je ekvivalentný s výrokom „Nie je pravda, že ak je dané číslo deliteľné číslom dva, tak je deliteľné číslom štyri.“?</body>
-   <answer val="true"> Dané číslo je deliteľné číslom dva a nie je deliteľné číslom štyri.</answer>
-   <answer val="false"> Dané číslo nie je deliteľné ani číslom dva, ani číslom štyri.</answer>
-   <answer val="false"> Dané číslo nie je deliteľné číslom dva alebo je deliteľné číslom štyri.</answer>
- </question>
+  <question id="2.D.0" sample="true">
+    <body>Ktorý z nasledujúcich výrokov je ekvivalentný s výrokom „Nie je pravda, že ak je dané číslo deliteľné číslom dva, tak je deliteľné číslom štyri.“?</body>
+    <answer val="false">Dané číslo je deliteľné číslom dva a nie je deliteľné číslom štyri.</answer>
+    <answer val="false">Dané číslo nie je deliteľné ani číslom dva, ani číslom štyri.</answer>
+    <answer val="true">Dané číslo nie je deliteľné číslom dva alebo je deliteľné číslom štyri.</answer>
+  </question>
 </library>
+<library order="14" size="1" points="90" name="L2E">
+  <question id="2.E.0" sample="true">
+    <body>Ktorý z nasledujúcich úsudkov je správny?</body>
+    <answer val="true">Pokiaľ je účastníkom občianskoprávnych vzťahov štát, (tak) je právnickou osobou.<br />
+                        Slovenská republika je účastníkom občianskoprávnych vzťahov.
+                        <hr />
+                        Slovenská republika je právnickou osobou.</answer>
+    <answer val="false">Pokiaľ je účastníkom občianskoprávnych vzťahov štát, (tak) je právnickou osobou.<br />
+                        Slovenská republika je právnickou osobou.
+                        <hr />
+                        Slovenská republika je účastníkom občianskoprávnych vzťahov.</answer>
+    <answer val="false">Pokiaľ je účastníkom občianskoprávnych vzťahov štát, (tak) je právnickou osobou.<br />
+                        Slovensko nie je účastníkom občianskoprávnych vzťahov.
+                        <hr />
+                        Slovensko nie je právnickou osobou.</answer>
+  </question>
+</library>
+<library order="19" size="1" points="60" name="L2H">
+  <question id="2.H.0" sample="true">
+    <body>Sú dané výroky:<br />
+          <br />
+          „Niektorí právnici sú sudcovia.“<br />
+          „Niektorí právnici nie sú sudcovia.“<br />
+          <br />
+          Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
+    <answer val="false">Práve jeden z nich je pravdivý.</answer>
+    <answer val="false">Najviac jeden z nich je pravdivý.</answer>
+    <answer val="true">Aspoň jeden z nich je pravdivý.</answer>
+  </question>
+</library>
+<library order="5" size="1" points="60" name="L3B">
+  <question id="3.B.0" sample="true">
+    <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Každý chirurg je lekár.“</body>
+    <answer val="true">Niektorí chirurgovia nie sú lekári.</answer>
+    <answer val="false">Niektorí chirurgovia sú lekári.</answer>
+    <answer val="false">Žiaden chirurg nie je lekár.</answer>
+  </question>
+=======
 <library order="13" size="1" points="90" name="L1E">
  <question>
    <body>Ktorý z nasledujúcich úsudkov je správny?</body>
@@ -181,14 +287,63 @@ Mišo je rovnako starý ako Anna.</answer>
 Mišo je mladší ako Anna.
 </answer>
  </question>
+>>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
-<library order="17" size="1" points="130" name="L1G">
- <question>
-   <body>V dedine Horná Maríková bolo spolu rybárov, poľovníkov a filatelistov 37. Niektorí boli len rybármi – tých bolo 12. Tých, ktorí boli aj poľovníci aj rybári aj filatelisti, bolo7. Poľovníkov, ktorí neboli ani rybári ani filatelisti, bolo 4. Filatelistov, ktorí neboli ani rybári ani poľovníci, bolo 5. Poľovníkov bolo o 2 viac ako filatelistov. Rybárov, ktorí boli aj filatelistami, ale neboli poľovníkmi, bolo 3. </body>
-   <answer val="0">Koľko bolo rybárov, ktorí boli aj poľovníkmi, ale neboli filatelistami? </answer>
-   <answer val="0">Koľko bolo poľovníkov, ktorí boli aj filatelistami, ale neboli rybármi? </answer>
- </question>
+<library order="15" size="1" points="90" name="L3E">
+  <question id="3.E.0" sample="true">
+    <body>Ktorý z nasledujúcich úsudkov je správny?</body>
+    <answer val="true">Ak Alan Gore je prezident USA, tak USA zrušili embargo Kuby.<br />
+                        Ak USA zrušili embargo Kuby, tak Tchajwan patrí Číne.
+                        <hr />
+                        Ak Alan Gore je prezident USA, tak Tchajwan patrí Číne.</answer>
+    <answer val="false">Ak Alan Gore nie je prezident USA, tak USA nezrušili embargo Kuby.<br />
+                        Ak USA nezrušili embargo Kuby, tak Hongkong nepatrí Číne
+                        <hr />
+                        Ak Alan Gore nie je prezidenta USA, tak Hongkong patrí Číne.</answer>
+    <answer val="false">Ak Alan Gore je prezident USA, tak USA zrušili embargo Kuby.<br />
+                        Ak USA nezrušili embargo Kuby, tak Tchajwan nepatrí Číne.
+                        <hr />
+                        Ak Alan Gore je prezident USA, tak Tchajwan nepatrí Číne.</answer>
+  </question>
 </library>
+<<<<<<< HEAD
+<library order="20" size="1" points="60" name="L3H">
+  <question id="3.H.0" sample="true">
+    <body>Sú dané výroky:<br />
+          <br />
+          „Žiadne demokratické zriadenie nie je monarchistické.“<br />
+          „Niektoré demokratické zriadenia sú monarchistické.“<br />
+          <br />
+          Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
+    <answer val="false">Najviac jeden z nich je pravdivý.</answer>
+    <answer val="true">Práve jeden z nich je pravdivý.</answer>
+    <answer val="false">Aspoň jeden z nich je pravdivý.</answer>
+  </question>
+</library>
+<library order="6" size="1" points="60" name="L4B">
+  <question id="4.B.0" sample="true">
+    <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Niektoré psy nehryzú.“</body>
+    <answer val="true">Všetky psy hryzú.</answer>
+    <answer val="false">Niektoré psy hryzú.</answer>
+    <answer val="false">Žiaden pes nehryzie.</answer>
+  </question>
+</library>
+<library order="7" size="1" points="60" name="L5B">
+  <question id="5.B.0" sample="true">
+    <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Každý pozná každého.“</body>
+    <answer val="true">Niekto niekoho nepozná.</answer>
+    <answer val="false">Niekto nepozná každého.</answer>
+    <answer val="false">Nik nepozná nikoho.</answer>
+  </question>
+</library>
+<library order="8" size="1" points="60" name="L6B">
+  <question id="6.B.0" sample="true">
+    <body>Z uvedených výrokov vyberte ten, ktorý je negáciou výroku „Každý človek niekedy spí.“</body>
+    <answer val="false">Niektorí ľudia niekedy nespia.</answer>
+    <answer val="true">Niektorí ľudia nikdy nespia.</answer>
+    <answer val="false">Žiaden človek nikdy nespí.</answer>
+  </question>
+=======
 <library order="18" size="1" points="130" name="L1H">
  <question>
    <body>Sú dané výroky: <br/>1) „Každý izotop je variant chemického prvku, ktorý sa líši počtom neutrónov v jadre.“ <br/>2) „Žiaden izotop nie je variant chemického prvku, ktorý sa líši počtom neutrónov v jadre.“ Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
@@ -212,6 +367,7 @@ Mišo je mladší ako Anna.
    <answer val="false"> Práve jeden z nich je pravdivý.</answer>
    <answer val="false"> Aspoň jeden z nich je pravdivý.</answer>
  </question>
+>>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
 <library order="21" size="3" points="50" name="D1">
  <question>
