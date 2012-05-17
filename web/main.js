@@ -114,7 +114,10 @@ Tester.doLogin = function (pid, success, failure) {
 
   ajaj({ action: 'login', pid: pid }, function (data) {
     _doLogin_busy = false;
-    if (data.error == 'invalid pid') {
+    if (data.error == 'login blocked') {
+      failure(data.error, 'Skúška ešte nebola zahájená. Počkajte, kým skončí poučenie.');
+    }
+    else if (data.error == 'invalid pid') {
       failure(data.error, 'Nesprávne ID. Skontrolujte, či ste pri prepise nespravili preklep.');
     }
     else if (data.error == 'closed') {

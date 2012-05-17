@@ -10,6 +10,9 @@ $config = (object)array(
 
   // ci sa ma zakazat refreshovanie testovaca klavesovymi skratkami
   'disable_refresh' => TRUE,
+
+  // ci je prave zablokovane prihlasovanie, lebo prebieha poucenie
+  'login_blocked' => FALSE,
 );
 
 require 'src/exam/FlawExam.php';

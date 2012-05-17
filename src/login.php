@@ -23,7 +23,8 @@ function _login_get_state($pid) {
 }
 
 function login_action($pid) {
-  global $dbh, $exam, $pid_checker;
+  global $config, $dbh, $exam, $pid_checker;
+  if ($config->login_blocked) return array('error' => 'login blocked');
   if (!$pid_checker->check($pid)) return array('error' => 'invalid pid');
 
   $dbh->beginTransaction();
