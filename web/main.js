@@ -295,6 +295,10 @@ function showQuestions(questions, state) {
 
 
 function goToQuestion(question) {
+  $('#main .statement').eq(question).css('background', '#FF8');
+  setTimeout(function () {
+    $('#main .statement').eq(question).css('background', 'transparent');
+  }, 400);
   $('#main').animate({ scrollTop: $('.question')[question].offsetTop }, 'fast');
 }
 
