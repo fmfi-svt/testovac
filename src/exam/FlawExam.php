@@ -5,17 +5,13 @@ class FlawExam {
     return 'Prijímacia skúška';
   }
 
-  public function getClientSoftTimeLimit() {
+  public function getClientTimeLimit() {
     return 60 * 60;
-  }
-
-  public function getClientHardTimeLimit() {
-    return $this->getClientSoftTimeLimit() + 2 * 60;
   }
 
   public function getServerTimeLimit() {
     // extra time for the client JS to send the last batch of events
-    return $this->getClientHardTimeLimit() + 30;
+    return $this->getClientTimeLimit() + 30;
   }
 
   public function getUserQuestions($pid) {

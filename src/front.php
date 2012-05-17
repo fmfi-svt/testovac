@@ -2,8 +2,7 @@
 $client_config = (object)array(
   'disableRefresh' => $config->disable_refresh,
   'attemptTimeCorrection' => $config->attempt_time_correction,
-  'softTimeLimit' => $exam->getClientSoftTimeLimit(),
-  'hardTimeLimit' => $exam->getClientHardTimeLimit(),
+  'timeLimit' => $exam->getClientTimeLimit(),
 );
 if ($config->demo_mode) {
   $client_config->demoPid = $pid_checker->generatePid(true);

@@ -278,27 +278,17 @@ function showQuestions(questions, state) {
     var elapsed = Math.floor((+new Date())/1000 - Tester.beginTime);
     if (elapsed == lastTime) return;
     lastTime = elapsed;
-    var now;
-    if (elapsed <= Tester.config.softTimeLimit) {
-      now = Tester.config.softTimeLimit - elapsed;
+    if (elapsed > Tester.config.timeLimit) {
+      doClose(true);
+      return;
     }
-    else {
-      now = elapsed - Tester.config.softTimeLimit;
-      $stopwatch.css('color', 'red');
-    }
+    var now = Tester.config.timeLimit - elapsed;
     var minutes = ''+Math.floor(now/60);
     if (minutes.length < 2) minutes = '0' + minutes;
     var seconds = ''+(now%60);
     if (seconds.length < 2) seconds = '0' + seconds;
     var text = minutes+':'+seconds;
-    if (elapsed > Tester.config.softTimeLimit) {
-      $stopwatch.css('color', 'red');
-      text = '-' + text;
-    }
     $stopwatch.text(text);
-    if (elapsed > Tester.config.hardTimeLimit) {
-      doClose(true);
-    }
   }
   Tester.stopwatchInterval = setInterval(updateStopwatch, 250);
 }
