@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <libraries>
 <library order="1" size="1" points="60" name="L1A">
-<<<<<<< HEAD
   <question id="1.A.0" sample="true">
     <body>Ktorý z výrokov je ekvivalentný výroku „Nie je pravda, že a) SR je konštitučná monarchia alebo b) Rakúsko je banánová republika.“?</body>
     <answer val="false">SR nie je konštitučná monarchia alebo Rakúsko nie je banánová republika.</answer>
     <answer val="false">SR je konštitučná monarchia, ale Rakúsko nie je banánová republika.</answer>
     <answer val="true">Nie je pravda, že SR je konštitučná monarchia a nie je pravda, že Rakúsko je banánová republika.</answer>
   </question>
-=======
- <question>
-   <body>Ktorý z výrokov je ekvivalentný výroku <br />„Nie je pravda, že SR je konštitučná monarchia alebo Rakúsko je banánová republika.“ ?</body>
-   <answer val="true">SR nie je konštitučná monarchia alebo Rakúsko nie je banánová republika.</answer>
-   <answer val="false">SR je konštitučná monarchia, ale Rakúsko nie je banánová republika.</answer>
-   <answer val="false">Nie je pravda, že SR je konštitučná monarchia a nie je pravda, že Rakúsko je banánová republika.</answer>
- </question>
-</library>
-<library order="2" size="1" points="60" name="L2A">
- <question>
-   <body>Ktorý z výrokov je ekvivalentný výroku <br />„Nie je pravda, že William Harvey je otcom teórie relativity alebo nie je pravda, že Albert Einstein je otcom teórie krvného obehu.“?</body>
-   <answer val="true"> William Harvey je otcom teórie relativity, ale Albert Einstein nie je otcom teórie krvného obehu.</answer>
-   <answer val="false"> Nie je pravda, že a) William Harvey je otcom teórie relativity alebo b) Albert Einstein je otcom teórie krvného obehu.</answer>
-   <answer val="false"> Nie je pravda, že a) William Harvey je otcom teórie relativity a b) Albert Einstein je otcom teórie krvného obehu. </answer>
- </question>
->>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
 <library order="3" size="1" points="60" name="L1B">
   <question id="1.B.0" sample="true">
@@ -95,7 +78,6 @@
     <answer val="0">Koľko bolo poľovníkov, ktorí boli aj filatelistami, ale neboli rybármi?</answer>
   </question>
 </library>
-<<<<<<< HEAD
 <library order="18" size="1" points="60" name="L1H">
   <question id="1.H.0" sample="true">
     <body>Sú dané výroky:<br />
@@ -116,38 +98,6 @@
     <answer val="false">Nie je pravda, že a) William Harvey je otcom teórie relativity alebo b) Albert Einstein je otcom teórie krvného obehu.</answer>
     <answer val="true">Nie je pravda, že a) William Harvey je otcom teórie relativity a b) Albert Einstein je otcom teórie krvného obehu.</answer>
   </question>
-=======
-<library order="9" size="1" points="90" name="L1C">
- <question>
-   <body>Predpokladajme, že dva nasledujúce výroky sú pravdivé:
-<br />
-	„Autor zbierky básní Nox et solitudo študoval v Rumunsku.“
-<br />
-    „Autor zbierky básní Nox et solitudo je autorom zbierky Verše.“
-
-<hr />
-	Ktorý z nasledujúcich výrokov z nich vyplýva?</body>
-   <answer val="true"> Ivan Krasko je autor zbierky básní Nox et solitudo.</answer>
-   <answer val="false"> Ján Botto je autor zbierky básní Verše.</answer>
-   <answer val="false"> Autor zbierky Verše študoval v Rumunsku.</answer>
- </question>
-</library>
-<library order="10" size="1" points="90" name="L2C">
- <question>
-   <body>Predpokladajme, že všetky nasledujúce výroky sú pravdivé:
-<br />
-	„Ivan Krasko je autor zbierky Nox et solitudo.“
-<br />
-    „Autor zbierky Verše študoval v Rumunsku.“
-<br />
-    „Ivan Krasko je Ján Botto.“
-<hr />
-	Ktorý z nasledujúcich výrokov z nich vyplýva?</body>
-   <answer val="true"> Ján Botto študoval v Rumunsku.</answer>
-   <answer val="false"> Ivan Krasko je autor zbierky Verše.</answer>
-   <answer val="false"> Ján Botto je autor zbierky Nox et solitudo.</answer>
- </question>
->>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
 <library order="4" size="1" points="60" name="L2B">
   <question id="2.B.0" sample="true">
@@ -171,7 +121,6 @@
     <answer val="true">Ján Botto je autor zbierky Nox et solitudo.</answer>
   </question>
 </library>
-<<<<<<< HEAD
 <library order="12" size="1" points="60" name="L2D">
   <question id="2.D.0" sample="true">
     <body>Ktorý z nasledujúcich výrokov je ekvivalentný s výrokom „Nie je pravda, že ak je dané číslo deliteľné číslom dva, tak je deliteľné číslom štyri.“?</body>
@@ -217,77 +166,6 @@
     <answer val="false">Niektorí chirurgovia sú lekári.</answer>
     <answer val="false">Žiaden chirurg nie je lekár.</answer>
   </question>
-=======
-<library order="13" size="1" points="90" name="L1E">
- <question>
-   <body>Ktorý z nasledujúcich úsudkov je správny?</body>
-   <answer val="true"> Kto neoprávneným zásahom do práva na ochranu osobnosti spôsobí škodu, zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu. 
-Nie je pravda, že Jozef neoprávnených zásahom do práva na ochranu osobnosti spôsobil škodu.
-<hr/>
-Nie je pravda, že Jozef zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.</answer>
-   <answer val="false"> Kto neoprávneným zásahom do práva na ochranu osobnosti spôsobí škodu, zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu. 
-Nie je pravda, že Jozef zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.
-<hr/>
-Nie je pravda, že Jozef neoprávnených zásahom do práva na ochranu osobnosti spôsobil škodu.</answer>
-   <answer val="false"> Kto neoprávneným zásahom do práva na ochranu osobnosti spôsobí škodu, zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu.
-Jozef zodpovedá podľa ustanovení (tohto) zákona o zodpovednosti za škodu (vo veci práva na ochranu osobnosti).
-<hr/>
-Jozef neoprávneným zásahom do práva na ochranu osobnosti spôsobil škodu.</answer>
- </question>
-</library>
-<library order="14" size="1" points="90" name="L2E">
- <question>
-   <body>Ktorý z nasledujúcich úsudkov je správny?</body>
-   <answer val="true"> Pokiaľ je účastníkom občianskoprávnych vzťahov štát, (tak) je právnickou osobou.
-Slovenská republika je účastníkom občianskoprávnych vzťahov.
-<hr/>
-Slovenská republika je právnickou osobou.</answer>
-   <answer val="false"> Pokiaľ je účastníkom občianskoprávnych vzťahov štát, (tak) je právnickou osobou.
-Slovenská republika je právnickou osobou.
-<hr/>
-Slovenská republika je účastníkom občianskoprávnych vzťahov. </answer>
-   <answer val="false"> Pokiaľ je účastníkom občianskoprávnych vzťahov štát, (tak) je právnickou osobou.
-Slovensko nie je účastníkom občianskoprávnych vzťahov.
-<hr/>
-Slovensko nie je právnickou osobou.</answer>
- </question>
-</library>
-<library order="15" size="1" points="90" name="L3E">
- <question>
-   <body>Ktorý z nasledujúcich úsudkov je správny?</body>
-   <answer val="true"> Ak Alan Gore je  prezident USA, tak USA zrušili embargo Kuby.
-Ak USA zrušili embargo Kuby, tak Tchajwan patrí Číne.
-<hr/>
-Ak Alan Gore je  prezident USA, tak Tchajwan patrí Číne.</answer>
-   <answer val="false"> Ak Alan Gore nie je prezident USA, tak USA nezrušili embargo Kuby.
-Ak USA nezrušili embargo Kuby, tak Hongkong nepatrí Číne
-<hr/>-
-Ak Alan Gore nie je prezidenta USA, tak Hongkong patrí Číne.</answer>
-   <answer val="false"> Ak Alan Gore je  prezident USA, tak USA zrušili embargo Kuby.
-Ak USA nezrušili embargo Kuby, tak Tchajwan nepatrí Číne.
-<hr/>-
-Ak Alan Gore je  prezident USA, tak Tchajwan nepatrí Číne.</answer>
- </question>
-</library>
-<library order="16" size="1" points="90" name="L1F">
- <question>
-   <body>Ktorý úsudok je logicky správny, ak predpokladáme známe vlastnosti vzťahov “byť 
-starší ako”, “byť mladší ako” a “byť rovnako starý ako”:</body>
-   <answer val="true"> Mišo je starší ako Ďuro.
-Ďuro nie je mladší ako Anna.
-<hr/>-
-Mišo je starší ako Anna.</answer>
-   <answer val="false"> Mišo nie je starší ako Ďuro.
-Ďuro nie je mladší ako Anna.
-<hr/>-
-Mišo je rovnako starý ako Anna.</answer>
-   <answer val="false"> Mišo nie je starší ako Ďuro.
-Ďuro nie je mladší ako Anna.
-<hr/>-
-Mišo je mladší ako Anna.
-</answer>
- </question>
->>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
 <library order="15" size="1" points="90" name="L3E">
   <question id="3.E.0" sample="true">
@@ -306,7 +184,6 @@ Mišo je mladší ako Anna.
                         Ak Alan Gore je prezident USA, tak Tchajwan nepatrí Číne.</answer>
   </question>
 </library>
-<<<<<<< HEAD
 <library order="20" size="1" points="60" name="L3H">
   <question id="3.H.0" sample="true">
     <body>Sú dané výroky:<br />
@@ -343,31 +220,6 @@ Mišo je mladší ako Anna.
     <answer val="true">Niektorí ľudia nikdy nespia.</answer>
     <answer val="false">Žiaden človek nikdy nespí.</answer>
   </question>
-=======
-<library order="18" size="1" points="130" name="L1H">
- <question>
-   <body>Sú dané výroky: <br/>1) „Každý izotop je variant chemického prvku, ktorý sa líši počtom neutrónov v jadre.“ <br/>2) „Žiaden izotop nie je variant chemického prvku, ktorý sa líši počtom neutrónov v jadre.“ Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
-   <answer val="false"> Aspoň jeden z nich je pravdivý.</answer>
-   <answer val="false"> Práve jeden z nich je pravdivý.</answer>
-   <answer val="false"> Najviac jeden z nich je pravdivý.</answer>
- </question>
-</library>
-<library order="19" size="1" points="60" name="L2H">
- <question>
-   <body>Sú dané výroky: <br/>1) „Niektorí právnici sú sudcovia.“ <br/>2) „Niektorí právnici nie sú sudcovia.“ Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
-   <answer val="false"> Práve jeden z nich je pravdivý.</answer>
-   <answer val="false"> Najviac jeden z nich je pravdivý.</answer>
-   <answer val="false"> Aspoň jeden z nich je pravdivý.</answer>
- </question>
-</library>
-<library order="20" size="1" points="60" name="L3H">
- <question>
-   <body>Sú dané výroky: <br/>1) „Žiadne demokratické zriadenie nie je monarchistické.“ <br/>2) Niektoré demokratické zriadenia sú monarchistické.“ Rozhodnite na základe logickej štruktúry výrokov, ktorý z logických vzťahov medzi týmito výrokmi nastáva:</body>
-   <answer val="false"> Najviac jeden z nich je pravdivý.</answer>
-   <answer val="false"> Práve jeden z nich je pravdivý.</answer>
-   <answer val="false"> Aspoň jeden z nich je pravdivý.</answer>
- </question>
->>>>>>> 987bdc6944f6a7c2cbd64550ab2042c30adc54f4
 </library>
 <library order="21" size="3" points="50" name="D1">
  <question>
