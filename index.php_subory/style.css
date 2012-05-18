@@ -24,6 +24,18 @@ div
 	background: transparent;
 }
 
+.harmonogram
+{
+    text-align: center;
+}
+
+iframe
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 /* Page containers ****************************************************************************** */
 

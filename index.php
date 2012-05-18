@@ -19,11 +19,11 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 </p>
 <h2>Priebeh prijímacieho konania</h2>
 <p>
-<table>
-<tr><td>Registrácia poslucháreň C</td><td>Poučenie uchádzačov</td><td>Vypracovanie testu</td></tr>
+<table class="harmonogram">
+<tr><th>Registrácia poslucháreň C</th><th>Poučenie uchádzačov</th><th>Vypracovanie testu</th></tr>
 <tr><td>07:45 - 08:25 hod.</td><td>08:30 - 08:45 hod.</td><td>08:45 - 09:45 hod.</td></tr>
 <tr><td>09:45 - 10:25 hod.</td><td>10:30 - 10:45 hod.</td><td>10:45 - 11:45 hod.</td></tr>
-<tr><td>11:45 - 12:25 hod.</td><td>12:30 - 12:45 hod.</td><td>12:45 - 11:45 hod</td></tr>
+<tr><td>11:45 - 12:25 hod.</td><td>12:30 - 12:45 hod.</td><td>12:45 - 11:45 hod.</td></tr>
 <tr><td>13:45 - 14:25 hod.</td><td>14:30 - 14:45 hod.</td><td>14:45 - 15:45 hod.</td></tr>
 </table>
 </p>
@@ -32,7 +32,7 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <ul>
 <li>vstup do priestorov fakulty budú mať len samotní uchádzači;</li>
 <li>uchádzač sa preukáže platným občianskym preukazom (cudzinec pasom);</li>
-<li>uchádzač predloží notárom overenú kópiu maturitného vysvedčenia ak ju ešte nepredložil), notárom overené kópie vysvedčení – z III. a IV. ročníka (ak ich ešte nepredložil);</li>
+<li>uchádzač predloží notárom overenú kópiu maturitného vysvedčenia (ak ju ešte nepredložil), notárom overené kópie vysvedčení – z III. a IV. ročníka (ak ich ešte nepredložil);</li>
 <li>uchádzač si vylosuje náramok s prezentačným číslom;</li>
 <li>službukonajúci personál pripevní uchádzačovi náramok na ruku;</li>
 <li>uchádzač je povinný si náramok ponechať na ruke počas prítomnosti v budove;</li>
