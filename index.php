@@ -28,7 +28,7 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 </table>
 </p>
 <p>
-I. Registrácia (poslucháreň C):
+<h3>I. Registrácia (poslucháreň C):</h3>
 <ul>
 <li>vstup do priestorov fakulty budú mať len samotní uchádzači;</li>
 <li>uchádzač sa preukáže platným občianskym preukazom (cudzinec pasom);</li>
@@ -42,14 +42,14 @@ I. Registrácia (poslucháreň C):
 </ul>
 </p>
 <p>
-II. Presun do počítačovej učebne (miestnosť č. H3):
+<h3>II. Presun do počítačovej učebne (miestnosť č. H3):</h3>
 <ul>
 <li>uchádzači sa spolu so službukonajúcim personálom presunú do počítačovej miestnosti, v ktorej sa uskutoční prijímacie konanie;</li>
 <li>počítačové miestnosti budú monitorované kamerovým bezpečnostným systémom.</li>
 </ul>
 </p>
 <p>
-III. Poučenie prodekana pred vykonaním prijímacej skúšky
+<h3>III. Poučenie prodekana pred vykonaním prijímacej skúšky</h3>
 <ul>
 <li>uchádzači sú povinní vypnúť a uschovať všetky informačno-komunikačné zariadenia (napr. mobilné telefóny, fotoaparáty a pod.);</li>
 <li>uchádzači sú povinní položiť na zem alebo uschovať do tašky všetky knihy a veci; jedinou povolenou pomôckou sú písacie potreby a to preto, lebo pri riešení úloh zameraných na logické usudzovanie si uchádzači budú môcť robiť poznámky;</li>
@@ -57,7 +57,7 @@ III. Poučenie prodekana pred vykonaním prijímacej skúšky
 </ul>
 </p>
 <p>
-IV. Prijímacia skúška
+<h3>IV. Prijímacia skúška</h3>
 <ul>
 <li>čistý čas na vypracovanie skúšobného testu bude 60 minút;</li>
 <li>test obsahuje 39 otázok, z ktorých 20 je zameraných na logické usudzovanie a 19 je zameraných na overovanie vedomostí;</li>
@@ -72,7 +72,7 @@ IV. Prijímacia skúška
 </ul>
 </p>
 <p>
-V. Presun do priestorov určených na podpis prijímacích testov
+<h3>V. Presun do priestorov určených na podpis prijímacích testov</h3>
 <ul>
 <li>po odovzdaní testu program bude informovať uchádzača, aby sa dostavil do priestorov určených na podpis vytlačených testov;</li>
 <li>uchádzač po dostavení sa do priestorov určených na podpis testov čaká na vyzvanie, aby po predložení dokladov totožnosti skontroloval a podpísal vytlačený test;</li>
