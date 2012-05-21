@@ -303,6 +303,20 @@ function goToQuestion(question) {
 }
 
 
+function showGlobalMessage(html) {
+  $('.overlay').trigger('close');
+  $('#main').hide();
+  $('#toc').hide();
+  $('#status').hide();
+  if (Tester.stopwatchInterval !== undefined) {
+    clearInterval(Tester.stopwatchInterval);
+    Tester.stopwatchInterval = undefined;
+  }
+  $('.global-message').remove();
+  $('<div />').attr('class', 'global-message').appendTo('body').html(html);
+}
+
+
 function saveEvents() {
   if (Tester.eventsBegin == Tester.eventsEnd) return;
   if (Tester.sendingEvents) return;
@@ -350,16 +364,7 @@ function emitEvent(event) {
 
 
 function doClose(timedOut) {
-  $('.overlay').trigger('close');
-  $('#main').hide();
-  $('#toc').hide();
-  $('#status').hide();
-  if (Tester.stopwatchInterval !== undefined) {
-    clearInterval(Tester.stopwatchInterval);
-    Tester.stopwatchInterval = undefined;
-  }
-  var $closing = $('<div />').attr('class', 'global-message').appendTo('body');
-  $closing.text('Prosím čakajte...');
+  showGlobalMessage('Prosím čakajte...');
 
   function attemptClose() {
     if (Tester.eventsBegin != Tester.eventsEnd) {
@@ -381,9 +386,10 @@ function doClose(timedOut) {
       }
       else if (data.error) {
         alert('Chyba pri komunikácii so serverom. Kontaktujte technický dozor.');
+        showGlobalMessage('Chyba pri komunikácii so serverom. Kontaktujte technický dozor.');
       }
       else {
-        $closing.text('Vaše odpovede boli uložené.');
+        showGlobalMessage('Vaše odpovede boli uložené.');
       }
     });
   }
