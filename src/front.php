@@ -2,6 +2,8 @@
 $client_config = (object)array(
   'disableRefresh' => $config->disable_refresh,
   'attemptTimeCorrection' => $config->attempt_time_correction,
+  'saveAfterEmit' => $config->save_after_emit,
+  'savingInterval' => $config->saving_interval,
   'timeLimit' => $exam->getClientTimeLimit(),
 );
 if ($config->demo_mode) {

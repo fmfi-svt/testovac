@@ -11,6 +11,14 @@ $config = (object)array(
   // ci sa ma zakazat refreshovanie testovaca klavesovymi skratkami
   'disable_refresh' => TRUE,
 
+  // ci sa ma po kazdom evente (kliknuti apod.) spustit saveEvents
+  // (vynimka: ak prave nejaky saveEvents bezi, nic sa nestane)
+  'save_after_emit' => TRUE,
+
+  // kazdych kolko milisekund sa ma spustit saveEvents (0 = vypnut)
+  // (vynimka: ak prave nejaky saveEvents bezi, nic sa nestane)
+  'saving_interval' => 15000,
+
   // ci je prave zablokovane prihlasovanie, lebo prebieha poucenie
   'login_blocked' => FALSE,
 );

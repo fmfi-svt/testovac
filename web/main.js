@@ -291,6 +291,12 @@ function showQuestions(questions, state) {
     $stopwatch.text(text);
   }
   Tester.stopwatchInterval = setInterval(updateStopwatch, 250);
+
+  if (Tester.config.savingInterval) {
+    Tester.savingInterval = setInterval(function () {
+      saveEvents(true);
+    }, Tester.config.savingInterval);
+  }
 }
 
 
@@ -312,13 +318,17 @@ function showGlobalMessage(html) {
     clearInterval(Tester.stopwatchInterval);
     Tester.stopwatchInterval = undefined;
   }
+  if (Tester.savingInterval !== undefined) {
+    clearInterval(Tester.savingInterval);
+    Tester.savingInterval = undefined;
+  }
   $('.global-message').remove();
   $('<div />').attr('class', 'global-message').appendTo('body').html(html);
 }
 
 
-function saveEvents() {
-  if (Tester.eventsBegin == Tester.eventsEnd) return;
+function saveEvents(force) {
+  if (Tester.eventsBegin == Tester.eventsEnd && !force) return;
   if (Tester.sendingEvents) return;
   Tester.sendingEvents = true;
   log(['sending event range', Tester.eventsBegin, Tester.eventsEnd]);
@@ -358,8 +368,7 @@ function saveEvents() {
 function emitEvent(event) {
   log(['event', Tester.eventsEnd, event]);
   Tester.events[Tester.eventsEnd++] = event;
-  // TODO: save events immediately or every X seconds?
-  saveEvents();
+  if (Tester.config.saveAfterEmit) saveEvents();
 }
 
 
