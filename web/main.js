@@ -175,7 +175,7 @@ Tester.booleanQuestionWidget = function (valueChanged, state) {
 Tester.textQuestionWidget = function (valueChanged, state) {
   var id = idseq();
   var $widget = $('<div/>', { 'class': 'text-widget' });
-  $widget.append('<span><input type="text" name="'+id+'" id="'+id+'"></span>');
+  $widget.append('<span><input type="text" name="'+id+'" id="'+id+'" maxlength="100"></span>');
   $widget.find('input').val(state);
   $widget.on('change', 'input', function (event) { valueChanged($(this).val()); })
   return $widget;
