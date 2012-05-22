@@ -1,43 +1,32 @@
 #!/bin/bash
-cat /dev/null > output.txt
-echo "Bash version ${BASH_VERSION}..."
-cat /dev/null > result.txt
-x=1
-while [ $x -le 200 ]
-do
-	</dev/urandom tr -dc 0-9 | head -c15 | php appendVerhoeff.php > output.txt
-	a=`cat output.txt result.txt | sort | uniq -d | wc -l`
-	if [ $a -gt 0 ]
-	then
-		continue
-	fi
-	s=`cat output.txt`
-	if [ -z $s ]
-	then
-		continue
-	fi
-	#echo $s
-	#echo ${s:3:1}
-	#echo ${s:7:1}
-	sum=`expr ${s:3:1} + ${s:7:1}`
-	#echo sum
-	sum=`expr $sum % 10`
-	#echo sum
-	#echo $check
-	#check=`expr $sum - 2`
-	#echo $check
 
-	if [ $sum -ne 2 ]
-	then
-		continue
-	fi
-	cat output.txt >> result.txt
-	x=$(( $x + 1 ))
+count=171
+
+rm -f tmp.txt
+> result.txt
+
+x=0
+while [ $x -lt $count ]
+do
+	dd if=/dev/urandom bs=8 count=200 2> /dev/null | od -tu8 -w8 | grep -P "^\d{7}\s+\d*[1-9]\d{13}$" | cut -c15-28 >> result.txt
+	sort result.txt | uniq > tmp.txt
+	mv tmp.txt result.txt
+	x=`cat result.txt | wc -l`
 done
-#sort result.txt  > result2.txt
-#mv result2.txt result.txt
+
+head -n$count result.txt > tmp.txt
+
+php appendVerhoeff.php < tmp.txt > result.txt
+rm tmp.txt
+
 cat result.txt | php barQrCode3.php > stickers.tex
+
 pdflatex --shell-escape stickers.tex
+rm stickers.aux
+rm stickers.log
+rm stickers-pics.pdf
+
+pdf90 stickers.pdf
+mv stickers-rotated90.pdf stickers.pdf
+
 pdf2ps stickers.pdf
-#latex stickers.tex
-#dvips stickers.dvi

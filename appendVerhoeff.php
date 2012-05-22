@@ -30,5 +30,11 @@ assert("Verhoeff::check(appendVerhoeffAfter15DigitString('123456789012345')) ===
 
 $f = fopen('php://stdin', 'r');
 while ($line = fgets($f)) {
-   echo appendVerhoeffAfter15DigitString($line)."\n";
+	$line=rtrim($line);
+
+	$num=$line[3];
+	$num=(12 - $num) % 10;
+	$line=substr($line, 0, 7) . $num . substr($line, 7);
+
+    echo appendVerhoeffAfter15DigitString($line)."\n";
 }
