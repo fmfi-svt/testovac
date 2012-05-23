@@ -30,7 +30,7 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <p>
 <h3>I. Registrácia (poslucháreň C):</h3>
 <ul>
-<li>vstup do priestorov fakulty budú mať len samotní uchádzači;</li>
+<li>osoby doprevádzajúce uchádzačov sa nesmú pohybovať v priestoroch vyhradených pre prijímacie pohovory;</li>
 <li>uchádzač sa preukáže platným občianskym preukazom (cudzinec pasom);</li>
 <li>uchádzač predloží notárom overenú kópiu maturitného vysvedčenia (ak ju ešte nepredložil), notárom overené kópie vysvedčení – z III. a IV. ročníka (ak ich ešte nepredložil);</li>
 <li>uchádzač si vylosuje náramok s prezentačným číslom;</li>
