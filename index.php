@@ -27,6 +27,10 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <tr><td>13:45 - 14:25 hod.</td><td>14:30 - 14:45 hod.</td><td>14:45 - 15:45 hod.</td></tr>
 </table>
 </p>
+<h2>Plán budovy</h2>
+<p id="plan">
+    <a href="index.php_subory/mapa.png"><img width="240" height="320" src="index.php_subory/mapa.png" alt="Plán budovy" /></a>
+</p>
 <p>
 <h3>I. Registrácia (poslucháreň C):</h3>
 <ul>
