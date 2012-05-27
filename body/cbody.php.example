@@ -1,0 +1,24 @@
+<?php
+$bodyC = array(
+    '1234-1234-1234-1234' => array(
+        'body' => 65,
+        'forma' => 'denna',
+    ),
+    '1234-1234-1234-1235' => array(
+        'body' => 69,
+        'forma' => 'denna',
+    ),
+    '1234-1234-1234-1236' => array(
+        'body' => 65,
+        'forma' => 'denna',
+    ),
+    '1334-9534-1434-1234' => array(
+        'body' => 15,
+        'forma' => 'externa',
+    ),
+    '1334-9534-1434-1235' => array(
+        'body' => 15,
+        'forma' => 'externa',
+    ),
+); 
+?>
