@@ -1,5 +1,5 @@
 <?php
-$url = 'http://prijimacky.flaw.uniba.sk/?id=';
+$url = 'http://prijimacky.flaw.uniba.sk/vysledky/';
 
 function generateLatexHeader() {
 	$result = '\documentclass[16pt]{minimal}'."\n".
