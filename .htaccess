@@ -1,2 +1,0 @@
-RewriteEngine on
-RewriteRule ^vysledky/(.+)$ /vysledky.php?pid=$1 [R,L]
