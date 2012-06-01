@@ -3,6 +3,10 @@ tr.selected-score {
 	background:#FECA77;
 }
 
+span.warning {
+	color: red;
+}
+
 h1, h2, h3, h4, p, ul, ol, li, table, th, td, .text, dl
 {
 	border: 0;

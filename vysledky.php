@@ -54,6 +54,20 @@ doručené do vlastných rúk.
 		document.getElementById(id).style.display='none';
 	}
 </script>
+<hr/>
+<p>
+Zvýrazni výsledok podľa kódu:
+<form action="" method="GET">
+<input id="pid" name="pid" value="<?php echo htmlspecialchars($vybranyKod, ENT_QUOTES, 'UTF-8');?>"/>
+<button type="submit">Vyhľadaj</button>
+</form>
+<?php
+if ($vybranyKod!==null && $vybraneBody === -1) {
+	echo '<br/><span class="warning">Zadaný kód sa vo výsledkovej listine nenašiel.</span>';
+}
+?>
+</p>
+<hr/>
 <div id="denna-forma"<?php if ($vybranaForma != 'denna') echo ' style="display:none;"'?>>
 <p><a href="javascript:hide('denna-forma');show('externa-forma');void(0);">zobraz výsledky pre externú formu</a></p>
 <h2>Výsledková listina pre dennú formu štúdia</h2>
