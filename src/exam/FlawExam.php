@@ -243,29 +243,19 @@ class FlawExam {
     public function getUserAnswers($pid) {
         global $dbh;
         
-        $sql = "DROP VIEW IF EXISTS subbody";
-        $sth = $dbh->prepare($sql);
-        $sth->execute();
-
-        $sql = "CREATE VIEW subbody AS( SELECT q.qid, COUNT( * ) AS numberofsubquestions
-                                FROM questions q, subquestions s
-                                WHERE q.qid = s.qid
-                                GROUP BY q.qid)";
-        $sth = $dbh->prepare($sql);
-        $sth->execute();
-
-        $sql = "SELECT u.pid, s.qid, uq.qorder, s.qsubord, e.value AS useranswer, s.value AS correctanswer, (b.points div sb.numberofsubquestions) AS points
-                                FROM users u, user_questions uq, subquestions s,
-                                events e, questions q, buckets b, subbody sb
-                                WHERE u.pid = uq.pid
-                                AND s.qid = uq.qid
-                                AND e.pid = u.pid
-                                AND e.qorder = uq.qorder
-                                AND e.qsubord = s.qsubord
-                                AND uq.qid = q.qid
-                                AND q.bid = b.bid
-                                AND q.qid = sb.qid
-                                AND u.pid=:pid";
+        $sql = "select uq.qorder,sq.qid,sq.qsubord,sq.value as correctanswer,e.value as useranswer,b.points, sb.numberofsubquestions as nsq,q.body as questionbody,sq.body as subquestionbody 
+from (user_questions as uq
+     join subquestions as sq 
+     on uq.qid = sq.qid)
+     left join events as e
+        on uq.pid = e.pid and uq.qorder = e.qorder and 
+           sq.qsubord = e.qsubord
+     join questions as q on uq.qid = q.qid
+     join subbody as sb on sb.qid = uq.qid
+     join buckets as b on q.bid = b.bid
+where uq.pid = :pid
+order by uq.qorder,sq.qsubord;
+";
 //        $sth->execute(array(':pid' => $pid));
 //        print_r($sth);
         try {
@@ -291,7 +281,7 @@ class FlawExam {
         return $userPoints;
     }
 
-    public function getSubAnswerUser($userAnswers, $pid, $qorder, $qsubord) {
+    public function getSubAnswerUser($userAnswers, $qorder, $qsubord) {
         //$userAnswers = $this->getUserAnswers($pid);
         foreach ($userAnswers as $userAnswer) {
             if (($userAnswer->qorder == $qorder) && ($userAnswer->qsubord == $qsubord) && ($userAnswer->useranswer != '')) {
@@ -305,6 +295,26 @@ class FlawExam {
             }
         }
         return '';
+    }
+    
+    public function getCompleteSubAnswerUser($userAnswers, $qorder, $qsubord) {
+        //$userAnswers = $this->getUserAnswers($pid);
+        $result = array();
+        foreach ($userAnswers as $userAnswer) {
+            if (($userAnswer->qorder == $qorder) && ($userAnswer->qsubord == $qsubord)) {
+                if ($userAnswer->correctanswer == 'true') {
+                    $result['correctanswer'] = 'Áno.';
+                }else
+                if ($userAnswer->correctanswer == 'false') {
+                    $result['correctanswer'] = 'Nie.';
+                } else {
+                     $result['correctanswer'] = $userAnswer->correctanswer;
+                }
+                    $result['points'] = $userAnswer->points; 
+                    $result['nsq'] = $userAnswer->nsq; 
+            }
+        }
+        return $result;
     }
 
 }

@@ -34,6 +34,10 @@ else if (($_SERVER['argv'][1] == 'printexam') && isset($_SERVER['argv'][2]) && $
   require 'src/print.php';
   printexamlarge_cli($_SERVER['argv'][3]);
 }
+else if (($_SERVER['argv'][1] == 'printallexams') && isset($_SERVER['argv'][2])) {
+  require 'src/print.php';
+  printallexams_cli($_SERVER['argv'][2]);
+}
 else if ($_SERVER['argv'][1] == 'exportresults') {
   require 'src/results.php';
   exportresults_cli();

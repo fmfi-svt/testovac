@@ -46,6 +46,9 @@ function droptables_cli() {
 function droptables_action() {
   global $dbh;
   $schema = _schema_get();
+  $sql = "DROP VIEW IF EXISTS subbody";
+  $sth = $dbh->prepare($sql);
+  $sth->execute();
 
   foreach ($schema as $table_name => $fields) {
     $dbh->query('DROP TABLE IF EXISTS ' . $table_name);
