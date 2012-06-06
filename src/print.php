@@ -1,7 +1,8 @@
 <?php
 
-$header = '\documentclass[a4paper,10pt,BCOR10mm,oneside,headsepline]{scrartcl}' . "\n" .
-        '\usepackage[slovak]{babel}' . "\n" .
+$documentHeaderNormal = '\documentclass[a4paper,twocolumn,10pt,BCOR10mm,oneside,headsepline]{scrartcl}' . "\n";
+$documentHeaderLarge = '\documentclass[a4paper,20pt,BCOR10mm,oneside,headsepline]{scrartcl}' . "\n";
+$header = '\usepackage[slovak]{babel}' . "\n" .
         '\usepackage[utf8]{inputenc}' . "\n" .
         '\usepackage{wasysym}% provides \ocircle and \Box' . "\n" .
         '\usepackage{enumitem}% easy control of topsep and leftmargin for lists' . "\n" .
@@ -12,9 +13,10 @@ $header = '\documentclass[a4paper,10pt,BCOR10mm,oneside,headsepline]{scrartcl}' 
         '\areaset{17cm}{26cm}' . "\n" .
         '\setlength{\topmargin}{-1cm}' . "\n" .
         '\usepackage{scrpage2}' . "\n" .
-        '\pagestyle{scrheadings}' . "\n" .
-        '%\ihead{Example questionnaire created with \LaTeX}' . "\n" .
-        '\ohead{\pagemark}' . "\n" .
+        '\pagestyle{scrheadings}' . "\n";
+
+        
+$header2=        '\ohead{\pagemark}' . "\n" .
         '\chead{}' . "\n" .
         '\cfoot{}' . "\n" .
         '\DeclareUnicodeCharacter{00A0}{~}' . "\n" .
@@ -67,10 +69,10 @@ $header = '\documentclass[a4paper,10pt,BCOR10mm,oneside,headsepline]{scrartcl}' 
         '  }' . "\n" .
         '}' . "\n" .
         '\begin{document}' . "\n" .
-        '' . "\n" .
-        '\begin{center}' . "\n" .
-        '  \textbf{\large Otázky}' . "\n" .
-        '\end{center}\vskip1em' . "\n";
+        '' . "\n";
+//        '\begin{center}' . "\n" .
+//        '  \textbf{\large Otázky}' . "\n" .
+ //       '\end{center}\vskip1em' . "\n";
 
 $footer = '\end{document}';
 
@@ -88,13 +90,18 @@ function printexamlarge_cli($uid) {
     }
     
     global $exam;
+    global $documentHeaderLarge;
     global $header;
+    global $header2;
     global $footer;
     $questions = $exam->getUserQuestions($uid);
     $myFile = "aux/" . $uid . ".tex";
     echo 'filename: ' . $myFile . "\n";
     $fh = fopen($myFile, 'w') or die("can't open file");
+    fwrite($fh, $documentHeaderLarge);
     fwrite($fh, $header);
+    fwrite($fh, '\ihead{'.$uid.'}' . "\n");
+    fwrite($fh, $header2);
     foreach ($questions as $question_id => $question) {
         $latexed = preg_replace('#<br\s*/?>#', "", $question['body']);
         $latexed = str_replace("\n" . '          ' . "\n" . '          ', "\n\\\\[10pt]\n", $latexed);
@@ -126,7 +133,9 @@ function printexamlarge_cli($uid) {
 
 function printfinished_cli() {
     global $exam;
+    global $documentHeaderNormal;
     global $header;
+    global $header2;
     global $footer;
     echo 'beginning' . "\n";
     $users = $exam->getFinishedUsersForPrinting();
@@ -138,13 +147,17 @@ function printfinished_cli() {
         $uid = $user->pid;
         echo $uid . "\n";
         $questions = $exam->getUserQuestions($uid);
+        $answers = $exam->getUserAnswers($uid);
         echo 'questions got' . "\n";
 
         $myFile = "aux/" . $uid . ".tex";
         echo 'filename: ' . $myFile . "\n";
         $fh = fopen($myFile, 'w') or die("can't open file");
 
+        fwrite($fh, $documentHeaderNormal);
         fwrite($fh, $header);
+        fwrite($fh, '\ihead{'.$uid.'}' . "\n");
+        fwrite($fh, $header2);
 //  global $dbh, $exam;
 //    print_r($questions);
 //    die;
@@ -165,11 +178,11 @@ function printfinished_cli() {
 //                $latexed2 = preg_replace('\s+', "\\\\[10pt]\n", $latexed2);
                     $latexed2 = preg_replace('#<hr\s*/?>#', " \Qlines{1} ", $latexed2);
                     $latexed2 = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $latexed2);
-                    $subAnswer = $exam->getSubAnswerUser($uid, $question_id, $section);
+                    $subAnswer = $exam->getSubAnswerUser($answers, $uid, $question_id, $section);
                     if ($subAnswer === '') {
                         $subAnswer = 'Nezodpovedané.';
                     }
-                    fwrite($fh, '\item ' . $section . ") " . $latexed2 . '\Qtab{5.5cm}{\hskip0.5cm' . '\textbf{' . $subAnswer . '}' . '}');
+                    fwrite($fh, '\item ' . $section . ") " . $latexed2 . '\hskip0.5cm' . '\textbf{' . $subAnswer . '}' . '');
                 }
             }
             fwrite($fh, '\end{Qlist}');

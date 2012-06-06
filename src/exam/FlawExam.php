@@ -291,8 +291,8 @@ class FlawExam {
         return $userPoints;
     }
 
-    public function getSubAnswerUser($pid, $qorder, $qsubord) {
-        $userAnswers = $this->getUserAnswers($pid);
+    public function getSubAnswerUser($userAnswers, $pid, $qorder, $qsubord) {
+        //$userAnswers = $this->getUserAnswers($pid);
         foreach ($userAnswers as $userAnswer) {
             if (($userAnswer->qorder == $qorder) && ($userAnswer->qsubord == $qsubord) && ($userAnswer->useranswer != '')) {
                 if ($userAnswer->useranswer == 'true') {
