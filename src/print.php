@@ -1,7 +1,7 @@
 <?php
 
 $header = '\documentclass[a4paper,10pt,BCOR10mm,oneside,headsepline]{scrartcl}' . "\n" .
-        '\usepackage[ngerman]{babel}' . "\n" .
+        '\usepackage[slovak]{babel}' . "\n" .
         '\usepackage[utf8]{inputenc}' . "\n" .
         '\usepackage{wasysym}% provides \ocircle and \Box' . "\n" .
         '\usepackage{enumitem}% easy control of topsep and leftmargin for lists' . "\n" .
