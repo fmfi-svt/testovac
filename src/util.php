@@ -36,6 +36,10 @@ function user_closed($user) {
     time() > $user->begintime + $exam->getServerTimeLimit();
 }
 
+function user_printed($user) {
+  return $user->printed;
+}
+
 function build_query($query_template, $fields) {
   return preg_replace_callback('/{([^|]+)\|([^|]+)\|([^}]+)}/',
     function ($matches) use ($fields) {

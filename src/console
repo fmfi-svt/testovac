@@ -26,6 +26,18 @@ else if ($_SERVER['argv'][1] == 'givetime' && isset($_SERVER['argv'][2]) && isse
   require 'src/givetime.php';
   givetime_cli();
 }
+else if ($_SERVER['argv'][1] == 'printfinished') {
+  require 'src/print.php';
+  printfinished_cli();
+}
+else if (($_SERVER['argv'][1] == 'printexam') && isset($_SERVER['argv'][2]) && $_SERVER['argv'][2] == '--large' && isset($_SERVER['argv'][3])) {
+  require 'src/print.php';
+  printexamlarge_cli($_SERVER['argv'][3]);
+}
+else if ($_SERVER['argv'][1] == 'exportresults') {
+  require 'src/results.php';
+  exportresults_cli();
+}
 else {
   print 'usage: php '.$_SERVER['argv'][0].' <action>'."\n";
   print 'actions:'."\n";
@@ -33,4 +45,7 @@ else {
   print '  import questions.xml'."\n";
   print '  droptables --delete-everything'."\n";
   print '  givetime <pid> <extra minutes>'."\n";
+  print '  printfinished'."\n";
+  print '  printexam --large <pid>'."\n";
+  print '  exportresults'."\n";
 }
