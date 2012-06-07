@@ -270,15 +270,14 @@ order by uq.qorder,sq.qsubord;
         return $userAnswers;
     }
 
-    public function getUserPoints($pid) {
-        $userAnswers = $this->getUserAnswers($pid);
-        $userPoints = 0;
+    public function getUserPoints($userAnswers) {
+        $userPointsNom = 0;
         foreach ($userAnswers as $userAnswer) {
             if ($userAnswer->useranswer === $userAnswer->correctanswer) {
-                $userPoints += $userAnswer->points;
+                  $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
             }
         }
-        return $userPoints;
+        return $userPointsNom;
     }
 
     public function getSubAnswerUser($userAnswers, $qorder, $qsubord) {

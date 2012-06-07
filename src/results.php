@@ -12,8 +12,9 @@ function exportresults_cli() {
 
     $body = '';
     foreach ($users as $user) {
-        $vysledneBody = $exam->getUserPoints($user->pid);
-        $body .= "'$user->pid' => array($vysledneBody, 1),\n";
+        $userAnswers = $exam->getUserAnswers($user->pid);
+        $vysledneBody = $exam->getUserPoints($userAnswers);
+        $body .= "'$user->pid' => array($vysledneBody, 6),\n";
     }
     fwrite($fh, $body);
     
