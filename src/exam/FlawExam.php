@@ -243,13 +243,22 @@ class FlawExam {
     public function getUserAnswers($pid) {
         global $dbh;
         
-        $sql = "select uq.qorder,sq.qid,sq.qsubord,sq.value as correctanswer,e.value as useranswer,b.points, sb.numberofsubquestions as nsq,q.body as questionbody,sq.body as subquestionbody 
+        $sql = "
+select uq.qorder,sq.qid,sq.qsubord,sq.value as correctanswer,
+       e.value as useranswer,b.points, sb.numberofsubquestions as nsq,
+       q.body as questionbody,sq.body as subquestionbody 
 from (user_questions as uq
      join subquestions as sq 
      on uq.qid = sq.qid)
      left join events as e
         on uq.pid = e.pid and uq.qorder = e.qorder and 
            sq.qsubord = e.qsubord
+     left join (
+       select pid as pid2,qorder as qorder2,qsubord as qsubord2,
+              max(serial) as maxser
+       from events group by pid2,qorder2,qsubord2
+     ) as maxserial on e.pid= pid2 and e.qorder = qorder2 and e.qsubord = qsubord2 
+                       and e.serial = maxser
      join questions as q on uq.qid = q.qid
      join subbody as sb on sb.qid = uq.qid
      join buckets as b on q.bid = b.bid
