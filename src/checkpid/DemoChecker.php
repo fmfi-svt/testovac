@@ -7,7 +7,7 @@ class DemoChecker {
     return (preg_match('/^[1-9][0-9]{15}$/', $pid) && ($pid[15] == '7'));
   }
 
-  public function generateDemoPid() {
+  public function generatePid($demo = false) {
     return '4567456745674567';
   }
 }

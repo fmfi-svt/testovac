@@ -15,8 +15,9 @@ function _save_get_user($pid, $sessid) {
 }
 
 function save_jsonapi() {
+  $events = isset($_POST['events']) ? getarg('events', 'array') : array();
   json_out(save_action(getarg('pid', 'string'), getarg('sessid', 'int'),
-      getarg('savedEvents', 'int'), getarg('events', 'array')));
+      getarg('savedEvents', 'int'), $events));
 }
 
 function save_action($pid, $sessid, $clientSavedEvents, $events) {
@@ -75,7 +76,7 @@ function save_action($pid, $sessid, $clientSavedEvents, $events) {
 
   $dbh->commit();
 
-  return array('savedEvents' => $newSavedEvents);
+  return array('savedEvents' => $newSavedEvents, 'beginTime' => (int)$user->begintime);
 }
 
 function close_jsonapi() {

@@ -2,4 +2,10 @@
 .*
 !.gitignore
 !.htaccess
+/nbproject
+/TODO.txt
 /config.php
+/aux
+/spool
+/exams
+/results

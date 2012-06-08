@@ -1,6 +1,13 @@
 <?php
+$client_config = (object)array(
+  'disableRefresh' => $config->disable_refresh,
+  'attemptTimeCorrection' => $config->attempt_time_correction,
+  'saveAfterEmit' => $config->save_after_emit,
+  'savingInterval' => $config->saving_interval,
+  'timeLimit' => $exam->getClientTimeLimit(),
+);
 if ($config->demo_mode) {
-  $config->demo_pid = $pid_checker->generateDemoPid();
+  $client_config->demoPid = $pid_checker->generatePid(true);
   // TODO if demo data will be saved, we might want to check pid uniqueness
 }
 ?>
@@ -21,7 +28,7 @@ if ($config->demo_mode) {
 </noscript>
 <script type="text/javascript">
 Tester = {};
-Tester.config = <?php print json_encode($config); ?>;
+Tester.config = <?php print json_encode($client_config); ?>;
 </script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="main.js"></script>
