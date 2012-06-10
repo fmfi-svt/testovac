@@ -258,11 +258,10 @@ from (user_questions as uq
               max(serial) as maxser
        from events group by pid2,qorder2,qsubord2
      ) as maxserial on e.pid= pid2 and e.qorder = qorder2 and e.qsubord = qsubord2 
-                       and e.serial = maxser
      join questions as q on uq.qid = q.qid
      join subbody as sb on sb.qid = uq.qid
      join buckets as b on q.bid = b.bid
-where uq.pid = :pid
+where (e.serial = maxser or (e.serial is NULL and maxser is NULL)) and uq.pid = :pid
 order by uq.qorder,sq.qsubord;
 ";
 //        $sth->execute(array(':pid' => $pid));
@@ -296,9 +295,16 @@ order by uq.qorder,sq.qsubord;
     public function getUserPoints($userAnswers) {
         $userPointsNom = 0;
         foreach ($userAnswers as $userAnswer) {
+	    print $userAnswer->qorder+1 . ".";
+	    print $userAnswer->qsubord . "; ";
+	    print $userAnswer->correctanswer . "; ";
+	    print $userAnswer->useranswer . "; ";
+	    print $userAnswer->points . "; ";
+	    print $userAnswer->nsq . "; ";
             if ($this->compareAnswers($userAnswer->correctanswer,$userAnswer->useranswer)) {
-               $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
-            }
+  	       $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
+	    }
+	    print $userPointsNom . ";\n";
         }
         return $userPointsNom;
     }
