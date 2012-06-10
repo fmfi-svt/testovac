@@ -72,11 +72,11 @@ if ($vybranyKod!==null && $vybraneBody === -1) {
 <p><a href="javascript:hide('denna-forma');show('externa-forma');void(0);">zobraz výsledky pre externú formu</a></p>
 <h2>Výsledková listina pre dennú formu štúdia</h2>
 <table>
-<tr><td>poradie</td><td>body</td></tr>
+<tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
 	$poradie = 0;
 	$posledne = -1;
-	foreach ($body['denna'] as $skore) {
+	foreach ($body['denna'] as $pid => $skore) {
 		if ($skore != $posledne) $poradie++;
 		$posledne = $skore;
 		if ($vybranaForma == 'denna' && $vybraneBody == $skore) {
@@ -84,7 +84,7 @@ if ($vybranyKod!==null && $vybraneBody === -1) {
 			$vybraneBody = -1;
 		}
 		else echo "<tr>";
-		echo "<td>$poradie.</td><td>$skore</td></tr>";
+		echo "<td>$poradie.</td><td>$pid</td><td>$skore</td></tr>";
 	}
 	
 ?>
@@ -95,18 +95,18 @@ if ($vybranyKod!==null && $vybraneBody === -1) {
 <p><a href="javascript:hide('externa-forma');show('denna-forma');void(0);">zobraz výsledky pre dennú formu</a></p>
 <h2>Výsledková listina pre externú formu štúdia</h2>
 <table>
-<tr><td>poradie</td><td>body</td></tr>
+<tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
 	$poradie = 0;
 	$posledne = -1;
-	foreach ($body['externa'] as $skore) {
+	foreach ($body['externa'] as $pid => $skore) {
 		if ($skore != $posledne) $poradie++;
 		$posledne = $skore;
 		if ($vybranaForma == 'externa' && $vybraneBody == $skore) {
 			echo '<tr class="selected-score">';
 			$vybraneBody = -1;
 		}		else echo "<tr>";
-		echo "<td>$poradie.</td><td>$skore</td></tr>";
+		echo "<td>$poradie.</td><td>$pid</td><td>$skore</td></tr>";
 	}
 	
 ?>
