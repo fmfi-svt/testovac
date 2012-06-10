@@ -383,7 +383,7 @@ function doClose(timedOut) {
     }
 
     if (timedOut) {
-      $closing.text('Váš čas vypršal.');
+      showGlobalMessage('Váš čas vypršal. Doteraz zadané odpovede boli uložené.');
       return;
     }
 
