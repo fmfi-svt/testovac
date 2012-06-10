@@ -320,6 +320,15 @@ order by uq.qorder,sq.qsubord;
                 }
                     $result['points'] = $userAnswer->points; 
                     $result['nsq'] = $userAnswer->nsq; 
+                
+                if ($userAnswer->useranswer == 'true') {
+                $result['useranswer'] = 'Áno.';
+                }else
+                if ($userAnswer->useranswer == 'false') {
+                    $result['useranswer'] = 'Nie.';
+                } else {
+                     $result['useranswer'] = $userAnswer->useranswer;
+                }
             }
         }
         return $result;

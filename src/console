@@ -42,6 +42,10 @@ else if ($_SERVER['argv'][1] == 'exportresults') {
   require 'src/results.php';
   exportresults_cli();
 }
+else if (($_SERVER['argv'][1] == 'printevaluatedexam') && isset($_SERVER['argv'][2])) {
+  require 'src/print.php';
+  printevaluatedexam_cli($_SERVER['argv'][2]);
+}
 else {
   print 'usage: php '.$_SERVER['argv'][0].' <action>'."\n";
   print 'actions:'."\n";
@@ -51,5 +55,7 @@ else {
   print '  givetime <pid> <extra minutes>'."\n";
   print '  printfinished'."\n";
   print '  printexam --large <pid>'."\n";
+  print '  printallexams <pid>'."\n";
+  print '  printevaluatedexam <pid>'."\n";
   print '  exportresults'."\n";
 }

@@ -259,4 +259,66 @@ function printallexams_cli($uid) {
     echo shell_exec("mv aux/$uid.pdf exams");
 }
 
+function printevaluatedexam_cli($uid) {
+    global $dbh;
+
+    $sth = $dbh->prepare('SELECT * FROM users WHERE pid = :pid');
+    $sth->execute(array(':pid' => $uid));
+    $user = $sth->fetchObject();
+    if ($user === false) {
+        echo 'invalid pid';
+        return;
+    }
+    
+    global $exam;
+    global $documentHeaderNormal;
+    global $header;
+    global $header2;
+    global $footer;
+    $questions = $exam->getUserQuestions($uid);
+    $answers = $exam->getUserAnswers($uid);
+    $myFile = "aux/" . $uid . ".tex";
+    echo 'filename: ' . $myFile . "\n";
+    $fh = fopen($myFile, 'w') or die("can't open file");
+    fwrite($fh, $documentHeaderNormal);
+    fwrite($fh, $header);
+    fwrite($fh, $header2);
+    foreach ($questions as $question_id => $question) {
+        $latexed = preg_replace('#<br\s*/?>#', "", $question['body']);
+        $latexed = str_replace("\n" . '          ' . "\n" . '          ', "\n\\\\[10pt]\n", $latexed);
+        $latexed = str_replace("\n" . '          ', "\n\\\\[10pt]\n", $latexed);
+        //            $latexed = str_replace('<br>', "\\\\[10pt]",$question['body']);
+        fwrite($fh, '\Qitem{ \Qq{' . $latexed . '}');
+        fwrite($fh, '\begin{Qlist}');
+        //            print_r($question);
+        //            die;
+        foreach ($question as $section => $value) {
+            if ($section != 'body') {
+                $latexed2 = preg_replace('#<br\s*/?>#', "", $value['body']);
+                $latexed2 = str_replace("\n" . '          ' . "\n" . '          ', "\n\\\\[10pt]\n", $latexed2);
+                //                $latexed2 = str_replace('          ', "\n\\\\[10pt]\n",  $latexed2);
+                //                $latexed2 = preg_replace('\s+', "\\\\[10pt]\n", $latexed2);
+                $latexed2 = preg_replace('#<hr\s*/?>#', " \Qlines{1} ", $latexed2);
+                $latexed2 = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $latexed2);
+                $subAnswer = $exam->getCompleteSubAnswerUser($answers, $question_id, $section);
+                if ($subAnswer['useranswer'] === $subAnswer['correctanswer']) {
+                    $points = $subAnswer['points'].'/'. $subAnswer['nsq'];
+                } else {
+                    $points = 0;
+                }
+                fwrite($fh, '\item ' . $section . ") " . $latexed2 . '\hskip0.5cm' . ' Odpoveď: ' . '\textbf{' . $subAnswer['useranswer'] . '} Správna odpoveď: \hskip0.5cm' . '\textbf{' . $subAnswer['correctanswer'] . '} ' . 'Max. počet bodov: \textbf{' . $subAnswer['points'].'/'. $subAnswer['nsq']. '}' . ' Získaný počet bodov: \textbf{' . $points . '}');
+            }
+        }
+        fwrite($fh, '\end{Qlist}');
+        fwrite($fh, '}' . "\n");
+    }
+    $totalPoints = round($exam->getUserPoints($answers)/6.0, 3);
+    fwrite($fh, 'Maximálny možný počet bodov za test: 2400'."\n");
+    fwrite($fh, 'Počet získaných bodov za test: '."$totalPoints\n");
+    fwrite($fh, $footer);
+    fclose($fh);
+    echo shell_exec("/usr/local/texlive/2011/bin/i386-linux/pdfcslatex -output-directory aux $uid.tex");
+    echo shell_exec("mv aux/$uid.pdf evaluatedexams");
+}
+
 ?>
