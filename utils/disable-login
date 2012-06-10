@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp /var/www/testovac/config.php.disabled /var/www/testovac/config.php

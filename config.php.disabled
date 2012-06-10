@@ -1,0 +1,40 @@
+<?php
+
+$config = (object)array(
+  // v demo mode sa prihlasuje umelym kodom
+  'demo_mode' => FALSE,
+
+  // ci sa ma pokusat o casovu synchronizaciu so serverom
+  // (samozrejme vsade kde sa da chceme radsej NTP, to je presnejsie)
+  'attempt_time_correction' => FALSE,
+
+  // ci sa ma zakazat refreshovanie testovaca klavesovymi skratkami
+  'disable_refresh' => TRUE,
+
+  // ci sa ma po kazdom evente (kliknuti apod.) spustit saveEvents
+  // (vynimka: ak prave nejaky saveEvents bezi, nic sa nestane)
+  'save_after_emit' => TRUE,
+
+  // kazdych kolko milisekund sa ma spustit saveEvents (0 = vypnut)
+  // (vynimka: ak prave nejaky saveEvents bezi, nic sa nestane)
+  'saving_interval' => 15000,
+
+  // ci je prave zablokovane prihlasovanie, lebo prebieha poucenie
+  'login_blocked' => TRUE,
+);
+
+require 'src/exam/FlawExam.php';
+$exam = new FlawExam();
+
+require 'src/checkpid/VerhoeffChecker.php';
+$pid_checker = new VerhoeffChecker();
+
+function connect_db() {
+  $dsn = 'mysql:host=localhost;dbname=testovac';
+  $username = 'testovac';
+  $password = 'password';
+  $options = array();
+  return new PDO($dsn, $username, $password, $options);
+}
+$dbh = connect_db();
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

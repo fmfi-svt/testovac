@@ -18,7 +18,7 @@ group by e.pid
 order by u.pid;
 ";
 
-my $cmd = "mysql -N -u root demo";
+my $cmd = "mysql -N -u root testovac";
 
 print "Vytlacene: ";
 print `$cmd -e '$query2'`;

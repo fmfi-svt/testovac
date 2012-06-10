@@ -1,0 +1,3 @@
+#!/bin/bash
+
+cp /var/www/testovac/config.php.enabled /var/www/testovac/config.php
