@@ -291,6 +291,7 @@ function printevaluatedexam_cli($uid) {
     $fh = fopen($myFile, 'w') or die("can't open file");
     fwrite($fh, $documentHeaderNormal);
     fwrite($fh, $header);
+    fwrite($fh, '\ihead{'.$uid.'}' . "\n");
     fwrite($fh, $header2);
     foreach ($questions as $question_id => $question) {
         $latexed = preg_replace('#<br\s*/?>#', "", $question['body']);

@@ -296,9 +296,9 @@ order by uq.qorder,sq.qsubord;
     public function getUserPoints($userAnswers) {
         $userPointsNom = 0;
         foreach ($userAnswers as $userAnswer) {
-	    if ($this->compareAnswers($userAnswer->correctanswer,$userAnswer->useranswer)) {
-  	       $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
-	    }
+            if ($this->compareAnswers($userAnswer->correctanswer,$userAnswer->useranswer)) {
+               $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
+            }
         }
         return $userPointsNom;
     }
