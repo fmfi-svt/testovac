@@ -279,12 +279,26 @@ order by uq.qorder,sq.qsubord;
         return $userAnswers;
     }
 
+    public function compareAnswers($correctanswer,$useranswer) {
+       $good = 0;
+       if ($correctanswer === 'true' || $correctanswer === 'false') {
+         if ($correctanswer === $useranswer) {
+  	    $good = 1;
+	 }
+       } elseif (strlen($useranswer)>0 && 0.0 + $correctanswer === 0.0 + $useranswer) {
+	    $good = 1;
+       } 
+
+       //print "Porovnavam $correctanswer a $useranswer -> $good\n";
+       return $good;
+    }
+
     public function getUserPoints($userAnswers) {
         $userPointsNom = 0;
         foreach ($userAnswers as $userAnswer) {
-            if ($userAnswer->useranswer === $userAnswer->correctanswer) {
-                  $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
-            }
+	    if ($this->compareAnswers($userAnswer->correctanswer,$userAnswer->useranswer)) {
+  	       $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
+	    }
         }
         return $userPointsNom;
     }
@@ -293,12 +307,6 @@ order by uq.qorder,sq.qsubord;
         //$userAnswers = $this->getUserAnswers($pid);
         foreach ($userAnswers as $userAnswer) {
             if (($userAnswer->qorder == $qorder) && ($userAnswer->qsubord == $qsubord) && ($userAnswer->useranswer != '')) {
-                if ($userAnswer->useranswer == 'true') {
-                    return 'Áno.';
-                }
-                if ($userAnswer->useranswer == 'false') {
-                    return 'Nie.';
-                }
                 return $userAnswer->useranswer; 
             }
         }
@@ -310,25 +318,10 @@ order by uq.qorder,sq.qsubord;
         $result = array();
         foreach ($userAnswers as $userAnswer) {
             if (($userAnswer->qorder == $qorder) && ($userAnswer->qsubord == $qsubord)) {
-                if ($userAnswer->correctanswer == 'true') {
-                    $result['correctanswer'] = 'Áno.';
-                }else
-                if ($userAnswer->correctanswer == 'false') {
-                    $result['correctanswer'] = 'Nie.';
-                } else {
-                     $result['correctanswer'] = $userAnswer->correctanswer;
-                }
+                    $result['correctanswer'] = $userAnswer->correctanswer;
                     $result['points'] = $userAnswer->points; 
                     $result['nsq'] = $userAnswer->nsq; 
-                
-                if ($userAnswer->useranswer == 'true') {
-                $result['useranswer'] = 'Áno.';
-                }else
-                if ($userAnswer->useranswer == 'false') {
-                    $result['useranswer'] = 'Nie.';
-                } else {
-                     $result['useranswer'] = $userAnswer->useranswer;
-                }
+                    $result['useranswer'] = $userAnswer->useranswer;
             }
         }
         return $result;

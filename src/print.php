@@ -182,10 +182,7 @@ function printfinished_cli() {
                     $latexed2 = preg_replace('#<hr\s*/?>#', " \Qlines{1} ", $latexed2);
                     $latexed2 = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $latexed2);
                     $subAnswer = $exam->getSubAnswerUser($answers, $question_id, $section);
-                    if ($subAnswer === '') {
-                        $subAnswer = 'Nezodpovedané.';
-                    }
-                    fwrite($fh, '\item ' . $section . ") " . $latexed2 . '\hskip0.5cm' . '\textbf{' . $subAnswer . '}' . '');
+                    fwrite($fh, '\item ' . $section . ") " . $latexed2 . '\hskip0.5cm' . '\textbf{' . FormatAnswer($subAnswer) . '}' . '');
                 }
             }
             fwrite($fh, '\end{Qlist}');
@@ -259,6 +256,18 @@ function printallexams_cli($uid) {
     echo shell_exec("mv aux/$uid.pdf exams");
 }
 
+function FormatAnswer($answer) {
+    if (strlen($answer) === 0) {
+	$answer = "nič";
+    } elseif ($answer === "true") {
+	$answer = "áno";
+    } elseif ($answer === "false") {
+	$answer = "nie";
+    }
+
+    return $answer;
+}
+
 function printevaluatedexam_cli($uid) {
     global $dbh;
 
@@ -300,20 +309,29 @@ function printevaluatedexam_cli($uid) {
                 //                $latexed2 = preg_replace('\s+', "\\\\[10pt]\n", $latexed2);
                 $latexed2 = preg_replace('#<hr\s*/?>#', " \Qlines{1} ", $latexed2);
                 $latexed2 = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $latexed2);
+
                 $subAnswer = $exam->getCompleteSubAnswerUser($answers, $question_id, $section);
-                if ($subAnswer['useranswer'] === $subAnswer['correctanswer']) {
-                    $points = $subAnswer['points'].'/'. $subAnswer['nsq'];
+
+                if ($exam->compareAnswers($subAnswer['correctanswer'], $subAnswer['useranswer'])) {
+                    $points = $subAnswer['points'] / $subAnswer['nsq'];
                 } else {
                     $points = 0;
                 }
-                fwrite($fh, '\item ' . $section . ") " . $latexed2 . '\hskip0.5cm' . ' Odpoveď: ' . '\textbf{' . $subAnswer['useranswer'] . '} Správna odpoveď: \hskip0.5cm' . '\textbf{' . $subAnswer['correctanswer'] . '} ' . 'Max. počet bodov: \textbf{' . $subAnswer['points'].'/'. $subAnswer['nsq']. '}' . ' Získaný počet bodov: \textbf{' . $points . '}');
+
+                $maxpoints = $subAnswer['points'] / $subAnswer['nsq'];
+
+                fwrite($fh,
+                    '\item ' . $section . ") " . $latexed2 . "\\\\" .
+                    '\textbf{' . sprintf("%4.2f", $points) . "; " . FormatAnswer($subAnswer['useranswer']) . '}' .
+                    ' (' . sprintf("%4.2f", $maxpoints) . "; " . FormatAnswer($subAnswer['correctanswer']) . ')'
+                );
             }
         }
         fwrite($fh, '\end{Qlist}');
         fwrite($fh, '}' . "\n");
     }
     $totalPoints = round($exam->getUserPoints($answers)/6.0, 3);
-    fwrite($fh, 'Maximálny možný počet bodov za test: 2400'."\n");
+    fwrite($fh, 'Maximálny možný počet bodov za test: 2400'."\\\\\n");
     fwrite($fh, 'Počet získaných bodov za test: '."$totalPoints\n");
     fwrite($fh, $footer);
     fclose($fh);
