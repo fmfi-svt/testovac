@@ -1,0 +1,41 @@
+#!/bin/bash
+
+dump_database() {
+  echo "Dumping database"
+  mysqldump -uroot testovac > /media/KINGSTON/H-server/H-$1.sql
+}
+
+backup_pdfs() {
+  echo "Backing up PDFs ..."
+  cp -a /var/www/testovac/spool/$1/ /media/KINGSTON/H-server/H-$1/
+}
+
+
+if [ -z "$1" ]
+then
+  echo "backup <name of current archived dir>"
+  echo "  ex. backup Pon1"
+  exit 85
+fi
+
+if [ ! -d "/media/KINGSTON" ]
+then
+  echo "USB key not mounted! Exiting."
+  exit 1
+fi
+
+if [ -f "/media/KINGSTON/H-server/H-$1.sql" ]
+then
+  echo "Backup of database exists! Skipping"
+else
+  dump_database $1
+fi
+
+if [ -d "/media/KINGSTON/H-server/H-$1/" ]
+then
+  echo "Backup directory for PDFs exists! Exiting."
+else
+  backup_pdfs $1
+fi
+
+exit 0

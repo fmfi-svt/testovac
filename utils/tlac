@@ -1,11 +1,10 @@
 #!/bin/bash
 
-echo "Printing started."
+count=1
 
-for fn in `ls *.pdf`
+for fn in /var/www/testovac/spool/*.pdf
 do
-  echo "Printing $fn"
+  echo "$count. printing $fn"
   lpr $fn
+  count=$(($count+1))
 done
-
-echo "Printing done."

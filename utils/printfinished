@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+  echo "printfinished backup_dir"
+  echo "  ex. printfinished Pon1"
+  exit 85
+fi
+
+echo "Creating PDFs ..."
+/var/www/testovac/src/console printfinished
+
+echo "Printing ..."
+/var/www/testovac/utils/tlac
+
+read -p "After successful printing press [Enter] to move PDFs into backup dir ..."
+
+if [ ! -d /var/www/testovac/spool/$1/ ]
+then
+  echo "Creating new backup directory /var/www/testovac/spool/$1/"
+  mkdir /var/www/testovac/spool/$1/
+  chmod 700 /var/www/testovac/spool/$1/
+fi
+
+echo "Moving PDFs into /var/www/testovac/spool/$1/"
+mv /var/www/testovac/spool/*.pdf /var/www/testovac/spool/$1/
+chmod 600 /var/www/testovac/spool/$1/*
+
+exit 0
