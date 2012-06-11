@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Printing started."
+
+for fn in `ls *.pdf`
+do
+  echo "Printing $fn"
+  lpr $fn
+done
+
+echo "Printing done."

@@ -5,8 +5,8 @@ chown -R rios:www-data .
 chmod -R u=rwX .
 chmod -R g=rX .
 chmod -R o= .
-chmod -R g= utils .git aux exams evaluatedexams results spool
+chmod -R g= utils .git aux exams evaluatedexams results spool config.php.enabled config.php.disabled
 chmod g= demo.xml config.default.php .gitignore INSTALL.txt
 chmod g= src/console src/givetime.php src/import.php src/print.php src/results.php src/schema.php
-chmod u=rwx utils/monitor.pl utils/setpermissions
+chmod u=rwx utils/*
 chmod g= web/base.css.diff
