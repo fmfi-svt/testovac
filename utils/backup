@@ -1,16 +1,5 @@
 #!/bin/bash
 
-dump_database() {
-  echo "Dumping database"
-  mysqldump -uroot testovac > /media/KINGSTON/H-server/H-$1.sql
-}
-
-backup_pdfs() {
-  echo "Backing up PDFs ..."
-  cp -a /var/www/testovac/spool/$1/ /media/KINGSTON/H-server/H-$1/
-}
-
-
 if [ -z "$1" ]
 then
   echo "backup <name of current archived dir>"
@@ -18,24 +7,49 @@ then
   exit 85
 fi
 
+USB_DRIVE=/media/KINGSTON/H-server/
+H_SERVER=/var/www/h-server/
+
 if [ ! -d "/media/KINGSTON" ]
 then
   echo "USB key not mounted! Exiting."
   exit 1
 fi
 
-if [ -f "/media/KINGSTON/H-server/H-$1.sql" ]
-then
-  echo "Backup of database exists! Skipping"
-else
-  dump_database $1
-fi
+DB_FILE_BACKUP=${USB_DRIVE}${1}.sql
 
-if [ -d "/media/KINGSTON/H-server/H-$1/" ]
-then
-  echo "Backup directory for PDFs exists! Exiting."
-else
-  backup_pdfs $1
-fi
+PDF_DIR=${C_SERVER}spool/$1/
+PDF_DIR_BACKUP=${USB_DRIVE}$1/
+
+dump_database() {
+  if [ ! -f "$DB_FILE_BACKUP" ]
+  then
+    echo "Dumping database"
+    echo "$DB_FILE_BACKUP"
+    mysqldump -uroot testovac > $DB_FILE_BACKUP
+  else
+    echo "Backup of database exists! Skipping"
+  fi
+}
+
+backup_pdfs() {
+  if [ -d "$PDF_DIR" ]
+  then
+    if [ ! -f "$PDF_DIR_BACKUP" ]
+    then
+      echo "Backing up PDFs ..."
+      echo "$PDF_DIR"
+      echo "$PDF_DIR_BACKUP"
+      cp -a $PDF_DIR $PDF_DIR_BACKUP
+    else
+      echo "Pdf dir backup does exist! Skipping"
+    fi
+  else
+    echo "Pdf dir does not exist! Skipping"
+  fi
+}
+
+dump_database
+backup_pdfs
 
 exit 0
