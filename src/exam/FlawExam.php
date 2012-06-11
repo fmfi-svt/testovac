@@ -242,7 +242,8 @@ class FlawExam {
 
     public function getUserAnswers($pid) {
         global $dbh;
-        
+
+/*        
         $sql = "
 select uq.qorder,sq.qid,sq.qsubord,sq.value as correctanswer,
        e.value as useranswer,b.points, sb.numberofsubquestions as nsq,
@@ -264,6 +265,35 @@ from (user_questions as uq
 where (e.serial = maxser or (e.serial is NULL and maxser is NULL)) and uq.pid = :pid
 order by uq.qorder,sq.qsubord;
 ";
+*/
+
+$sql = "
+select uq.qorder,sq.qid,sq.qsubord,sq.value as correctanswer,
+       e.value as useranswer,b.points, sb.numberofsubquestions as nsq,
+       q.body as questionbody,sq.body as subquestionbody
+from (user_questions as uq
+     join subquestions as sq
+     on uq.qid = sq.qid)
+     left join events as e
+        on uq.pid = e.pid and uq.qorder = e.qorder and
+           sq.qsubord = e.qsubord
+     left join (
+       select pid as pid2,qorder as qorder2,qsubord as qsubord2,
+              max(serial) as maxser
+       from events
+       where pid = :pid
+       group by pid2,qorder2,qsubord2
+       order by pid2, qorder2, qsubord2
+     ) as maxserial on e.pid= pid2 and e.qorder = qorder2 and e.qsubord = qsubord2
+     join questions as q on uq.qid = q.qid
+     join subbody as sb on sb.qid = uq.qid
+     join buckets as b on q.bid = b.bid
+where (e.serial = maxser or (e.serial is NULL and maxser is NULL))
+and uq.pid = :pid
+order by uq.qorder,sq.qsubord;
+";
+
+
 //        $sth->execute(array(':pid' => $pid));
 //        print_r($sth);
         try {
@@ -295,16 +325,16 @@ order by uq.qorder,sq.qsubord;
     public function getUserPoints($userAnswers) {
         $userPointsNom = 0;
         foreach ($userAnswers as $userAnswer) {
-	    print $userAnswer->qorder+1 . ".";
-	    print $userAnswer->qsubord . "; ";
-	    print $userAnswer->correctanswer . "; ";
-	    print $userAnswer->useranswer . "; ";
-	    print $userAnswer->points . "; ";
-	    print $userAnswer->nsq . "; ";
+//	    print $userAnswer->qorder+1 . ".";
+//	    print $userAnswer->qsubord . "; ";
+//	    print $userAnswer->correctanswer . "; ";
+//	    print $userAnswer->useranswer . "; ";
+//	    print $userAnswer->points . "; ";
+//	    print $userAnswer->nsq . "; ";
             if ($this->compareAnswers($userAnswer->correctanswer,$userAnswer->useranswer)) {
   	       $userPointsNom += ($userAnswer->points*6/$userAnswer->nsq);
 	    }
-	    print $userPointsNom . ";\n";
+//	    print $userPointsNom . ";\n";
         }
         return $userPointsNom;
     }
