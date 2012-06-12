@@ -13,7 +13,7 @@ echo "Creating PDFs ..."
 echo "Printing ..."
 /var/www/testovac/utils/tlac
 
-read -p "After successful printing press [Enter] to move PDFs into backup dir ..."
+#read -p "After successful printing press [Enter] to move PDFs into backup dir ..."
 
 if [ ! -d /var/www/testovac/spool/$1/ ]
 then
