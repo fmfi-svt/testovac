@@ -109,7 +109,7 @@ function printexamlarge_cli($uid) {
         $latexed = str_replace("\n" . '          ' . "\n" . '          ', "\n\\\\[10pt]\n", $latexed);
         $latexed = str_replace("\n" . '          ', "\n\\\\[10pt]\n", $latexed);
         //            $latexed = str_replace('<br>', "\\\\[10pt]",$question['body']);
-        fwrite($fh, '\Qitem{ \Qq{' . $latexed . '}');
+        fwrite($fh, '\Qitem{ \Qq{ \bf{' . $latexed . '}}');
         fwrite($fh, '\begin{Qlist}');
         //            print_r($question);
         //            die;
@@ -121,7 +121,7 @@ function printexamlarge_cli($uid) {
                 //                $latexed2 = preg_replace('\s+', "\\\\[10pt]\n", $latexed2);
                 $latexed2 = preg_replace('#<hr\s*/?>#', " \Qlines{1} ", $latexed2);
                 $latexed2 = preg_replace("/&#?[a-z0-9]{2,8};/i", "", $latexed2);
-                fwrite($fh, '\item ' . $section . ") " . $latexed2);
+                fwrite($fh, '\item \bf{' . $section . "}) " . $latexed2);
             }
         }
         fwrite($fh, '\end{Qlist}');
