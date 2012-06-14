@@ -36,8 +36,8 @@ doručené do vlastných rúk.
 	}
 	
 	foreach ($bodyH as $kod => $zlomok) {
-		if (!empty($body['denna'][$kod])) $body['denna'][$kod] = round($body['denna'][$kod]+($zlomok[0]/$zlomok[1]),2);
-		else if (!empty($body['externa'][$kod])) $body['externa'][$kod] = round($body['externa'][$kod]+($zlomok[0]/$zlomok[1]),2);
+		if (isset($body['denna'][$kod])) $body['denna'][$kod] = round($body['denna'][$kod]+($zlomok[0]/$zlomok[1]),3);
+		else if (isset($body['externa'][$kod])) $body['externa'][$kod] = round($body['externa'][$kod]+($zlomok[0]/$zlomok[1]),3);
 		else throw new Exception('Nenašli sa body z vysvedčenia pre jeden z kódov.');
 	}
 
@@ -68,23 +68,26 @@ if ($vybranyKod!==null && $vybraneBody === -1) {
 ?>
 </p>
 <hr/>
+<h2>Priebežné výsledky prijímacích pohovorov, 11.-13.6.2012</h2>
 <div id="denna-forma"<?php if ($vybranaForma != 'denna') echo ' style="display:none;"'?>>
 <p><a href="javascript:hide('denna-forma');show('externa-forma');void(0);">zobraz výsledky pre externú formu</a></p>
-<h2>Výsledková listina pre dennú formu štúdia</h2>
+<h2>Denná forma štúdia</h2>
 <table>
 <tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
 	$poradie = 0;
+	$vypisporadie = 0;
 	$posledne = -1;
 	foreach ($body['denna'] as $pid => $skore) {
-		if ($skore != $posledne) $poradie++;
+		$poradie++;
+		if ($skore != $posledne) $vypisporadie = $poradie; 
 		$posledne = $skore;
 		if ($vybranaForma == 'denna' && $vybraneBody == $skore) {
 			echo '<tr class="selected-score">';
-			$vybraneBody = -1;
+			//$vybraneBody = -1;
 		}
 		else echo "<tr>";
-		echo "<td>$poradie.</td><td>$pid</td><td>$skore</td></tr>";
+		printf("<td align=right>%d.</td><td>$pid</td><td>%.03f</td></tr>\n",$vypisporadie,$skore);
 	}
 	
 ?>
@@ -93,7 +96,7 @@ if ($vybranyKod!==null && $vybraneBody === -1) {
 
 <div id="externa-forma"<?php if ($vybranaForma != 'externa') echo ' style="display:none;"'?>>
 <p><a href="javascript:hide('externa-forma');show('denna-forma');void(0);">zobraz výsledky pre dennú formu</a></p>
-<h2>Výsledková listina pre externú formu štúdia</h2>
+<h2>Externá forma štúdia</h2>
 <table>
 <tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
