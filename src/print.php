@@ -340,4 +340,12 @@ function printevaluatedexam_cli($uid) {
     echo shell_exec("mv aux/$uid.pdf evaluatedexams");
 }
 
+function printallevaluatedexams_cli() {
+  global $exam;
+  $users = $exam->getUsers();
+  foreach ($users as $user) {
+    printevaluatedexam_cli($user->pid);
+    echo $user->pid."\n";
+  }
+}
 ?>

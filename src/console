@@ -42,6 +42,10 @@ else if ($_SERVER['argv'][1] == 'exportresults') {
   require 'src/results.php';
   exportresults_cli();
 }
+else if (($_SERVER['argv'][1] == 'printevaluatedexam') && isset($_SERVER['argv'][2]) && $_SERVER['argv'][2] == '--all') {
+  require 'src/print.php';
+  printallevaluatedexams_cli();
+}
 else if (($_SERVER['argv'][1] == 'printevaluatedexam') && isset($_SERVER['argv'][2])) {
   require 'src/print.php';
   printevaluatedexam_cli($_SERVER['argv'][2]);
@@ -57,5 +61,6 @@ else {
   print '  printexam --large <pid>'."\n";
   print '  printallexams <pid>'."\n";
   print '  printevaluatedexam <pid>'."\n";
+  print '  printevaluatedexam --all'."\n";
   print '  exportresults'."\n";
 }
