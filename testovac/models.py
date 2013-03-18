@@ -86,9 +86,17 @@ def droptables(app, *args):
 droptables.help = '  $0 droptables --delete-everything'
 
 
+def import_(app, filename):
+    db = app.DbSession()
+    exam.import_questions(models, db, filename)
+    db.close()
+import_.help = '  $0 import questions.xml'
+
+
 commands = {
     'initschema': initschema,
     'droptables': droptables,
+    'import': import_,
 }
 
 
