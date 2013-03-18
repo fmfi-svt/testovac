@@ -17,6 +17,9 @@ save_after_emit = True
 # (vynimka: ak prave nejaky saveEvents bezi, nic sa nestane)
 saving_interval = 15000
 
+# ci je prave zablokovane prihlasovanie, lebo prebieha poucenie
+login_blocked = False
+
 # ktory exam
 from .exam import flaw as exam
 

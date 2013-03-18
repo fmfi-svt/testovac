@@ -25,6 +25,21 @@ def add_exam_models(models):
         Column('bid', Integer, ForeignKey('buckets.bid'), nullable=False))
 
 
+def choose_user_questions(models, db):
+    bucket_qids = {}
+    for bid, qid in db.query(models.Questions.c.bid, models.Questions.c.qid):
+        bucket_qids.setdefault(bid, []).append(qid)
+
+    result = []
+
+    for bid, size in (db.query(models.Buckets.c.bid, models.Buckets.c.size)
+                        .order_by(models.Buckets.c.border.asc())):
+        qids = bucket_qids.get(bid, [])
+        result.extend(random.sample(qids, min(size, len(qids))))
+
+    return result
+
+
 def import_questions(models, db, filename):
     from sqlalchemy.sql import func
     try:

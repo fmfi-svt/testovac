@@ -72,6 +72,36 @@ def user_closed(user):
             time.time() > user.begintime + exam.server_time_limit)
 
 
+def get_user_questions(db, pid):
+    result = {}
+
+    for qorder, body in (db
+            .query(UserQuestions.c.qorder, Questions.c.body)
+            .filter(UserQuestions.c.qid == Questions.c.qid,
+                    UserQuestions.c.pid == pid)):
+        result[qorder] = { 'body': body }
+
+    for qorder, qsubord, body, isbool in (db
+            .query(UserQuestions.c.qorder, Subquestions.c.qsubord,
+                   Subquestions.c.body,
+                   Subquestions.c.value.in_(('true', 'false')))
+            .filter(UserQuestions.c.qid == Subquestions.c.qid,
+                    UserQuestions.c.pid == pid)):
+        type = 'bool' if isbool else 'text'
+        result[qorder][qsubord] = { 'body': body, 'type': type }
+
+    result_list = [result[i] for i in xrange(len(result))]
+    return result_list
+
+
+def generate_user_questions(db, pid):
+    chosen_qids = exam.choose_user_questions(models, db)
+    for i, qid in enumerate(chosen_qids):
+        db.execute(UserQuestions.insert().values(pid=pid, qorder=i, qid=qid))
+    db.commit()
+    return get_user_questions(db, pid)
+
+
 def initschema(app):
     metadata.create_all(app.db_engine)
     create_current_events(app.db_engine)
