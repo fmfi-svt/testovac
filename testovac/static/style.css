@@ -1,0 +1,224 @@
+
+/******************************************************************************/
+/* zaklad */
+
+body {
+  font-family: "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+  text-align: justify;
+  font-size: 14px;
+}
+
+
+
+/******************************************************************************/
+/* linky a fakelinky */
+
+a, .fakelink {
+  color: #00A;
+  cursor: pointer;
+  text-decoration: none;
+}
+a:hover, .fakelink:hover {
+  color: #00E;
+  text-decoration: underline;
+}
+
+
+
+/******************************************************************************/
+/* overlay */
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 30%;
+  z-index: 1000;
+}
+
+.dialog {
+  font-size: 1.143em;   /* 16/14 */
+  width: 40em;
+  margin: auto;
+  background-color: white;
+  border: 0.6em solid #CCC;
+  border-radius: 1.5em;
+  padding: 1em;
+  text-align: center;
+}
+
+.dialog input {
+  margin: 0 0.5em;
+}
+
+
+
+/******************************************************************************/
+/* #login-form */
+
+#login-form, .global-message {
+  font-size: 2.857em;   /* 40/14 */
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+}
+
+#login-form .pid {
+  font-family: monospace;
+}
+
+#login-form p {
+  font-size: 0.625em;   /* 25/40 */
+}
+
+
+
+/******************************************************************************/
+/* #toc */
+
+#toc {
+  position: fixed;
+  right: 0;
+  width: 30em;
+  top: 0;
+  bottom: 8em;
+  background: #EEE;
+  overflow-y: auto;
+}
+
+#toc ol {
+  margin: 2em 1em 2em 3em;
+  padding: 0;
+}
+
+#toc a, #toc .fakelink {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.05em 0;
+}
+
+#toc .complete {
+  color: #AAA;
+}
+
+#toc .complete:hover {
+  color: #666;
+}
+
+
+
+/******************************************************************************/
+/* #status */
+
+#status {
+  position: fixed;
+  right: 0;
+  width: 30em;
+  height: 8em;
+  bottom: 0;
+  background: #E0E0E0;
+  overflow: hidden;
+  line-height: 1;
+}
+
+#status .pid {
+  border-top: solid #AAA 1px;
+  padding: 0.5em 0.2em 0;
+  font-size: 2.3em;
+  text-align: center;
+}
+
+#status .submit {
+  margin: 0.5em 1.6em;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+#status .submit input {
+  float: left;
+  padding: 0 0.5em;
+  text-transform: uppercase;
+}
+
+#status .submit .stopwatch {
+  font-size: 1.1em;
+  float: right;
+}
+
+
+
+/******************************************************************************/
+/* #main */
+
+#main {
+  position: fixed;
+  left: 0;
+  right: 30em;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  padding: 1em 1.5em;
+}
+
+#main #questions {
+  max-width: 60em;
+  margin: auto;
+}
+
+#main .question {
+  padding: 2em 0 2em 3em;
+  border-bottom: solid #DDD 1px;
+}
+
+#main .question h3 {
+  font-size: 1.286em;   /* 18/14 */
+  font-weight: normal;
+  margin: 0 0 1em;
+  position: relative;
+}
+
+#main .num {
+  position: absolute;
+  right: 100%;
+  text-align: right;
+}
+
+#main hr {
+  margin: 0.2em 0 0.2em 1em;
+  padding: 0;
+  border: 0;
+  border-bottom: solid gray 1px;
+  width: 35%;
+}
+
+#main .question .option {
+  margin-top: 0.9em;
+  position: relative;
+}
+
+#main .question .option .text {
+  margin-bottom: 0.2em;
+}
+
+.boolean-widget span {
+  margin-left: 1em;
+}
+
+.text-widget span {
+  margin-left: 2em;
+}
+
