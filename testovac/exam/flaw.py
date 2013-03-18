@@ -14,7 +14,7 @@ server_time_limit = client_time_limit + 30
 def add_exam_models(models):
     from sqlalchemy import Table, Column, Integer, Boolean, ForeignKey
     models.Buckets = Table('buckets', models.metadata,
-        Column('bid', Integer, nullable=False, primary_key=True),
+        Column('bid', Integer, nullable=False, primary_key=True, autoincrement=False),
         Column('border', Integer, nullable=False, index=True),
         Column('size', Integer, nullable=False),
         Column('points', Integer, nullable=False),

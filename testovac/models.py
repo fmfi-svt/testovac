@@ -20,9 +20,9 @@ Users = Table('users', metadata,
 
 Events = Table('events', metadata,
     Column('pid', String(255), ForeignKey('users.pid'), nullable=False, primary_key=True, index=True),
-    Column('serial', Integer, nullable=False, primary_key=True),
+    Column('serial', Integer, nullable=False, primary_key=True, autoincrement=False),
     Column('qorder', Integer, nullable=False),
-    Column('qsubord', Integer, nullable=False),
+    Column('qsubord', CHAR(1), nullable=False),
     Column('value', String(255)),
     Column('time', Integer, nullable=False),
     ForeignKeyConstraint(['pid', 'qorder'], ['user_questions.pid', 'user_questions.qorder']),
@@ -30,12 +30,12 @@ Events = Table('events', metadata,
 Events.key_fields = ['pid', 'qorder', 'qsubord']
 
 Questions = Table('questions', metadata,
-    Column('qid', Integer, nullable=False, primary_key=True),
+    Column('qid', Integer, nullable=False, primary_key=True, autoincrement=False),
     Column('body', UnicodeText, nullable=False),
 )
 
 Subquestions = Table('subquestions', metadata,
-    Column('qid', Integer, ForeignKey('questions.qid'), nullable=False, primary_key=True),
+    Column('qid', Integer, ForeignKey('questions.qid'), nullable=False, primary_key=True, autoincrement=False),
     Column('qsubord', CHAR(1), nullable=False, primary_key=True),
     Column('body', UnicodeText, nullable=False),
     Column('value', String(255), nullable=False),
@@ -43,7 +43,7 @@ Subquestions = Table('subquestions', metadata,
 
 UserQuestions = Table('user_questions', metadata,
     Column('pid', String(255), ForeignKey('users.pid'), nullable=False, primary_key=True),
-    Column('qorder', Integer, nullable=False, primary_key=True),
+    Column('qorder', Integer, nullable=False, primary_key=True, autoincrement=False),
     Column('qid', Integer, ForeignKey('questions.qid'), nullable=False)
 )
 
@@ -53,15 +53,16 @@ UserQuestions = Table('user_questions', metadata,
 CurrentEvents = table('current_events', *(c.copy() for c in Events.columns))
 
 def create_current_events(db_engine):
-    fields_clause = ', '.join(Events.key_fields)
-    on_clause = ' AND '.join('events.{0} = x.{0}'.format(f)
-                             for f in Events.key_fields + ['serial'])
+    drop_current_events(db_engine)
+
+    # http://stackoverflow.com/a/2111420
+    on_clause = ' AND '.join('e1.{0} = e2.{0}'.format(f)
+                             for f in Events.key_fields)
     db_engine.execute('''
-        CREATE VIEW IF NOT EXISTS current_events AS
-        SELECT events.* FROM events JOIN (
-            SELECT {0}, MAX(serial) AS serial FROM events
-            GROUP BY {0}) x
-        ON {1}'''.format(fields_clause, on_clause))
+        CREATE VIEW current_events AS
+        SELECT e1.* FROM events e1
+        LEFT OUTER JOIN events e2 ON ({0} AND e1.serial < e2.serial)
+        WHERE e2.serial IS NULL'''.format(on_clause))
 
 def drop_current_events(db_engine):
     db_engine.execute('''DROP VIEW IF EXISTS current_events''')
