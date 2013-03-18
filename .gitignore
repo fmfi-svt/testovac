@@ -1,0 +1,7 @@
+*.py[co]
+*.sqlite
+.*
+!.git*
+*~
+/*env
+local_settings.py
