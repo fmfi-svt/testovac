@@ -249,7 +249,7 @@ function showQuestions(questions, state) {
     function addSub(j) {
       function valueChanged(value) {
         stateTable[i][j] = value;
-        emitEvent({ qorder: i, qsubord: j, value: value, time: Math.floor(+new Date())/1000 });
+        emitEvent({ qorder: i, qsubord: j, value: value, time: Math.floor((+new Date())/1000) });
         updateToc();
       }
       var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
