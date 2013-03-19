@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from fractions import Fraction
 import random
 
 
@@ -38,6 +39,23 @@ def choose_user_questions(models, db):
         result.extend(random.sample(qids, min(size, len(qids))))
 
     return result
+
+
+def get_question_scores(models, db):
+    points = dict(db
+        .query(models.Questions.c.qid, models.Buckets.c.points)
+        .filter(models.Questions.c.bid == models.Buckets.c.bid))
+
+    subquestions = {}
+    for qid, qsubord in db.query(models.Subquestions.c.qid, models.Subquestions.c.qsubord):
+        subquestions.setdefault(qid, []).append(qsubord)
+
+    subpoints = {}
+    for qid, subs in subquestions.iteritems():
+        for qsubord in subs:
+            subpoints[(qid, qsubord)] = Fraction(points[qid], len(subs))
+
+    return subpoints
 
 
 def import_questions(models, db, filename):

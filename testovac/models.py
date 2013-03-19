@@ -103,6 +103,22 @@ def generate_user_questions(db, pid):
     return get_user_questions(db, pid)
 
 
+def get_results(db, pids):
+    points = exam.get_question_scores(models, db)
+    results = dict((pid, Fraction(0)) for pid in pids)
+    if not pids: return results
+    for pid, qid, qsubord in (db
+            .query(CurrentEvents.c.pid, Subquestions.c.qid, Subquestions.c.qsubord)
+            .filter(CurrentEvents.c.pid.in_(pids),
+                    CurrentEvents.c.pid == UserQuestions.c.pid,
+                    CurrentEvents.c.qorder == UserQuestions.c.qorder,
+                    UserQuestions.c.qid == Subquestions.c.qid,
+                    CurrentEvents.c.qsubord == Subquestions.c.qsubord,
+                    CurrentEvents.c.value == Subquestions.c.value)):
+        results[pid] += points[(qid, qsubord)]
+    return results
+
+
 def initschema(app):
     metadata.create_all(app.db_engine)
     create_current_events(app.db_engine)
