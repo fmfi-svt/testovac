@@ -36,9 +36,11 @@ class TestovacApp(object):
 
     def run_help(self, *args):
         print 'usage:'
-        for command in self.commands.itervalues():
-            if hasattr(command, 'help'):
-                print command.help.replace('$0', sys.argv[0])
+        for module in site_modules:
+            if hasattr(module, 'commands'):
+                for command in module.commands.itervalues():
+                    if hasattr(command, 'help'):
+                        print command.help.replace('$0', sys.argv[0])
 
     def run_command(self, args):
         command = args[0] if args else None
