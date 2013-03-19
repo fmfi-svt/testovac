@@ -73,14 +73,15 @@ def user_closed(user):
             time.time() > user.begintime + exam.server_time_limit)
 
 
-def get_user_questions(db, pid):
+def get_user_questions(db, pid, with_qid=False):
     result = {}
 
-    for qorder, body in (db
-            .query(UserQuestions.c.qorder, Questions.c.body)
+    for qorder, qid, body in (db
+            .query(UserQuestions.c.qorder, Questions.c.qid, Questions.c.body)
             .filter(UserQuestions.c.qid == Questions.c.qid,
                     UserQuestions.c.pid == pid)):
         result[qorder] = { 'body': body }
+        if with_qid: result[qorder]['qid'] = qid
 
     for qorder, qsubord, body, isbool in (db
             .query(UserQuestions.c.qorder, Subquestions.c.qsubord,
@@ -95,12 +96,12 @@ def get_user_questions(db, pid):
     return result_list
 
 
-def generate_user_questions(db, pid):
+def generate_user_questions(db, pid, with_qid=False):
     chosen_qids = exam.choose_user_questions(models, db)
     for i, qid in enumerate(chosen_qids):
         db.execute(UserQuestions.insert().values(pid=pid, qorder=i, qid=qid))
     db.commit()
-    return get_user_questions(db, pid)
+    return get_user_questions(db, pid, with_qid)
 
 
 def get_results(db, pids):

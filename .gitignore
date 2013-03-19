@@ -4,5 +4,8 @@
 !.git*
 *~
 /*env
+/aux
+/spool
+/exams
 local_settings.py
 hbody.php
