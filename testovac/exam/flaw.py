@@ -28,7 +28,9 @@ def add_exam_models(models):
 
 def choose_user_questions(models, db):
     bucket_qids = {}
-    for bid, qid in db.query(models.Questions.c.bid, models.Questions.c.qid):
+    for bid, qid in (db
+            .query(models.Questions.c.bid, models.Questions.c.qid)
+            .filter(models.Questions.c.disabled == False)):
         bucket_qids.setdefault(bid, []).append(qid)
 
     result = []

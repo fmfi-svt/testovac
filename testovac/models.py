@@ -32,6 +32,7 @@ Events.key_fields = ['pid', 'qorder', 'qsubord']
 Questions = Table('questions', metadata,
     Column('qid', Integer, nullable=False, primary_key=True, autoincrement=False),
     Column('body', UnicodeText, nullable=False),
+    Column('disabled', Boolean, nullable=False, default=False),
 )
 
 Subquestions = Table('subquestions', metadata,
