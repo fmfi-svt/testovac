@@ -1,0 +1,150 @@
+/* 
+    Document   : theme
+    Created on : May 3, 2012, 1:59:55 AM
+    Author     : jakub
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+#lean_overlay {
+    position: fixed;
+    z-index:100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    display: none;
+}
+.test {
+
+    width: 600px;
+    padding: 30px; 
+    display:none;
+
+
+    background: #FFF;
+    border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
+
+
+
+}
+root { 
+    display: block;
+}
+
+body {
+    font-family: arial;
+
+}
+
+table {
+    margin-left:auto; 
+    margin-right:auto;
+    border-collapse:collapse;
+}
+
+th {
+    font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica,
+        sans-serif;
+    color: #36494E;
+    border-right: 1px solid #C1DAD7;
+    border-bottom: 1px solid #C1DAD7;
+    border-top: 0px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: left;
+    padding: 6px 6px 6px 12px;
+
+}
+
+.log { 
+    font-family: "Andale Mono", "Monotype.com", monospace;
+    font-size: 0.8em;
+    white-space:nowrap;
+}
+
+th.cssleft {
+    border-top: 0;
+    border-left: 0;
+    border-right: 1px solid #C1DAD7;
+    background: none;
+}
+
+th.cssright {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    background: none;
+}
+tr {
+    border-right: 0px;
+    border-left: 0px;
+}
+
+td {
+    border-right: 1px solid #C1DAD7;
+    border-bottom: 1px solid #C1DAD7;
+    padding-top: 0px;
+    padding: 6px 6px 6px 12px;
+    color: #36494E;
+}
+
+td.cssunlock {
+    border-right: 0px;
+    border-left: 0px;
+}
+
+.highlight {
+    background: #F5FAFA;
+    color: #B4AA9D;
+}
+
+.hover {
+    background: #FFFF66;
+    color: #B4AA9D;
+}
+
+.hide {
+    display:none;
+}
+
+#subject-filter-wrapper {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+#header {
+    overflow: hidden;
+}
+
+.input_row {
+    background: #FFEDED;
+    color: #B4AA9D;
+}
+
+.priemery {
+    text-align: right;
+}
+
+.filterbar {
+    float:left;
+
+}
+
+#navigation {
+    float:right;
+
+    text-align: right;
+}
+
+#student-filter-wrapper {
+    float:left;
+
+}
+
