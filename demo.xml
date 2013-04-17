@@ -421,7 +421,7 @@
 <library order="27" size="1" points="50" name="K1J1">
  <question>
    <body>Aké je hlavné mesto Českej republiky?</body>
-   <answer val="true">Liberec</answer>
+   <answer val="false">Liberec</answer>
    <answer val="false">Olomouc</answer>
    <answer val="false">Ostrava</answer>
  </question>
