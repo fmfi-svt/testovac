@@ -26,15 +26,19 @@ from .exam import flaw as exam
 # ktory pid checker
 from .checkpid import verhoeff as checkpid
 
+
 def db_connect():
     from sqlalchemy import create_engine
 
-    # pool_recycle: vid http://www.sqlalchemy.org/trac/wiki/FAQ#MySQLserverhasgoneaway - ten error to hadzalo
+    # MySQL
+    # (poznamka ad pool_recycle: vid http://www.sqlalchemy.org/trac/wiki/FAQ#MySQLserverhasgoneaway - ten error to hadzalo)
 #    return create_engine('mysql://myuser:mypass@localhost/mydbname?charset=utf8', pool_recycle=7200)
 
+    # SQLite
     return create_engine('sqlite:///db.sqlite')
 
-try:
+
+# nacitame lokalne upravene nastavenia z local_settings
+import os
+if os.path.exists(os.path.dirname(__file__) + '/local_settings.py'):
     from testovac.local_settings import *
-except ImportError:
-    pass
