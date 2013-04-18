@@ -5,7 +5,7 @@ require 'include/header.php';
 
 <h1>Prijímacie konanie</h1>
 <p>    
-Prijímacie konanie sa koná v dňoch 11.6.2012-15.6.2012 v priestoroch 
+Prijímacie konanie sa koná v dňoch 11.6.2013-14.6.2013 v priestoroch 
     Fakulty matematiky, fyziky a informatiky Univerzity Komenského v Bratislave.
     Účastníci prijímacieho konania dostali bližšie pokyny o mieste a čase 
     v ktorom sa treba dostaviť na prijímacie skúšky poštou.
@@ -22,9 +22,9 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <table class="harmonogram">
 <tr><th>Registrácia poslucháreň C</th><th>Poučenie uchádzačov</th><th>Vypracovanie testu</th></tr>
 <tr><td>07:45 - 08:25 hod.</td><td>08:30 - 08:45 hod.</td><td>08:45 - 09:45 hod.</td></tr>
-<tr><td>09:45 - 10:25 hod.</td><td>10:30 - 10:45 hod.</td><td>10:45 - 11:45 hod.</td></tr>
-<tr><td>11:45 - 12:25 hod.</td><td>12:30 - 12:45 hod.</td><td>12:45 - 11:45 hod.</td></tr>
-<tr><td>13:45 - 14:25 hod.</td><td>14:30 - 14:45 hod.</td><td>14:45 - 15:45 hod.</td></tr>
+<tr><td>09:15 - 09:55 hod.</td><td>10:00 - 10:15 hod.</td><td>10:15 - 11:15 hod.</td></tr>
+<tr><td>11:45 - 12:25 hod.</td><td>12:30 - 12:45 hod.</td><td>12:45 - 13:45 hod.</td></tr>
+<tr><td>13:15 - 13:55 hod.</td><td>14:00 - 14:15 hod.</td><td>14:15 - 15:15 hod.</td></tr>
 </table>
 </p>
 <h2>Plán budovy</h2>
@@ -70,9 +70,8 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <li>prvých 20 otázok (zameraných na logické usudzovanie) má len jednu správnu odpoveď (neplatí pre slovnú úlohu);</li>
 <li>zvyšných 19 otázok (ktoré sú zamerané na kontrolu vedomostí) môžu mať aj viac správnych odpovedí, prípadne žiadnu správnu odpoveď;</li>
 <li>uchádzač sa pri vypĺňaní testu riadi pokynmi, ktoré sa mu zobrazujú na monitore;</li>
-<li>po označení odpovedí na otázky uchádzač ukončí test stlačením tlačidla „ukončiť skúšku a odoslať test na hodnotenie“;</li>
+<li>po označení odpovedí na otázky uchádzač ukončí test stlačením tlačidla „odovzdať test“;</li>
 <li>v prípade vypršania časového limitu sa test automaticky ukončí a odošle na hodnotenie;</li>
-<li>po odoslaní testu program ponúkne uchádzačovi záverečný prehľad otázok a jeho odpovedí s možnosťou vrátiť sa k vypĺňaniu testu (okrem prípadu automatického ukončenia z dôvodu vypršania časového limitu).</li>
 </ul>
 </p>
 <p>
