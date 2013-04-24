@@ -1,6 +1,7 @@
 #!/bin/bash
 
-count=171
+count=1416
+count=96
 
 rm -f tmp.txt
 > result.txt
@@ -25,8 +26,5 @@ pdflatex --shell-escape stickers.tex
 rm stickers.aux
 rm stickers.log
 rm stickers-pics.pdf
-
-pdf90 stickers.pdf
-mv stickers-rotated90.pdf stickers.pdf
 
 pdf2ps stickers.pdf
