@@ -10,17 +10,17 @@ jQuery(document).ready(function ($) {
     "use strict";
     
 
-//    $("input").keyup(function(e) {
-//        if(e.keyCode == 13) {
-//            var inputs = $(this).closest("tr").find(':input');
-//            var index = inputs.index( this );
-//            inputs.eq( index + 1 ).focus();
-//            if (piderror == true && $(this).hasClass('pidcheck')) {
-//                $(this).focus();
-//                $(this).select();
-//            }
-//        }
-//    });
+    $("input").keyup(function(e) {
+        if(e.keyCode == 13) {
+            var inputs = $(this).closest("div").find(':input');
+            var index = inputs.index( this );
+            inputs.eq( index + 1 ).focus();
+            if (piderror == true && $(this).hasClass('pidcheck')) {
+                $(this).focus();
+                $(this).select();
+            }
+        }
+    });
     
     $(".subbtn").click(function(e) {
         var p1msg = 'III. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
@@ -71,11 +71,38 @@ jQuery(document).ready(function ($) {
         }).appendTo(novyForm);
         novyForm.submit();
     });
-
+    
+    $(".subdelbtn").click(function(e) {
+        var novyForm = $('<form/>').hide().appendTo('body');
+        novyForm.attr('method', 'post');
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'id',
+            value: $(this).closest("div").find(".idsub").val()
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'info',
+            value: $(this).closest("div").find(".infosub").val()
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'delete',
+            value: 'yes'
+        }).appendTo(novyForm);
+        novyForm.submit();
+    });
+  
+    $(".closebtn").click(function(e) {
+        $("#lean_overlay").fadeOut(200);
+        $(this).closest("div").css({
+            "display": "none"
+        })
+    });
 
     // zvyraznenie row pri kliknuti na row
     $("td").click(function() {
-	$(this).closest("tr").siblings().removeClass("highlight");
+        $(this).closest("tr").siblings().removeClass("highlight");
         $(this).parents("tr").addClass("highlight");
     });
     
@@ -97,11 +124,11 @@ jQuery(document).ready(function ($) {
                 lrow.find('.priemer1check').val('');
                 lrow.find('.priemer2check').val('');
                 lrow.find("img.errorcontrol").hide();
-           	 piderror = false;
-           	 pidduplerror = false;
-            	pidrocnikerror = false;
-            	priemer1error = false;
-            	priemer2error = false;
+                piderror = false;
+                pidduplerror = false;
+                pidrocnikerror = false;
+                priemer1error = false;
+                priemer2error = false;
             }
             lastrow = r.find('.idsub').val();
         };

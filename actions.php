@@ -17,17 +17,17 @@ class Repository {
     function getAllStudents() {
         $this->db->query('SET NAMES UTF8;');
         //$query = & $this->db->query('SELECT * from Students ORDER BY sign(pid), priezvisko');
-       $query = & $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
+        $query = & $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
 left join Students as s2 on
 s1.meno = s2.meno and s1.priezvisko=s2.priezvisko and s1.datum_narodenia=s2.datum_narodenia and
 not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
-	 // Always check that result is not an error
+        // Always check that result is not an error
         if (PEAR::isError($query)) {
             die($query->getMessage());
         }
         return $query;
     }
-    
+
     function printStudents() {
         $this->db->query('SET NAMES UTF8;');
         $query = & $this->db->query('SELECT * from Students WHERE printed is null AND pid is not null ORDER BY pid');
@@ -37,19 +37,18 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         if (PEAR::isError($query)) {
             die($query->getMessage());
         }
-        
-	$logmsg = 'PRINT; ';
-	while ($query->fetchInto($row)) {
-		$pid = $row['pid'];
-		$logmsg = $logmsg . $pid . ' ';
-	}
-        
-        $logmsg = $logmsg . " , edit_by:admin , time:" . date('G-i-s+j/m/y') ;
-      	
+
+        $logmsg = 'PRINT; ';
+        while ($query->fetchInto($row)) {
+            $pid = $row['pid'];
+            $logmsg = $logmsg . $pid . ' ';
+        }
+
+        $logmsg = $logmsg . " , edit_by:admin , time:" . date('G-i-s+j/m/y');
+
         $this->writeToLog($logmsg);
-	return $retquery;
+        return $retquery;
     }
-   
 
     function exportStudents() {
         $this->db->query('SET NAMES UTF8;');
@@ -59,20 +58,28 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         if (PEAR::isError($query)) {
             die($query->getMessage());
         }
-	$logmsg = 'EXPORT; ';
-        
+        $logmsg = 'EXPORT; ';
+
         $logmsg = $logmsg . " edit_by:admin , time:" . date('G-i-s+j/m/y');
-      	
+
         $this->writeToLog($logmsg);
-	return $query;
+        return $query;
     }
- 
+
     function updateStudents() {
         $id = $_POST['id'];
         if ($id == -1) {
             return;
         }
         $logMessage = "UPDATE; ID:" . $id;
+        print_r($_POST);
+        if ($_POST['delete'] == 'yes') {
+            $sth = $this->db->prepare("UPDATE Students SET pid = NULL WHERE id=" . $id);
+            $this->db->execute($sth);
+
+            $logMessage = $logMessage . " , PID:" . $data . "  !!! POZOR VYMAZANY PID !!!";
+        }
+
         if (isset($_POST['pid'])) {
             if ($_POST['pid'] != 0) {
                 $sth = $this->db->prepare("UPDATE Students SET pid = (?) WHERE id=" . $id);
@@ -99,7 +106,7 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
             }
         }
         $logMessage = $logMessage . " , edit_by:" . $_SERVER['REMOTE_USER'] . " , time:" . date('G-i-s+j/m/y');
-        
+
         if (isset($_POST['info'])) {
             $studentname = $_POST['info'];
         }
@@ -128,6 +135,7 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         $date = $parts[2] . '-' . $parts[1] . '-' . $parts[0];
         return $date;
     }
+
 }
 
 ?>
