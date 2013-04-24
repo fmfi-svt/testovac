@@ -23,20 +23,12 @@ jQuery(document).ready(function ($) {
     });
     
     $(".subbtn").click(function(e) {
-        var p1msg = 'III. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
-        var p2msg = 'IV. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
         var pidrocnikmsg = 'PID \n -> zadaný PID je z ineho rocnika \n';
         var pidmsg = 'PID \n -> zadaný PID nie je správny \n';
         var pidduplmsg = 'PID \n -> zadaný PID sa už nachádza v databáze, zlikvidujte duplikát';
         var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: \n';
         var finalmsg = defaultmsg;
      
-        if (priemer1error == true) {
-            finalmsg = finalmsg + p1msg;
-        }
-        if (priemer2error == true) {
-            finalmsg = finalmsg + p2msg;
-        }
         if (pidrocnikerror == true) {
             finalmsg = finalmsg + pidrocnikmsg;
         }
@@ -46,8 +38,7 @@ jQuery(document).ready(function ($) {
         if (pidduplerror == true) {
             finalmsg = finalmsg + pidduplmsg;
         }
-        if (priemer1error == true || priemer2error == true || pidrocnikerror == true || 
-            piderror == true || pidduplerror == true) {
+        if (pidrocnikerror == true || piderror == true || pidduplerror == true) {
             alert(finalmsg);
             return;
         }
@@ -68,6 +59,48 @@ jQuery(document).ready(function ($) {
             type: 'hidden',
             name: 'pid',
             value: $(this).closest("div").find(".pidsub").val()
+        }).appendTo(novyForm);
+        novyForm.submit();
+    });
+    
+    $(".subavgbtn").click(function(e) {
+        var p1msg = 'III. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
+        var p2msg = 'IV. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
+        var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: \n';
+        var finalmsg = defaultmsg;
+     
+        if (priemer1error == true) {
+            finalmsg = finalmsg + p1msg;
+        }
+        if (priemer2error == true) {
+            finalmsg = finalmsg + p2msg;
+        }
+        if (priemer1error == true || priemer2error == true) {
+            alert(finalmsg);
+            return;
+        }
+            
+        var novyForm = $('<form/>').hide().appendTo('body');
+        novyForm.attr('method', 'post');
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'id',
+            value: $(this).closest("tr").find(".idsub").val()
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'info',
+            value: $(this).closest("tr").find(".infosub").val()
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'priemer1',
+            value: $(this).closest("tr").find(".priemer1sub").val()
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'priemer2',
+            value: $(this).closest("tr").find(".priemer2sub").val()
         }).appendTo(novyForm);
         novyForm.submit();
     });
