@@ -30,8 +30,9 @@ def login(request):
         questions = get_user_questions(db, pid)
         want_columns = (c for c in CurrentEvents.columns
                         if c.name not in ['pid', 'serial'])
-        state = list(db.query(CurrentEvents).filter_by(pid=pid)
-                       .values(*want_columns))
+        state = [t._asdict() for t in
+                 db.query(CurrentEvents).filter_by(pid=pid)
+                   .values(*want_columns)]
         saved_events = db.query(Events).filter_by(pid=pid).count()
     else:
         begintime = int(time.time())
