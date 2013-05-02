@@ -66,7 +66,7 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <li>čistý čas na vypracovanie skúšobného testu bude 60 minút;</li>
 <li>test obsahuje 39 otázok, z ktorých 20 je zameraných na logické usudzovanie a 19 je zameraných na overovanie vedomostí;</li>
 <li>po správnom zadaní číselného kódu sa na monitoroch objaví 39 otázok; každá otázka má tri odpovede;</li>
-<li>v každej otázke je nutné označiť správnu odpoveď (alebo správne odpovede) kliknutím do políčka „ÁNO“ a taktiež je nutné označiť aj každú nesprávnu odpoveď (alebo nesprávne odpovede) kliknutím do políčka „NIE;</li>
+<li>v každej otázke je nutné označiť správnu odpoveď (alebo správne odpovede) kliknutím do políčka „ÁNO“ a taktiež je nutné označiť aj každú nesprávnu odpoveď (alebo nesprávne odpovede) kliknutím do políčka „NIE“;</li>
 <li>prvých 20 otázok (zameraných na logické usudzovanie) má len jednu správnu odpoveď (neplatí pre slovnú úlohu);</li>
 <li>zvyšných 19 otázok (ktoré sú zamerané na kontrolu vedomostí) môžu mať aj viac správnych odpovedí, prípadne žiadnu správnu odpoveď;</li>
 <li>uchádzač sa pri vypĺňaní testu riadi pokynmi, ktoré sa mu zobrazujú na monitore;</li>
