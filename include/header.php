@@ -46,7 +46,7 @@
 			<img src="index.php_subory/menu_left.gif" style="float: left; margin-right: 8px;" alt="">
 			<ul>
 				<li><a href="index.php" title="Miesto konania" class="<?php echo ($page=="miesto"?"selected":"")?>">Priebeh</a></li>
-				<li><a href="demo.php" title="Demo" class="<?php echo ($page=="demo"?"selected":"")?>">Demo</a></li>
+				<li><a href="demo.php" title="Demo" class="<?php echo ($page=="demo"?"selected":"")?>">Ukážka testu</a></li>
 				<li><a href="vysledky.php" title="Výsledky" class="<?php echo ($page=="vysledky"?"selected":"")?>">Výsledky</a></li>
 				<li><a href="kontakt.php" title="Kontakt" class="<?php echo ($page=="kontakt"?"selected":"")?>">Kontakt</a></li>
 			</ul>

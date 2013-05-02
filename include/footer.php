@@ -13,7 +13,7 @@
 
 			<div id="content_bottom">
 				<div id="content_bottom_in">
-					Posledná aktualizácia: 08.05.2012
+					Posledná aktualizácia: 02.05.2013
 				</div>
 			</div>
 
