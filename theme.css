@@ -21,14 +21,21 @@
     display: none;
 }
 .addPid {
-    width: 600px;
+    width: 800px;
     padding: 30px; 
     display:none;
+    font-size: 2.8em;
     background: #FFF;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
     box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
 
 }
+
+input[type=text] {
+    font-size: 1.5em;
+    
+}
+
 .deletePid {
     width: 600px;
     padding: 30px; 
@@ -38,7 +45,9 @@
     box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);
 
 }
-
+.subbtn {
+    float:left;
+}
 .closebtn {
     float:right;
 }
@@ -156,3 +165,6 @@ td.cssunlock {
 
 }
 
+.hiddentr {
+    display: none;
+}

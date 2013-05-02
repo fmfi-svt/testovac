@@ -19,7 +19,7 @@ if (isset($_POST['id'])) {
         <script type="text/javascript" src="jquery.leanModal.min.js"></script>
         <script type="text/javascript">
             $(function() {
-                $('a[rel*=leanModal]').leanModal({ top : 200, closeButton: ".modal_close" });		
+                $('a[rel*=leanModal]').leanModal({ top : 200, closeButton: ".modal_close" });
             });
         </script>
     </head>
@@ -63,6 +63,7 @@ if (isset($_POST['id'])) {
                 <th style="min-width:6em">Forma</th>
                 <th style="min-width:5em">III. roč.</th>
                 <th style="min-width:5em">IV. roč.</th>
+                <th style="min-width:5em">Vytlaceny</th>
                 <th style="min-width:5em">PID</th>
                 <th style="min-width:6em" class="cssright"></th>
             </tr>
@@ -93,9 +94,14 @@ if (isset($_POST['id'])) {
                     $priemer2 = $priemer2 . '0';
                 }
                 $pid = $row['pid'];
+                if ($row['printed']==1) {
+                    $printed = 'ano';
+                } else {
+                    $printed = 'nie';
+                }
                 $info = $meno . ' ' . $priezvisko;
 
-                echo "<tr class=\"name_listing\">";
+                echo "<tr id=\"$id\" class=\"name_listing\">";
 
                 $id_name = 'id[' . $id . ']';
 
@@ -132,32 +138,34 @@ if (isset($_POST['id'])) {
                     echo $priemer2;
                 }
                 echo '</td>';
+                
+                echo '<td>';
+                echo $printed;
+                echo '</td>';
 
                 echo '<td>';
                 if ($pid <> 0) {
                     echo $pid;
-                    echo "&nbsp <a id=\"go\" rel=\"leanModal\" name=\"deletePid.$id\" href=\"#deletePid$id\">Zrus registraciu.</a>";
-                } else {
-                    echo "<a id=\"go\" rel=\"leanModal\" name=\"addPid.$id\" href=\"#addPid$id\">Pridaj PID</a>";
                 }
-
-
+                echo '</td>';
+                
+                
                 // modal window pre pridanie PID
                 echo "<div class=\"addPid\" id=addPid$id>";
                 echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
                 echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
-                echo "Meno:  $meno";
+                echo "Meno:  <b>$meno</b>";
                 echo '<br/>';
-                echo "Priezvisko:  $priezvisko";
+                echo "Priezvisko:  <b>$priezvisko</b>";
                 echo '<br/>';
                 if ($pid == 0) {
                     $pid_name = 'pid[' . $id . ']';
-                    echo "<input type=\"text\" class=\"pidcheck pid pidsub\" name=\"$pid_name\" value=\"\">";
+                    echo "<input type=\"text\" id=\"input$id\" size=\"14\" class=\"pidcheck pid pidsub\" name=\"inputText$id\" value=\"\">";
                     $numOfInputs++;
                 } else {
                     echo $pid;
                 }
-
+                echo '<br/>';
                 if ($numOfInputs > 0) {
                     echo "<input type=\"button\" class=\"subbtn\" name=\"submit\" value=\"Uložiť\">";
 
@@ -178,6 +186,23 @@ if (isset($_POST['id'])) {
                 echo "<input type=\"button\" class=\"closebtn\" value=\"Zatvorit.\">";
 
                 echo '</div>';
+
+
+
+               
+                echo '</tr>';
+                
+                
+                echo '<tr class=hiddentr>';
+                echo '<td>';
+
+                echo '</td>';
+                echo '<td>';
+                if ($pid <> 0) {
+                    echo "<a id=\"go$id\" rel=\"leanModal\" href=\"#deletePid$id\">Zrus registraciu.</a>";
+                } else {
+                    echo "<a id=\"go$id\" class=\"addClick\"rel=\"leanModal\" href=\"#addPid$id\">Pridaj PID</a>";
+                }
                 echo '</td>';
                 echo '</tr>';
             }

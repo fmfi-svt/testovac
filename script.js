@@ -22,45 +22,49 @@ jQuery(document).ready(function ($) {
         }
     });
     
-    $(".subbtn").click(function(e) {
+    $(".subbtn").focus(function(e) {
         var pidrocnikmsg = 'PID \n -> zadaný PID je z ineho rocnika \n';
         var pidmsg = 'PID \n -> zadaný PID nie je správny \n';
         var pidduplmsg = 'PID \n -> zadaný PID sa už nachádza v databáze, zlikvidujte duplikát';
         var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: \n';
         var finalmsg = defaultmsg;
-     
-        if (pidrocnikerror == true) {
-            finalmsg = finalmsg + pidrocnikmsg;
-        }
-        if (piderror == true) {
-            finalmsg = finalmsg + pidmsg;
-        }
-        if (pidduplerror == true) {
-            finalmsg = finalmsg + pidduplmsg;
-        }
-        if (pidrocnikerror == true || piderror == true || pidduplerror == true) {
-            alert(finalmsg);
-            return;
-        }
-            
-        var novyForm = $('<form/>').hide().appendTo('body');
-        novyForm.attr('method', 'post');
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'id',
-            value: $(this).closest("div").find(".idsub").val()
-        }).appendTo(novyForm);
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'info',
-            value: $(this).closest("div").find(".infosub").val()
-        }).appendTo(novyForm);
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'pid',
-            value: $(this).closest("div").find(".pidsub").val()
-        }).appendTo(novyForm);
-        novyForm.submit();
+        setTimeout(function(){
+        
+            if (pidrocnikerror == true) {
+                finalmsg = finalmsg + pidrocnikmsg;
+            }
+            if (piderror == true) {
+                finalmsg = finalmsg + pidmsg;
+            }
+            if (pidduplerror == true) {
+                finalmsg = finalmsg + pidduplmsg;
+            }
+            if (pidrocnikerror == true || piderror == true || pidduplerror == true) {
+                alert(finalmsg);
+                return;
+            }
+            var novyForm = $('<form/>').hide().appendTo('body');
+            novyForm.attr('method', 'post');
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'id',
+                value: $(this).closest("div").find(".idsub").val()
+            }).appendTo(novyForm);
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'info',
+                value: $(this).closest("div").find(".infosub").val()
+            }).appendTo(novyForm);
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'pid',
+                value: $(this).closest("div").find(".pidsub").val()
+            }).appendTo(novyForm);
+            setTimeout(function(){
+                novyForm.submit();
+            }, 1000); 
+        }, 10); 
+
     });
     
     $(".subavgbtn").click(function(e) {
@@ -102,7 +106,10 @@ jQuery(document).ready(function ($) {
             name: 'priemer2',
             value: $(this).closest("tr").find(".priemer2sub").val()
         }).appendTo(novyForm);
-        novyForm.submit();
+        setTimeout(function(){
+            novyForm.submit();
+        }, 2000); 
+        
     });
     
     $(".subdelbtn").click(function(e) {
@@ -132,7 +139,28 @@ jQuery(document).ready(function ($) {
             "display": "none"
         })
     });
+    
+    $("tr").click(function() {
+        var currentId = $(this).attr('id');
+        
+        currentId = "#go" + currentId;
 
+        
+      
+        $(currentId).click();
+        
+    });
+
+    $(".addClick").click(function() {
+        var currentId = $(this).attr('id');
+        currentId = currentId.replace('go','');
+        var modalId = "#input" + currentId;
+        setTimeout(function(){
+            $(modalId).focus();
+        }, 1); 
+        
+    });
+    
     // zvyraznenie row pri kliknuti na row
     $("td").click(function() {
         $(this).closest("tr").siblings().removeClass("highlight");

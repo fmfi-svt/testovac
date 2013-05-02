@@ -63,6 +63,8 @@ if (isset($_POST['id'])) {
                 <th style="min-width:6em">Forma</th>
                 <th style="min-width:5em">III. roč.</th>
                 <th style="min-width:5em">IV. roč.</th>
+                <th style="min-width:5em">Vytlaceny</th>
+                <th style="min-width:5em">Exportovany</th>
                 <th style="min-width:5em">PID</th>
                 <th style="min-width:6em" class="cssright"></th>
             </tr>
@@ -71,9 +73,6 @@ if (isset($_POST['id'])) {
             while ($query->fetchInto($row)) {
                 $numOfInputs = 0;
 
-                if ($row['exported'] == 1) {
-                    continue;
-                }
 
                 $id = $row['id'];
                 $meno = $row['meno'];
@@ -99,8 +98,17 @@ if (isset($_POST['id'])) {
                 }
                 $pid = $row['pid'];
                 $info = $meno . ' ' . $priezvisko;
-                $printed = $row['printed'];
 
+                if ($row['printed'] == 1) {
+                    $printed = 'ano';
+                } else {
+                    $printed = 'nie';
+                }
+                if ($row['exported'] == 1) {
+                    $exported = 'ano';
+                } else {
+                    $exported = 'nie';
+                }
                 echo "<tr class=\"name_listing $formaclass\">";
 
                 $id_name = 'id[' . $id . ']';
@@ -146,6 +154,14 @@ if (isset($_POST['id'])) {
                 } else {
                     echo $priemer2;
                 }
+                echo '</td>';
+
+                echo '<td>';
+                echo $printed;
+                echo '</td>';
+
+                echo '<td>';
+                echo $exported;
                 echo '</td>';
 
                 // pid cell
