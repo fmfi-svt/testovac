@@ -135,24 +135,28 @@ if (isset($_POST['id'])) {
                 echo '</td>';
 
                 // priemer1 cell
-                echo '<td class="priemery">';
+                echo '<td class="priemery priemer1td">';
                 if ($priemer1 == 0) {
                     $priemer1_name = 'priemer1[' . $id . ']';
-                    echo "<input type=\"text\" class=\"priemer1check priemer1sub\" size=\"5\" name=\"$priemer1_name\" value=\"\">";
+                    echo '<div class="priemertext"></div>';
+                    echo "<input type=\"text\" class=\"priemer1check priemerinput \" size=\"3\" name=\"$priemer1_name\" value=\"\">";
                     $numOfInputs++;
                 } else {
-                    echo $priemer1;
+                    echo '<div class="priemertext">' . $priemer1 . '</div>';
+                    echo "<input type=\"text\" style=\"display:none\" class=\"priemer1check priemerinput\" size=\"3\" name=\"$priemer1_name\" value=\"$priemer1\">";
                 }
                 echo '</td>';
 
                 // priemer2 cell
-                echo '<td class="priemery">';
+                echo '<td class="priemery priemer2td">';
                 if ($priemer2 == 0) {
                     $priemer2_name = 'priemer2[' . $id . ']';
-                    echo "<input type=\"text\" class=\"priemer2check priemer2sub\" size=\"5\" name=\"$priemer2_name\" value=\"\">";
+                    echo '<div class="priemertext"></div>';
+                    echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"\">";
                     $numOfInputs++;
                 } else {
-                    echo $priemer2;
+                    echo '<div class="priemertext">' . $priemer2 . '</div>';
+                    echo "<input type=\"text\" style=\"display:none\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"$priemer2\">";
                 }
                 echo '</td>';
 
@@ -175,10 +179,10 @@ if (isset($_POST['id'])) {
 
                 echo '<td class="cssunlock">';
                 $submit_name = 'sub[' . $id . ']';
-                if ($numOfInputs > 0) {
-                    echo "<input type=\"button\" class=\"subavgbtn\" name=\"$submit_name\" value=\"Uložiť\">";
-                    echo "<input type=\"hidden\" class=\"sub\" name=\"$submit_name\" value=\"\">";
-                }
+//                if ($numOfInputs > 0) {
+//                    echo "<input type=\"button\" class=\"subavgbtn\" name=\"$submit_name\" value=\"Uložiť\">";
+//                    echo "<input type=\"hidden\" class=\"sub\" name=\"$submit_name\" value=\"\">";
+//                }
 
                 echo '</td>';
                 echo '</tr>';

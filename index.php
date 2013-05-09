@@ -19,17 +19,17 @@ if (isset($_POST['id'])) {
         <script type="text/javascript" src="jquery.leanModal.min.js"></script>
         <script type="text/javascript">
             $(function() {
-                $('a[rel*=leanModal]').leanModal({ top : 200, closeButton: ".modal_close" });
+                $('a[rel*=leanModal]').leanModal({top: 200, closeButton: ".modal_close"});
             });
         </script>
     </head>
-    <body>        
+    <body>          
         <div id="header">
 
             <div id="navigation">
 
                 <a href="priemery.php">Pridavanie priemerov</a>&nbsp;
-                Ste prihlásení ako 
+                Ste prihlásení ako 3487978594638014
                 <?php
                 echo $_SERVER['REMOTE_USER'];
                 ?>
@@ -64,8 +64,7 @@ if (isset($_POST['id'])) {
                 <th style="min-width:5em">III. roč.</th>
                 <th style="min-width:5em">IV. roč.</th>
                 <th style="min-width:5em">Vytlaceny</th>
-                <th style="min-width:5em">PID</th>
-                <th style="min-width:6em" class="cssright"></th>
+                <th style="min-width:5em" class="cssright">PID</th>
             </tr>
 
             <?php
@@ -94,7 +93,7 @@ if (isset($_POST['id'])) {
                     $priemer2 = $priemer2 . '0';
                 }
                 $pid = $row['pid'];
-                if ($row['printed']==1) {
+                if ($row['printed'] == 1) {
                     $printed = 'ano';
                 } else {
                     $printed = 'nie';
@@ -138,40 +137,29 @@ if (isset($_POST['id'])) {
                     echo $priemer2;
                 }
                 echo '</td>';
-                
+
                 echo '<td>';
                 echo $printed;
                 echo '</td>';
 
-                echo '<td>';
+                echo '<td class="pidtd cssright">';
                 if ($pid <> 0) {
                     echo $pid;
                 }
                 echo '</td>';
-                
-                
+
                 // modal window pre pridanie PID
                 echo "<div class=\"addPid\" id=addPid$id>";
                 echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
                 echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
-                echo "Meno:  <b>$meno</b>";
-                echo '<br/>';
-                echo "Priezvisko:  <b>$priezvisko</b>";
-                echo '<br/>';
+                echo "<b>Registracia uchadzaca</b> <br/><br/>Meno:  <b>$meno</b><br/>Priezvisko:  <b>$priezvisko</b><br/>";
                 if ($pid == 0) {
-                    $pid_name = 'pid[' . $id . ']';
                     echo "<input type=\"text\" id=\"input$id\" size=\"14\" class=\"pidcheck pid pidsub\" name=\"inputText$id\" value=\"\">";
-                    $numOfInputs++;
                 } else {
                     echo $pid;
                 }
                 echo '<br/>';
-                if ($numOfInputs > 0) {
-                    echo "<input type=\"button\" class=\"subbtn\" name=\"submit\" value=\"Uložiť\">";
-
-                    echo "<input type=\"hidden\" class=\"sub\" name=\"\" value=\"\">";
-                    echo "<input type=\"button\" class=\"closebtn\" value=\"Zatvorit.\">";
-                }
+                echo "<input type=\"button\" class=\"closebtn\" value=\"Zatvorit.\">";
                 echo '</div>';
 
                 // modal window pre vymazanie usera
@@ -180,19 +168,14 @@ if (isset($_POST['id'])) {
                 echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
                 echo "<h1> POZOR </h1> Naozaj si zelate zrusit registraciu pre tohto studenta?<br/>";
                 echo "<p>Meno:  $meno <br/> Priezvisko:  $priezvisko<br/> PID:  $pid</p>";
-                echo "<p>Ak ano, pokracujte kliknutim na tlacidlo 'Ano, zmaz registraciu', v opacnom pripade kliknite na 'Zatvorit.'</p>";
+                echo "<p>Ak ano, pokracujte kliknutim na tlacidlo 'Ano, zmaz registraciu', v opacnom pripade kliknite na 'Nie, ponechat registraciu.'</p>";
 
                 echo "<input type=\"button\" class=\"subdelbtn\" name=\"delete\" value=\"Ano, zmaz registraciu.\">";
-                echo "<input type=\"button\" class=\"closebtn\" value=\"Zatvorit.\">";
+                echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechat registraciu.\">";
 
                 echo '</div>';
 
-
-
-               
                 echo '</tr>';
-                
-                
                 echo '<tr class=hiddentr>';
                 echo '<td>';
 
@@ -207,6 +190,12 @@ if (isset($_POST['id'])) {
                 echo '</tr>';
             }
             ?>
+            <tr class=hiddentr>
+                <td>
+                    <input type="hidden" class="idsub">"
+                </td>
+                <td>
+            </tr>
         </table>
     </form>
 </body>

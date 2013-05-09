@@ -33,9 +33,18 @@
 
 input[type=text] {
     font-size: 1.5em;
-    
+
 }
 
+.errorcontrol {
+    font-size: 0.7em;
+    color: #660000;
+
+}
+
+.loadingGif {
+    text-align: right;
+}
 .deletePid {
     width: 600px;
     padding: 30px; 
@@ -95,6 +104,11 @@ th.cssleft {
 
 th.cssright {
     border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    background: none;
+}
+td.cssright {
     border-left: 0;
     border-right: 0;
     background: none;
