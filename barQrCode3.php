@@ -37,7 +37,7 @@ function generateLatexHeader() {
 	'\setlength\LTpre{0mm}'."\n".
 	'\setlength\LTpost{0mm}'."\n".
 	''."\n".
-	'\begin{longtable}{MM}'."\n".
+	'\begin{longtable}{MMM}'."\n".
 	'\vspace{0mm}'."\n";
 }
 
@@ -53,22 +53,21 @@ function generateLatexQrBarcode($payload) {
 	global $counter, $url;
 
 	$result =
-'   \begin{tabular}{BBB}'."\n".
-'     \begin{pspicture}'."\n".
-'       \psbarcode{'."$url"."$payload".'}{height=0.8 width=0.8}{qrcode}'."\n".
-'     \end{pspicture} &'."\n".
+'   \begin{tabular}{B}'."\n".
 '     \begin{tabular}{>{\bfseries}c}'."\n".
 '       \begin{pspicture}'."\n".
 '         \psbarcode{'."$payload".'}{height=0.5}{code128}'."\n".
-'       \end{pspicture} \\\\'."\n".
-'       '.substr($payload,0,4).'\\,-\\,'.substr($payload,4,4).'\\,-\\,'.substr($payload,8,4).'\\,-\\,'.substr($payload,12,4)."\n".
-'     \end{tabular} &'."\n".
+'       \end{pspicture}'. "\n".
 '     \begin{pspicture}'."\n".
-'       \includegraphics[width=0.8in]{praflogogray}'."\n".
+'       \includegraphics[height=0.5in,width=0.5in]{praflogogray}'."\n".
 '     \end{pspicture}'."\n".
+
+ '\\\\'."\n".
+'       '.substr($payload,0,4).'\\,-\\,'.substr($payload,4,4).'\\,-\\,'.substr($payload,8,4).'\\,-\\,'.substr($payload,12,4)."\n".
+'     \end{tabular} '."\n".
 '   \end{tabular} ';
 
-	$counter = ($counter + 1) % 2;
+	$counter = ($counter + 1) % 3;
 	if ($counter === 0) {
 		$result = $result . "\n" . '\\\\' . "\n";
 		$result = $result . '\vspace{\arrayrulewidth}' . "\n";
