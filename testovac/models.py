@@ -4,6 +4,7 @@ import time
 from sqlalchemy import (MetaData, Table, Column, ForeignKey,
     ForeignKeyConstraint, Integer, String, Boolean, UnicodeText, CHAR)
 from sqlalchemy.sql import table
+from fractions import Fraction
 from .settings import exam
 models = sys.modules[__name__]
 

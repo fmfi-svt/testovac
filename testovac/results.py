@@ -14,7 +14,7 @@ def exportresults(app):
     print '<?php $bodyH = array('
     for pid, points in results.iteritems():
         points = Fraction(points)
-        print "  '{}' => array({}, {})," % (pid, points.numerator, points.denominator)
+        print "  '{}' => array({}, {}),".format(pid, points.numerator, points.denominator)
     print ');'
 exportresults.help = '  $0 exportresults > hbody.php'
 
