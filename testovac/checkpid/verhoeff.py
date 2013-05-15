@@ -1,5 +1,6 @@
 
 import re
+import time
 import random
 
 
@@ -51,9 +52,10 @@ def generate(demo=False):
         digits[2] = random.randint(0, 8)
         digits[7] = 8 - digits[2]
     else:
-        # rocnik 2012: tretia a osma cifra maju sucet 12
-        digits[2] = random.randint(3, 9)
-        digits[7] = 12 - digits[2]
+        # naostro: stvrta cifra + osma cifra === rok (modulo 10)
+        # && tretia cifra + osma cifra != 8
+        digits[7] = (time.localtime().tm_year - digits[3]) % 10
+        if digits[2] + digits[7] == 8: digits[2] = (digits[2] + 1) % 10
     digits.append(INV[calculate(digits + [0])])
     string = ''.join(map(str, digits))
     return '-'.join([string[0:4], string[4:8], string[8:12], string[12:16]])
