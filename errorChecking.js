@@ -51,6 +51,8 @@ jQuery(document).ready(function($) {
         priemer1error = false;
         if ($(this).val().length < 1) {
             priemer1error = true;
+            $(this).closest("td").append(img_cross_src_p);
+            return;
         } else if (!validateAverage($(this).val())) {
             priemer1error = true;
         } else {
@@ -92,9 +94,10 @@ jQuery(document).ready(function($) {
         hideErrorsForTd(element);
         priemer2error = false;
         if ($(this).val().length < 1) {
+            priemer2error = true;
+            $(this).closest("td").append(img_cross_src_p);
             return;
-        }
-        if (!validateAverage($(this).val())) {
+        } else if (!validateAverage($(this).val())) {
             priemer2error = true;
         } else {
             priemer2error = false;
