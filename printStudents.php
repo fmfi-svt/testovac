@@ -16,7 +16,7 @@ $fileloc = "logs/printed.tex";
 $handle = fopen($fileloc, 'w');
 
 $doc = '\documentclass[12pt]{book}
-\usepackage{slovak}
+\usepackage[slovak]{babel}
 \usepackage{tabularx}
 \usepackage{amsfonts}
 \usepackage{amssymb}

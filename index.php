@@ -28,7 +28,7 @@ if (isset($_POST['id'])) {
 
             <div id="navigation">
 
-                <a href="priemery.php">Pridavanie priemerov</a>&nbsp;
+                <a href="priemery.php">Pridávanie priemerov</a>&nbsp;
                 Ste prihlásení ako 3487978594638014
                 <?php
                 echo $_SERVER['REMOTE_USER'];
@@ -63,7 +63,7 @@ if (isset($_POST['id'])) {
                 <th style="min-width:6em">Forma</th>
                 <th style="min-width:5em">III. roč.</th>
                 <th style="min-width:5em">IV. roč.</th>
-                <th style="min-width:5em">Vytlaceny</th>
+                <th style="min-width:5em">Vytlačený</th>
                 <th style="min-width:5em" class="cssright">PID</th>
             </tr>
 
@@ -94,7 +94,7 @@ if (isset($_POST['id'])) {
                 }
                 $pid = $row['pid'];
                 if ($row['printed'] == 1) {
-                    $printed = 'ano';
+                    $printed = 'áno';
                 } else {
                     $printed = 'nie';
                 }
@@ -152,26 +152,28 @@ if (isset($_POST['id'])) {
                 echo "<div class=\"addPid\" id=addPid$id>";
                 echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
                 echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
-                echo "<b>Registracia uchadzaca</b> <br/><br/>Meno:  <b>$meno</b><br/>Priezvisko:  <b>$priezvisko</b><br/>";
+                echo "<h3>Registrácia uchádzača</h3> Meno:  <b>$meno</b><br/>Priezvisko:  <b>$priezvisko</b><br/><br/>";
+                if ($row['printed'] == 1) {
+                    echo '<div class="warning"> Pozor, registrujete už vytlačeného študenta!!!</div><br/>';
+                }
                 if ($pid == 0) {
                     echo "<input type=\"text\" id=\"input$id\" size=\"14\" class=\"pidcheck pid pidsub\" name=\"inputText$id\" value=\"\">";
                 } else {
                     echo $pid;
                 }
                 echo '<br/>';
-                echo "<input type=\"button\" class=\"closebtn\" value=\"Zatvorit.\">";
+                echo "<input type=\"button\" class=\"closebtn\" value=\"Zatvoriť.\">";
                 echo '</div>';
 
                 // modal window pre vymazanie usera
                 echo "<div class=\"deletePid\" id=deletePid$id>";
                 echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
                 echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
-                echo "<h1> POZOR </h1> Naozaj si zelate zrusit registraciu pre tohto studenta?<br/>";
-                echo "<p>Meno:  $meno <br/> Priezvisko:  $priezvisko<br/> PID:  $pid</p>";
-                echo "<p>Ak ano, pokracujte kliknutim na tlacidlo 'Ano, zmaz registraciu', v opacnom pripade kliknite na 'Nie, ponechat registraciu.'</p>";
+                echo "<h1> Zrušenie registrácie </h1> Chcete zrušiť registráciu pre tohto uchádzača?<br/>";
+                echo "<p><b>Meno:</b>  $meno <br/> <b>Priezvisko:</b>  $priezvisko<br/> <b>PID:</b>  $pid</p>";
 
-                echo "<input type=\"button\" class=\"subdelbtn\" name=\"delete\" value=\"Ano, zmaz registraciu.\">";
-                echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechat registraciu.\">";
+                echo "<input type=\"button\" class=\"subdelbtn\" name=\"delete\" value=\"Áno, zmaž registráciu.\">";
+                echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechať registráciu.\">";
 
                 echo '</div>';
 

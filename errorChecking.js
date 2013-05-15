@@ -4,8 +4,8 @@
  */
 
 var lastEdit = '';
-var img_cross_src = '<img src="cross.png" width="15" class="errorcontrol" />';
-var img_tick_src = '<img src="tick-ok.png" width="15" class="errorcontrol" />';
+var img_cross_src_p = '<img src="cross.png" width="15" class="errorcontrol" />';
+var img_tick_src_p = '<img src="tick-ok.png" width="15" class="errorcontrol" />';
 var img_loading_small = '<img src="image.gif" width="15" class="errorcontrol" />';
 
 jQuery(document).ready(function($) {
@@ -24,7 +24,13 @@ jQuery(document).ready(function($) {
         return true;
     };
 
-    $(":input.priemerinput").keydown(function(e) {
+    $(":input.priemer1check").keydown(function(e) {
+        if (e.keyCode === 13) {
+            $(this).closest("tr").find('.priemer2check').focus();
+        }
+    });
+
+    $(":input.priemer2check").keydown(function(e) {
         if (e.keyCode === 13) {
             $(this).blur();
         }
@@ -44,9 +50,8 @@ jQuery(document).ready(function($) {
         hideErrorsForTd(element);
         priemer1error = false;
         if ($(this).val().length < 1) {
-            return;
-        }
-        if (!validateAverage($(this).val())) {
+            priemer1error = true;
+        } else if (!validateAverage($(this).val())) {
             priemer1error = true;
         } else {
             priemer1error = false;
@@ -56,14 +61,13 @@ jQuery(document).ready(function($) {
         var p1zadany = $(this).val();
 
         if (priemer1error === true) {
-            $(this).closest("td").append(img_cross_src);
+            $(this).closest("td").append(img_cross_src_p);
             setTimeout(function() {
                 element.focus();
                 element.select();
             }, 200);
         } else {
-            $(this).closest("td").append(img_tick_src);
-            $(this).closest("td").append(img_loading_small);
+            $(this).closest("td").append(img_tick_src_p);
             $.ajax({
                 type: 'POST',
                 url: 'db.php',
@@ -72,13 +76,10 @@ jQuery(document).ready(function($) {
                     id: id,
                     priemer1: p1zadany
                 },
-                success: function(data) {
+                success: function() {
                     setTimeout(function() {
                         hideErrorsForTd(element);
-                        element.hide();
-                        element.closest("td").find('.priemertext').text(p1zadany);
-                        element.closest("td").find('.priemertext').show();
-                        element.closest("tr").find('.priemer2check').focus();
+//                        element.closest("tr").find('.priemer2check').focus();
                     }, 2000);
                 }
             });
@@ -103,14 +104,13 @@ jQuery(document).ready(function($) {
         var p2zadany = $(this).val();
 
         if (priemer2error === true) {
-            $(this).closest("td").append(img_cross_src);
+            $(this).closest("td").append(img_cross_src_p);
             setTimeout(function() {
                 element.focus();
                 element.select();
             }, 200);
         } else {
-            $(this).closest("td").append(img_tick_src);
-            $(this).closest("td").append(img_loading_small);
+            $(this).closest("td").append(img_tick_src_p);
             $.ajax({
                 type: 'POST',
                 url: 'db.php',
@@ -119,12 +119,9 @@ jQuery(document).ready(function($) {
                     id: id,
                     priemer2: p2zadany
                 },
-                success: function(data) {
+                success: function() {
                     setTimeout(function() {
                         hideErrorsForTd(element);
-                        element.hide();
-                        element.closest("td").find('.priemertext').text(p2zadany);
-                        element.closest("td").find('.priemertext').show();
                     }, 2000);
                 }
             });
@@ -133,14 +130,10 @@ jQuery(document).ready(function($) {
 
 
     $('.priemer1td').click(function() {
-        $(this).find('.priemertext').hide();
-        $(this).find('.priemer1check').show();
         $(this).find('.priemer1check').focus();
     });
 
     $('.priemer2td').click(function() {
-        $(this).find('.priemertext').hide();
-        $(this).find('.priemer2check').show();
         $(this).find('.priemer2check').focus();
     });
 

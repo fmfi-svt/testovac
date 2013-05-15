@@ -29,13 +29,17 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
     }
 
     function printStudents() {
+        print_r('asdasd');
         $this->db->query('SET NAMES UTF8;');
-        $query = & $this->db->query('SELECT * from Students WHERE printed is null AND pid is not null ORDER BY pid');
-        $retquery = & $this->db->query('SELECT * from Students WHERE printed is null AND pid is not null ORDER BY pid');
-        $printquery = $this->db->query('UPDATE Students SET printed = 1 WHERE printed is null AND pid is not null');
+        $query = & $this->db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
+        $retquery = & $this->db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
+        $printquery = & $this->db->query('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
         // Always check that result is not an error
         if (PEAR::isError($query)) {
             die($query->getMessage());
+        }
+        if (PEAR::isError($printquery)) {
+            die($printquery->getMessage());
         }
 
         $logmsg = 'PRINT; ';
@@ -52,8 +56,8 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
 
     function exportStudents() {
         $this->db->query('SET NAMES UTF8;');
-        $query = & $this->db->query('SELECT * from Students WHERE printed is not null ORDER BY pid');
-        $exportquery = $this->db->query('UPDATE Students SET exported = 1 WHERE exported is null AND printed is not null');
+        $query = & $this->db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
+        $exportquery = $this->db->query('UPDATE Students SET exported = 1 WHERE exported = 1 AND printed = 0');
         // Always check that result is not an error
         if (PEAR::isError($query)) {
             die($query->getMessage());

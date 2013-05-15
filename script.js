@@ -6,8 +6,8 @@ var pidduplerror;
 var pidrocnikerror;
 var lastrow;
 var mistake;
-var img_cross_src = '<img src="cross.png" width="15" class="errorcontrol" />';
-var img_tick_src = '<img src="tick-ok.png" width="15" class="errorcontrol" />';
+var img_cross_src = '<img src="cross.png" width="25" class="errorcontrol" />';
+var img_tick_src = '<img src="tick-ok.png" width="25" class="errorcontrol" />';
 var img_loading_src = '<img src="image.gif" width="50" class="errorcontrol loadingGif" />';
 
 jQuery(document).ready(function($) {
@@ -45,9 +45,9 @@ jQuery(document).ready(function($) {
     };
 
     var checkPid = function(element) {
-        var pidrocnikmsg = 'zadaný PID je z ineho rocnika <br/>';
-        var pidmsg = 'zadaný PID nie je správny <br/>';
-        var pidduplmsg = 'zadaný PID sa už nachádza v databáze, zlikvidujte duplikát <br/>';
+        var pidrocnikmsg = '&bull; zadaný PID je z ineho rocnika <br/>';
+        var pidmsg = '&bull; zadaný PID nie je správny <br/>';
+        var pidduplmsg = '&bull; zadaný PID sa už nachádza v databáze, zlikvidujte duplikát <br/>';
         var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: <br/>';
         var finalmsg = defaultmsg;
         
@@ -127,7 +127,6 @@ jQuery(document).ready(function($) {
             focusedElement.closest("div").append(img_tick_src);
             var okText = '<div class="errorcontrol"> PID ok. Cakajte...';
             focusedElement.closest("div").append(okText);
-            focusedElement.closest("div").append(img_loading_src);
             focusedElement.closest("div").append('</div>');
             return true;
         }

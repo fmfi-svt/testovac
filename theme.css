@@ -31,9 +31,16 @@
 
 }
 
-input[type=text] {
+.pid {
     font-size: 1.5em;
+}
 
+input[type=button] {
+    font-size: 0.7em;
+}
+
+.warning {
+    color: crimson;
 }
 
 .errorcontrol {
@@ -42,6 +49,17 @@ input[type=text] {
 
 }
 
+.priemerinput {
+    border: none;
+    font-size:1em;
+}
+h3 {
+    color:darkblue;
+}
+
+h1 {
+    color:darkblue;
+}
 .loadingGif {
     text-align: right;
 }
@@ -49,6 +67,7 @@ input[type=text] {
     width: 600px;
     padding: 30px; 
     display:none;
+    font-size: 1.8em;
     background: #FFF;
     border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
     box-shadow: 0px 0px 4px rgba(0,0,0,0.7); -webkit-box-shadow: 0 0 4px rgba(0,0,0,0.7); -moz-box-shadow: 0 0px 4px rgba(0,0,0,0.7);

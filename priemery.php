@@ -1,9 +1,9 @@
 <?php
 include 'db.php';
 
-if (isset($_POST['id'])) {
-    header("location: priemery.php");
-}
+//if (isset($_POST['id'])) {
+//    header("location: priemery.php");
+//}
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,7 +28,7 @@ if (isset($_POST['id'])) {
 
             <div id="navigation">
 
-                <a href="index.php">Pridavanie PID / Registracia</a>&nbsp;
+                <a href="index.php">Pridávanie PID / Registrácia</a>&nbsp;
                 Ste prihlásení ako 
                 <?php
                 echo $_SERVER['REMOTE_USER'];
@@ -37,20 +37,19 @@ if (isset($_POST['id'])) {
         </div>
 
         <?php
-        if (isset($_SESSION['sprava'])) {
-            if (isset($_SESSION['counter'])) {
-                if ($_SESSION['counter'] != 0) {
-                    echo $_SESSION['sprava'];
-                    $_SESSION['counter'] = $_SESSION['counter'] - 1;
-                } else {
-                    echo 'Momentálne sa neodohrali žiadne udalosti zasluhujúce upozornenie.';
-                }
-            }
-        } else {
-            echo 'Momentálne sa neodohrali žiadne udalosti zasluhujúce upozornenie.';
-        }
+//        if (isset($_SESSION['sprava'])) {
+//            if (isset($_SESSION['counter'])) {
+//                if ($_SESSION['counter'] != 0) {
+//                    echo $_SESSION['sprava'];
+//                    $_SESSION['counter'] = $_SESSION['counter'] - 1;
+//                } else {
+//                    echo 'Momentálne sa neodohrali žiadne udalosti zasluhujúce upozornenie.';
+//                }
+//            }
+//        } else {
+//            echo 'Momentálne sa neodohrali žiadne udalosti zasluhujúce upozornenie.';
+//        }
         ?>
-    </div>
     <?php
     //print_r($_POST);
     ?>
@@ -63,10 +62,9 @@ if (isset($_POST['id'])) {
                 <th style="min-width:6em">Forma</th>
                 <th style="min-width:5em">III. roč.</th>
                 <th style="min-width:5em">IV. roč.</th>
-                <th style="min-width:5em">Vytlaceny</th>
-                <th style="min-width:5em">Exportovany</th>
-                <th style="min-width:5em">PID</th>
-                <th style="min-width:6em" class="cssright"></th>
+                <th style="min-width:5em">Vytlačený</th>
+                <th style="min-width:5em">Exportovaný</th>
+                <th style="min-width:5em" class="cssright">PID</th>
             </tr>
 
             <?php
@@ -91,11 +89,7 @@ if (isset($_POST['id'])) {
                     $priemer2 = $priemer2 . '0';
                 }
                 $forma = $row['forma_studia'];
-                if ($forma == 'externá') {
-                    $formaclass = 'ext';
-                } else {
-                    $formaclass = 'int';
-                }
+             
                 $pid = $row['pid'];
                 $info = $meno . ' ' . $priezvisko;
 
@@ -109,7 +103,7 @@ if (isset($_POST['id'])) {
                 } else {
                     $exported = 'nie';
                 }
-                echo "<tr class=\"name_listing $formaclass\">";
+                echo "<tr class=\"name_listing\">";
 
                 $id_name = 'id[' . $id . ']';
                 echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
@@ -138,12 +132,10 @@ if (isset($_POST['id'])) {
                 echo '<td class="priemery priemer1td">';
                 if ($priemer1 == 0) {
                     $priemer1_name = 'priemer1[' . $id . ']';
-                    echo '<div class="priemertext"></div>';
                     echo "<input type=\"text\" class=\"priemer1check priemerinput \" size=\"3\" name=\"$priemer1_name\" value=\"\">";
                     $numOfInputs++;
                 } else {
-                    echo '<div class="priemertext">' . $priemer1 . '</div>';
-                    echo "<input type=\"text\" style=\"display:none\" class=\"priemer1check priemerinput\" size=\"3\" name=\"$priemer1_name\" value=\"$priemer1\">";
+                    echo "<input type=\"text\" class=\"priemer1check priemerinput\" size=\"3\" name=\"$priemer1_name\" value=\"$priemer1\">";
                 }
                 echo '</td>';
 
@@ -151,12 +143,10 @@ if (isset($_POST['id'])) {
                 echo '<td class="priemery priemer2td">';
                 if ($priemer2 == 0) {
                     $priemer2_name = 'priemer2[' . $id . ']';
-                    echo '<div class="priemertext"></div>';
                     echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"\">";
                     $numOfInputs++;
                 } else {
-                    echo '<div class="priemertext">' . $priemer2 . '</div>';
-                    echo "<input type=\"text\" style=\"display:none\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"$priemer2\">";
+                    echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"$priemer2\">";
                 }
                 echo '</td>';
 
@@ -169,22 +159,14 @@ if (isset($_POST['id'])) {
                 echo '</td>';
 
                 // pid cell
-                echo '<td class="pidtd">';
+                echo '<td class="pidtd cssright">';
                 if ($pid != 0) {
                     echo $pid;
                 } else {
-                    echo 'Neregistrovany.';
+                    echo 'Neregistrovaný.';
                 }
                 echo '</td>';
 
-                echo '<td class="cssunlock">';
-                $submit_name = 'sub[' . $id . ']';
-//                if ($numOfInputs > 0) {
-//                    echo "<input type=\"button\" class=\"subavgbtn\" name=\"$submit_name\" value=\"Uložiť\">";
-//                    echo "<input type=\"hidden\" class=\"sub\" name=\"$submit_name\" value=\"\">";
-//                }
-
-                echo '</td>';
                 echo '</tr>';
             }
             ?>
