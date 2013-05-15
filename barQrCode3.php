@@ -4,8 +4,8 @@ $separatory = false;
 
 function generateLatexHeader() {
         global $separatory;
-        $result = '\documentclass[16pt]{article}'."\n" .
-	'\usepackage[papersize={210mm,297mm},top=3mm,bottom=3mm,left=3mm,right=3mm,nohead,nofoot]{geometry}'."\n".
+        $result = '\documentclass[18pt]{article}'."\n" .
+	'\usepackage[papersize={210mm,297mm},top=12mm,bottom=3mm,left=0mm,right=0mm,nohead,nofoot]{geometry}'."\n".
 	'\usepackage{tikz}'."\n".
 	'\usepackage{tabls}'."\n".
 	//'\usepackage{verbatim}'."\n".
@@ -15,15 +15,16 @@ function generateLatexHeader() {
 	'\usepackage{pst-barcode}'."\n".
 	'\usepackage{auto-pst-pdf}'."\n".
 	'\usepackage{eqparbox}'."\n".
-        '\renewcommand{\baselinestretch}{0.5}\normalsize' . "\n" .
+        '\renewcommand{\baselinestretch}{0.55}\normalsize' . "\n" .
 	''."\n".
 	//'\renewcommand{\familydefault}{pcr}'."\n".
+        //'\renewcommand{\arraystretch}{1.2}'."\n".
 	''."\n".
 	'\begin{document}'."\n".
-        '\setlength{\extrarowheight}{1pt}' . "\n".
+        '\setlength{\extrarowheight}{1.5pt}' . "\n".
 	'\newsavebox\TBox'."\n".
-	'\tabcolsep=0.1mm'."\n".
-	'\arrayrulewidth=0.25mm'."\n".
+	'\tabcolsep=1mm'."\n".
+	'\arrayrulewidth=1mm'."\n".
 	'\newenvironment{saveTBox}'."\n".
 	'  {\begin{lrbox}{\TBox}\varwidth{\linewidth}}'."\n".
 	'  {\endvarwidth\end{lrbox}%'."\n".
@@ -69,10 +70,10 @@ function generateLatexQrBarcode($payload) {
 '   \begin{tabular}{B}'."\n".
 '     \begin{tabular}{>{\bfseries}c}'."\n".
 '       \begin{pspicture}'."\n".
-'         \psbarcode{'."$payload".'}{height=0.4}{code128}'."\n".
+'         \psbarcode{'."$payload".'}{height=0.505}{code128}'."\n".
 '       \end{pspicture}'. "\n".
 '     \begin{pspicture}'."\n".
-'       \includegraphics[height=0.4in,width=0.4in]{praflogogray}'."\n".
+'       \includegraphics[height=0.505in,width=0.505in]{praflogogray}'."\n".
 '     \end{pspicture}'."\n".
 
  '\\\\'."\n".

@@ -33,7 +33,7 @@ while ($line = fgets($f)) {
 	$line=rtrim($line);
 
 	$num=$line[3];
-	$num=(12 - $num) % 10;
+	$num=(13 - $num) % 10;
 	$line=substr($line, 0, 7) . $num . substr($line, 7);
 
     echo appendVerhoeffAfter15DigitString($line)."\n";
