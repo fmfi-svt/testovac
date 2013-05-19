@@ -1,16 +1,21 @@
 
+import os
 import random
 import time
-from .settings import exam, checkpid, login_blocked
+from .settings import exam, checkpid
 from .models import (Users, Events, CurrentEvents, user_closed,
     get_user_questions, generate_user_questions)
+
+
+login_block_file = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                'loginblock')
 
 
 def login(request):
     db = request.db
     pid = request.form['pid']
 
-    if login_blocked:
+    if os.path.exists(login_block_file):
         return { 'error': 'login blocked' }
     if not checkpid.check(pid):
         return { 'error': 'invalid pid' }
@@ -56,6 +61,25 @@ def login(request):
     }
 
 
+def loginctl(app, *args):
+    if args == ('block',):
+        if os.path.exists(login_block_file):
+            return "login is already blocked!"
+        with open(login_block_file, 'a'): pass
+    elif args == ('unblock',):
+        if not os.path.exists(login_block_file):
+            return "login is already unblocked!"
+        os.remove(login_block_file)
+    else:
+        raise ValueError("must use block or unblock")
+loginctl.help = '  $0 login block\n  $0 login unblock'
+
+
 actions = {
     'login': login,
+}
+
+
+commands = {
+    'login': loginctl,
 }
