@@ -38,7 +38,7 @@ def subquestion_to_tex(body):
     latexed = body
     latexed = re.sub(r'<br\s*/?>', '', latexed)
     latexed = latexed.replace('\n          \n          ', '\n\\\\[10pt]\n')   # TODO: toto predsa nemoze byt spravne...
-    latexed = re.sub(r'<hr\s*/?>', '\Qlines{1} ', latexed)
+    latexed = re.sub(r'<hr\s*/?>', '\Qline ', latexed)
     latexed = re.sub(r'&#?[a-z0-9]{2,8};', '', latexed)
     return latexed
 
