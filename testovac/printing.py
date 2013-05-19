@@ -10,8 +10,8 @@ from models import (Users, UserQuestions, CurrentEvents, Subquestions,
 from jinja2 import Template
 
 
-pdfcslatex = 'pdfcslatex'
-#pdfcslatex = '/usr/local/texlive/2011/bin/i386-linux/pdfcslatex'
+# allow changing the binary with an environment variable
+pdfcslatex = os.getenv('PDFCSLATEX', 'pdfcslatex')
 
 
 with open(os.path.dirname(__file__) + '/printing.tex') as f:
