@@ -1,8 +1,8 @@
-@{ if large_header }@
+<$ if large_header $>
 \documentclass[a4paper,20pt,BCOR10mm,oneside,headsepline]{scrartcl}
-@{ else }@
+<$ else $>
 \documentclass[a4paper,twocolumn,10pt,BCOR10mm,oneside,headsepline]{scrartcl}
-@{ endif }@
+<$ endif $>
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{wasysym}% provides \ocircle and \Box
@@ -15,10 +15,10 @@
 \setlength{\topmargin}{-1cm}
 \usepackage{scrpage2}
 \pagestyle{scrheadings}
-@{ if show_pid }@
-\ihead{@[ show_pid ]@}
+<$ if show_pid $>
+\ihead{<<show_pid>>}
 \ifoot{Podpis:}
-@{ endif }@
+<$ endif $>
 \ohead{\pagemark}
 \chead{}
 \cfoot{}
@@ -33,7 +33,7 @@
 \newcommand{\Qrating}[1]{\QO\forloop{qr}{1}{\value{qr} < #1}{---\QO}}
 \newcommand{\Qline}[1]{\rule{#1}{0.6pt}}
 \newcounter{ql}
-\newcommand{\Qlines}[1]{\forloop{ql}{0}{\value{ql}<#1}{\vskip0em\Qline{\linewidth}}}
+\newcommand{\Qlines}[1]{\forloop{ql}{0}{\value{ql} < #1}{\vskip0em\Qline{\linewidth}}}
 \newenvironment{Qlist}{%
 %  \renewcommand{\labelitemi}{\QO}
   \renewcommand{\labelitemi}{}
@@ -72,11 +72,12 @@
   }
 }
 \begin{document}
-@{ for question in questions }@\Qitem{ \Qq{@[ question.body ]@}
+<$ for question in questions $>\Qitem{ \Qq{<<question.body>>}
 \begin{Qlist}
-@{ for sub in question.subs }@\item @[ sub.body ]@ @{ if sub.answer or sub.points }@ \hskip0.5cm @{ endif }@ @{ if sub.answer }@ \textbf{ @[ sub.answer ]@ } @{ endif }@ @{ if sub.points }@ \textbf{ @[ sub.points ]@ } @{ endif }@
-@{ endfor }@
+<$ macro wrap(s) $> \textbf{ <<s>> } <$ endmacro $>
+<$ for sub in question.subs $>\item <<sub.body>> <$ if sub.answer or sub.points $> \hskip0.5cm <$ endif $> <<wrap(sub.answer) if sub.answer>> <<wrap(sub.points) if sub.points>>
+<$ endfor $>
 \end{Qlist}
 }
-@{ endfor }@
+<$ endfor $>
 \end{document}

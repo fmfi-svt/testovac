@@ -16,10 +16,7 @@ pdfcslatex = os.getenv('PDFCSLATEX', 'pdfcslatex')
 
 with open(os.path.dirname(__file__) + '/printing.tex') as f:
     template_content = f.read().decode('utf-8')
-    template = Template(template_content,
-                        block_start_string='@{', block_end_string='}@',
-                        variable_start_string='@[', variable_end_string=']@',
-                        comment_start_string='@{%', comment_end_string='%}@')
+    template = Template(template_content, '<$', '$>', '<<', '>>', '<<%', '%>>')
 
 
 def mkdirs():
