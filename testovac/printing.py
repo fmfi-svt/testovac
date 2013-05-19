@@ -59,9 +59,9 @@ def format_questions(questions, answers=None, points=None):
             if answers:
                 answer = answers.get((qorder, qsubord))
                 if answer: answer = unicode(answer)
-                if not answer: answer = u'Nezodpovedané.'
-                if answer == u'true': answer = u'Áno.'
-                if answer == u'false': answer = u'Nie.'
+                if not answer: answer = u'nič'
+                if answer == u'true': answer = u'áno'
+                if answer == u'false': answer = u'nie'
                 subs[-1]['answer'] = answer
 
         yield { 'body': body, 'subs': subs }
