@@ -22,6 +22,12 @@ with open(os.path.dirname(__file__) + '/printing.tex') as f:
                         comment_start_string='@{%', comment_end_string='%}@')
 
 
+def mkdirs():
+    for name in ['aux', 'spool', 'exams']:
+        if not os.path.isdir(name):
+            os.mkdir(name, 0700)
+
+
 def question_to_tex(body):
     #return re.sub(r'<br\s*/?>', '\\\\[10pt]', body)
     latexed = body
@@ -65,6 +71,7 @@ def format_questions(questions, answers=None, points=None):
 
 
 def printexamlarge(app, pid):
+    mkdirs()
     db = app.DbSession()
 
     user = db.query(Users).filter_by(pid=pid).first()
@@ -86,6 +93,7 @@ printexamlarge.help = '  $0 printexamlarge <pid>'
 
 
 def printfinished(app):
+    mkdirs()
     db = app.DbSession()
 
     for user in db.query(Users):
@@ -116,6 +124,7 @@ printfinished.help = '  $0 printfinished'
 
 
 def printallexams(app, pid):
+    mkdirs()
     db = app.DbSession()
 
     user = db.query(Users).filter_by(pid=pid).first()
