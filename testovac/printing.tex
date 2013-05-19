@@ -43,10 +43,10 @@
   \end{enumerate}
 }
 \begin{document}
-<$ for question in questions $>\Qitem{ \textbf{<<question.body>>}
+<$ macro bold(s) $>\textbf{<<s>>}<$ endmacro $>
+<$ for question in questions $>\Qitem{ <<bold(question.body)>>
 \begin{Qlist}
-<$ macro wrap(s) $> \textbf{ <<s>> } <$ endmacro $>
-<$ for sub in question.subs $>\item <<sub.body>> <$ if sub.answer or sub.points $> \hskip0.5cm <$ endif $> <<wrap(sub.answer) if sub.answer>> <<wrap(sub.points) if sub.points>>
+<$ for sub in question.subs $>\item <<bold(sub.body) if large_header else sub.body>> <$ if sub.answer or sub.points $> \hskip0.5cm <$ endif $> <<bold(sub.answer) if sub.answer>> <<bold(sub.points) if sub.points>>
 <$ endfor $>
 \end{Qlist}
 }
