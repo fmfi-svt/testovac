@@ -31,7 +31,7 @@ def monitor(app):
         if row.submitted:
             subdesc = 'odovzdane '
             num_submitted += 1
-        elif time > exam.server_time_limit:
+        elif their_time > exam.server_time_limit:
             subdesc = 'expirovane'
             num_expired += 1
         else:
