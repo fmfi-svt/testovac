@@ -1,4 +1,5 @@
 
+import re
 import sys
 import time
 from sqlalchemy import (MetaData, Table, Column, ForeignKey,
@@ -106,19 +107,40 @@ def generate_user_questions(db, pid, with_qid=False):
     return get_user_questions(db, pid, with_qid)
 
 
+def answer_is_correct(their_answer, correct_answer):
+    if their_answer == correct_answer: return True
+
+    their_answer = their_answer.strip()
+    correct_answer = correct_answer.strip()
+    if their_answer == correct_answer: return True
+
+    try:
+        def cela0(n): return re.sub(r'[,\.]0*$', '', n)
+        if int(cela0(their_answer)) == int(cela0(correct_answer)): return True
+    except ValueError:
+        pass
+
+    # desatinne cisla (okrem "1234.00") zatial neriesime, lebo by aj tak
+    # vyzadovali zlozitejsiu podporu (epsilon pri porovnani atd)
+
+    return False
+
+
 def get_results(db, pids):
     points = exam.get_question_scores(models, db)
     results = dict((pid, Fraction(0)) for pid in pids)
     if not pids: return results
-    for pid, qid, qsubord in (db
-            .query(CurrentEvents.c.pid, Subquestions.c.qid, Subquestions.c.qsubord)
+    for pid, their_answer, qid, qsubord, correct_answer in (db
+            .query(CurrentEvents.c.pid, CurrentEvents.c.value,
+                   Subquestions.c.qid, Subquestions.c.qsubord,
+                   Subquestions.c.value)
             .filter(CurrentEvents.c.pid.in_(pids),
                     CurrentEvents.c.pid == UserQuestions.c.pid,
                     CurrentEvents.c.qorder == UserQuestions.c.qorder,
                     UserQuestions.c.qid == Subquestions.c.qid,
-                    CurrentEvents.c.qsubord == Subquestions.c.qsubord,
-                    CurrentEvents.c.value == Subquestions.c.value)):
-        results[pid] += points[(qid, qsubord)]
+                    CurrentEvents.c.qsubord == Subquestions.c.qsubord)):
+        if answer_is_correct(their_answer, correct_answer):
+            results[pid] += points[(qid, qsubord)]
     return results
 
 
