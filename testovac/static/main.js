@@ -39,6 +39,11 @@ function idseq() {
 }
 
 
+Tester.now = function () {
+  return (+new Date())/1000 - Tester.timeOffset;
+}
+
+
 Tester.showLoginForm = function (demoPid, showQuestions) {
   var $form, $pidInput;
 
@@ -133,7 +138,7 @@ Tester.doLogin = function (pid, success, failure) {
       if (Tester.config.attemptTimeCorrection) {
         Tester.timeOffset = (+new Date())/1000 - data.now;
       }
-      Tester.beginTime = data.beginTime + Tester.timeOffset;
+      Tester.beginTime = data.beginTime;
       Tester.events = {};
       Tester.eventsBegin = data.savedEvents;
       Tester.eventsEnd = data.savedEvents;
@@ -249,7 +254,7 @@ function showQuestions(questions, state) {
     function addSub(j) {
       function valueChanged(value) {
         stateTable[i][j] = value;
-        emitEvent({ qorder: i, qsubord: j, value: value, time: Math.floor((+new Date())/1000) });
+        emitEvent({ qorder: i, qsubord: j, value: value, time: Math.floor(Tester.now()) });
         updateToc();
       }
       var $option = $('<div/>', { 'class': 'option' }).appendTo($options);
@@ -275,7 +280,7 @@ function showQuestions(questions, state) {
   var $stopwatch = $('<span/>').addClass('stopwatch').appendTo($submit.parent());
   var lastTime;
   function updateStopwatch() {
-    var elapsed = Math.floor((+new Date())/1000 - Tester.beginTime);
+    var elapsed = Math.floor(Tester.now() - Tester.beginTime);
     if (elapsed == lastTime) return;
     lastTime = elapsed;
     if (elapsed > Tester.config.timeLimit) {
@@ -359,7 +364,7 @@ function saveEvents(force) {
       }
       Tester.eventsEnd = Math.max(Tester.eventsBegin, Tester.eventsEnd);
       if (Tester.eventsBegin != Tester.eventsEnd) saveEvents();
-      Tester.beginTime = data.beginTime + Tester.timeOffset;
+      Tester.beginTime = data.beginTime;
     }
   });
 }
