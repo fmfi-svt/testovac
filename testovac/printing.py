@@ -2,6 +2,7 @@
 
 import os
 import re
+from subprocess import check_call
 from .settings import exam
 from . import models
 from models import (Users, CurrentEvents, Subquestions,
@@ -16,12 +17,6 @@ pdfcslatex = os.getenv('PDFCSLATEX', 'pdfcslatex')
 with open(os.path.dirname(__file__) + '/printing.tex') as f:
     template_content = f.read().decode('utf-8')
     template = Template(template_content, '<$', '$>', '<<', '>>', '<<%', '%>>')
-
-
-def mkdirs():
-    for name in ['aux', 'spool', 'exams', 'evaluatedexams']:
-        if not os.path.isdir(name):
-            os.mkdir(name, 0700)
 
 
 def question_to_tex(body):
@@ -66,8 +61,21 @@ def format_questions(questions, sub_info=None):
         yield { 'body': body, 'subs': subs }
 
 
+def render_pdf(pid, target_dir, **template_args):
+    content = template.render(**template_args)
+
+    with open('aux/%s.tex' % pid, 'w') as f:
+        f.write(content.encode('utf-8'))
+
+    check_call([pdfcslatex, '%s.tex' % pid], cwd='aux')
+
+    if not os.path.isdir(target_dir):
+        os.mkdir(target_dir, 0700)
+
+    os.rename('aux/%s.pdf' % pid, '%s/%s.pdf' % (target_dir, pid))
+
+
 def printexamlarge(app, pid):
-    mkdirs()
     db = app.DbSession()
 
     user = db.query(Users).filter_by(pid=pid).first()
@@ -75,21 +83,15 @@ def printexamlarge(app, pid):
 
     questions = get_user_questions(db, pid, with_qid=True)
 
+    render_pdf(pid, 'exams',
+        show_pid=pid, large_header=True,
+        questions=format_questions(questions))
+
     db.close()
-
-    filename = 'aux/%s.tex' % pid
-    print "filename: %s" % filename
-    with open(filename, 'w') as f:
-        f.write(template.render(show_pid=pid, large_header=True,
-                                questions=format_questions(questions)).encode('utf-8'))
-
-    os.system(pdfcslatex + ' -output-directory aux '+pid+'.tex')
-    os.system('mv aux/'+pid+'.pdf exams')
 printexamlarge.help = '  $0 printexamlarge <pid>'
 
 
 def printfinished(app):
-    mkdirs()
     db = app.DbSession()
 
     for user in db.query(Users):
@@ -105,15 +107,9 @@ def printfinished(app):
                 return (r'\hskip0.5cm \textbf{%s}' %
                     format_answer(answers.get((qorder, qsubord))))
 
-            filename = 'aux/%s.tex' % pid
-            print "filename: %s" % filename
-            with open(filename, 'w') as f:
-                f.write(template.render(
-                    show_pid=pid, show_sign=True,
-                    questions=format_questions(questions, sub_info)).encode('utf-8'))
-
-            os.system(pdfcslatex + ' -output-directory aux '+pid+'.tex')
-            os.system('mv aux/*.pdf spool/')
+            render_pdf(pid, 'spool',
+                show_pid=pid, show_sign=True,
+                questions=format_questions(questions, sub_info))
 
             db.execute(Users.update().where(Users.c.pid==pid).
                        values(printed=True))
@@ -124,7 +120,6 @@ printfinished.help = '  $0 printfinished'
 
 
 def printevaluatedexam(app, pid):
-    mkdirs()
     db = app.DbSession()
 
     if pid == '--all':
@@ -164,17 +159,11 @@ def printevaluatedexam(app, pid):
         points_total = sum(points[(qid, qsubord)] for (qid, qsubord) in points if qid in my_qids)
         print results[pid]
 
-        filename = 'aux/%s.tex' % pid
-        print "filename: %s" % filename
-        with open(filename, 'w') as f:
-            f.write(template.render(
-                show_pid=pid,
-                points_total=format_points_sum(points_total),
-                points_gained=format_points_sum(results[pid]),
-                questions=format_questions(questions, sub_info)).encode('utf-8'))
-
-        os.system(pdfcslatex + ' -output-directory aux '+pid+'.tex')
-        os.system('mv aux/'+pid+'.pdf evaluatedexams')
+        render_pdf(pid, 'evaluatedexams',
+            show_pid=pid,
+            points_total=format_points_sum(points_total),
+            points_gained=format_points_sum(results[pid]),
+            questions=format_questions(questions, sub_info))
 
     db.close()
 printevaluatedexam.help = '  $0 printevaluatedexam <pid>\n  $0 printevaluatedexam --all'
