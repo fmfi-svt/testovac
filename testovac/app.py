@@ -8,8 +8,8 @@ from werkzeug.exceptions import HTTPException, NotFound, BadRequest
 from sqlalchemy.orm import sessionmaker
 from .settings import db_connect
 
-from . import disableq, front, givetime, login, models, monitor, update, printing, results, serve
-site_modules = [disableq, front, givetime, login, models, monitor, update, printing, results, serve]
+from . import bucketstats, disableq, front, givetime, login, models, monitor, update, printing, results, serve
+site_modules = [bucketstats, disableq, front, givetime, login, models, monitor, update, printing, results, serve]
 
 
 def json_response(json_object):
