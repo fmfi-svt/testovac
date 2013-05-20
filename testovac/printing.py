@@ -91,32 +91,38 @@ def printexamlarge(app, pid):
 printexamlarge.help = '  $0 printexamlarge <pid>'
 
 
-def printfinished(app):
+def printfinished(app, pid):
     db = app.DbSession()
 
-    for user in db.query(Users):
-        if user_closed(user) and not user.printed:
-            pid = user.pid
+    if pid == '--notprinted':
+        pids = [user.pid for user in db.query(Users)
+                if user_closed(user) and not user.printed]
+    else:
+        user = db.query(Users).filter_by(pid=pid).first()
+        if not user: raise ValueError('invalid pid')
+        if not user_closed(user): raise ValueError('user not yet closed')
+        pids = [pid]
 
-            questions = get_user_questions(db, pid, with_qid=True)
-            answers = {}
-            for event in db.query(CurrentEvents).filter_by(pid=pid):
-                answers[(event.qorder, event.qsubord)] = event.value
+    for pid in pids:
+        questions = get_user_questions(db, pid, with_qid=True)
+        answers = {}
+        for event in db.query(CurrentEvents).filter_by(pid=pid):
+            answers[(event.qorder, event.qsubord)] = event.value
 
-            def sub_info(qorder, qid, qsubord):
-                return (r'\hskip0.5cm \textbf{%s}' %
-                    format_answer(answers.get((qorder, qsubord))))
+        def sub_info(qorder, qid, qsubord):
+            return (r'\hskip0.5cm \textbf{%s}' %
+                format_answer(answers.get((qorder, qsubord))))
 
-            render_pdf(pid, 'spool',
-                show_pid=pid, show_sign=True,
-                questions=format_questions(questions, sub_info))
+        render_pdf(pid, 'spool',
+            show_pid=pid, show_sign=True,
+            questions=format_questions(questions, sub_info))
 
-            db.execute(Users.update().where(Users.c.pid==pid).
-                       values(printed=True))
-            db.commit()
+        db.execute(Users.update().where(Users.c.pid==pid).
+                   values(printed=True))
+        db.commit()
 
     db.close()
-printfinished.help = '  $0 printfinished'
+printfinished.help = '  $0 printfinished --notprinted\n  $0 printfinished <pid>'
 
 
 def printevaluatedexam(app, pid):
