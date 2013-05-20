@@ -7,6 +7,7 @@
 /aux
 /spool
 /exams
+/evaluatedexams
 local_settings.py
 hbody.php
 /loginblock

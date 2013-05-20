@@ -129,6 +129,7 @@ def answer_is_correct(their_answer, correct_answer):
 def get_results(db, pids):
     points = exam.get_question_scores(models, db)
     results = dict((pid, Fraction(0)) for pid in pids)
+    details = dict((pid, {}) for pid in pids)
     if not pids: return results
     for pid, their_answer, qid, qsubord, correct_answer in (db
             .query(CurrentEvents.c.pid, CurrentEvents.c.value,
@@ -141,7 +142,9 @@ def get_results(db, pids):
                     CurrentEvents.c.qsubord == Subquestions.c.qsubord)):
         if answer_is_correct(their_answer, correct_answer):
             results[pid] += points[(qid, qsubord)]
-    return results
+            details[pid][(qid, qsubord)] = points[(qid, qsubord)]
+
+    return results, details
 
 
 def initschema(app):

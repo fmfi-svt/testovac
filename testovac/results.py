@@ -8,7 +8,7 @@ from models import Users, user_closed, get_results
 def exportresults(app):
     db = app.DbSession()
     pids = [user.pid for user in db.query(Users) if user_closed(user)]
-    results = get_results(db, pids)
+    results, details = get_results(db, pids)
     db.close()
 
     print '<?php $bodyH = array('

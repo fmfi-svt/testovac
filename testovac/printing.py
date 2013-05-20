@@ -2,11 +2,10 @@
 
 import os
 import re
-from fractions import Fraction
 from .settings import exam
 from . import models
-from models import (Users, UserQuestions, CurrentEvents, Subquestions,
-    user_closed, get_user_questions)
+from models import (Users, CurrentEvents, Subquestions,
+    user_closed, get_user_questions, get_results)
 from jinja2 import Template
 
 
@@ -20,7 +19,7 @@ with open(os.path.dirname(__file__) + '/printing.tex') as f:
 
 
 def mkdirs():
-    for name in ['aux', 'spool', 'exams']:
+    for name in ['aux', 'spool', 'exams', 'evaluatedexams']:
         if not os.path.isdir(name):
             os.mkdir(name, 0700)
 
@@ -43,7 +42,15 @@ def subquestion_to_tex(body):
     return latexed
 
 
-def format_questions(questions, answers=None, points=None):
+def format_answer(answer):
+    if answer: answer = unicode(answer)
+    if not answer: answer = u'nič'
+    if answer == u'true': answer = u'áno'
+    if answer == u'false': answer = u'nie'
+    return answer
+
+
+def format_questions(questions, sub_info=None):
     for qorder, question in enumerate(questions):
         qid = question['qid']
         body = question_to_tex(question['body'])
@@ -53,16 +60,8 @@ def format_questions(questions, answers=None, points=None):
             subbody = qsubord + ') ' + subquestion_to_tex(value['body'])
             subs.append({ 'body': subbody })
 
-            if points:
-                subs[-1]['points'] = points[(qid, qsubord)]
-
-            if answers:
-                answer = answers.get((qorder, qsubord))
-                if answer: answer = unicode(answer)
-                if not answer: answer = u'nič'
-                if answer == u'true': answer = u'áno'
-                if answer == u'false': answer = u'nie'
-                subs[-1]['answer'] = answer
+            if sub_info:
+                subs[-1]['info'] = sub_info(qorder, qid, qsubord) or ''
 
         yield { 'body': body, 'subs': subs }
 
@@ -102,12 +101,16 @@ def printfinished(app):
             for event in db.query(CurrentEvents).filter_by(pid=pid):
                 answers[(event.qorder, event.qsubord)] = event.value
 
+            def sub_info(qorder, qid, qsubord):
+                return (r'\hskip0.5cm \textbf{%s}' %
+                    format_answer(answers.get((qorder, qsubord))))
+
             filename = 'aux/%s.tex' % pid
             print "filename: %s" % filename
             with open(filename, 'w') as f:
                 f.write(template.render(
-                    show_pid=pid,
-                    questions=format_questions(questions, answers)).encode('utf-8'))
+                    show_pid=pid, show_sign=True,
+                    questions=format_questions(questions, sub_info)).encode('utf-8'))
 
             os.system(pdfcslatex + ' -output-directory aux '+pid+'.tex')
             os.system('mv aux/*.pdf spool/')
@@ -120,36 +123,65 @@ def printfinished(app):
 printfinished.help = '  $0 printfinished'
 
 
-def printallexams(app, pid):
+def printevaluatedexam(app, pid):
     mkdirs()
     db = app.DbSession()
 
-    user = db.query(Users).filter_by(pid=pid).first()
-    if not user: raise ValueError('invalid pid')
+    if pid == '--all':
+        pids = [user.pid for user in db.query(Users)]
+    else:
+        user = db.query(Users).filter_by(pid=pid).first()
+        if not user: raise ValueError('invalid pid')
+        pids = [pid]
 
-    questions = get_user_questions(db, pid, with_qid=True)
+    correct_answers = {}
+    for sq in db.query(Subquestions):
+        correct_answers[(sq.qid, sq.qsubord)] = sq.value
+
     points = exam.get_question_scores(models, db)
-    answers = {}
-    for qorder, qsubord, correct_value in (db
-            .query(UserQuestions.c.qorder, Subquestions.c.qsubord, Subquestions.c.value)
-            .filter(UserQuestions.c.pid == pid,
-                    UserQuestions.c.qid == Subquestions.c.qid)):
-        answers[(qorder, qsubord)] = correct_value
+
+    results, details = get_results(db, pids)
+
+    for pid in pids:
+        questions = get_user_questions(db, pid, with_qid=True)
+        answers = {}
+        for event in db.query(CurrentEvents).filter_by(pid=pid):
+            answers[(event.qorder, event.qsubord)] = event.value
+
+        def sub_info(qorder, qid, qsubord):
+            their_answer = answers.get((qorder, qsubord))
+            correct_answer = correct_answers[(qid, qsubord)]
+            their_points = details[pid].get((qid, qsubord), 0)
+            max_points = points[(qid, qsubord)]
+            return (r'\\ \textbf{%.2f; %s} (%.2f; %s)' % (
+                their_points, format_answer(their_answer),
+                max_points, format_answer(correct_answer)))
+
+        def format_points_sum(p):
+            return re.sub(r'\.0+$', '', '%.3f' % p)
+
+        my_qids = set(question['qid'] for question in questions)
+        points_total = sum(points[(qid, qsubord)] for (qid, qsubord) in points if qid in my_qids)
+        print results[pid]
+
+        filename = 'aux/%s.tex' % pid
+        print "filename: %s" % filename
+        with open(filename, 'w') as f:
+            f.write(template.render(
+                show_pid=pid,
+                points_total=format_points_sum(points_total),
+                points_gained=format_points_sum(results[pid]),
+                questions=format_questions(questions, sub_info)).encode('utf-8'))
+
+        os.system(pdfcslatex + ' -output-directory aux '+pid+'.tex')
+        os.system('mv aux/'+pid+'.pdf evaluatedexams')
 
     db.close()
-
-    filename = 'aux/%s.tex' % pid
-    print "filename: %s" % filename
-    with open(filename, 'w') as f:
-        f.write(template.render(questions=format_questions(questions, answers, points)).encode('utf-8'))
-
-    os.system(pdfcslatex + ' -output-directory aux '+pid+'.tex')
-    os.system('mv aux/'+pid+'.pdf exams')
-printallexams.help = '  $0 printallexams <pid>'
+printevaluatedexam.help = '  $0 printevaluatedexam <pid>\n  $0 printevaluatedexam --all'
 
 
 commands = {
     'printfinished': printfinished,
     'printexamlarge': printexamlarge,
-    'printallexams': printallexams,
+    'printevaluatedexam': printevaluatedexam,
 }
