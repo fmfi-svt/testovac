@@ -29,6 +29,18 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
     }
 
     function getStudentsForAverage() {
+//        SELECT * 
+//FROM 
+//(SELECT Students.priezvisko
+//FROM Students
+//WHERE time_of_registration >= DATE_SUB( NOW( ) , INTERVAL 1 HOUR ) 
+//ORDER BY priezvisko) DUMMY_ALIAS1
+//UNION ALL
+//SELECT * 
+//FROM 
+//(SELECT Students.priezvisko
+//FROM Students
+//ORDER BY sign(pid), priezvisko) DUMMY_ALIAS2
         $this->db->query('SET NAMES UTF8;');
         //$query = & $this->db->query('SELECT * from Students ORDER BY sign(pid), priezvisko');
         $query = & $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
@@ -71,7 +83,7 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
     function exportStudents() {
         $this->db->query('SET NAMES UTF8;');
         $query = & $this->db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
-        $exportquery = $this->db->query('UPDATE Students SET exported = 1 WHERE exported = 1 AND printed = 0');
+        $exportquery = $this->db->query('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
         // Always check that result is not an error
         if (PEAR::isError($query)) {
             die($query->getMessage());
