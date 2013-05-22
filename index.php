@@ -15,7 +15,7 @@ if (isset($_POST['id'])) {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
         <script type="text/javascript" src="script.js"></script>
-        <script type="text/javascript" src="errorChecking.js"></script>   
+        <!--<script type="text/javascript" src="errorChecking.js"></script>-->   
         <script type="text/javascript" src="jquery.leanModal.min.js"></script>
         <script type="text/javascript">
             $(function() {
@@ -64,11 +64,12 @@ if (isset($_POST['id'])) {
                 <th style="min-width:5em">III. roč.</th>
                 <th style="min-width:5em">IV. roč.</th>
                 <th style="min-width:5em">Vytlačený</th>
+                <th style="min-width:4em">Čas registrácie</th>
                 <th style="min-width:5em" class="cssright">PID</th>
             </tr>
 
             <?php
-            while ($query->fetchInto($row)) {
+            while ($query1->fetchInto($row)) {
                 $numOfInputs = 0;
 
                 if ($row['exported'] == 1) {
@@ -93,6 +94,7 @@ if (isset($_POST['id'])) {
                     $priemer2 = $priemer2 . '0';
                 }
                 $pid = $row['pid'];
+                $time = $row['time_of_registration'];
                 if ($row['printed'] == 1) {
                     $printed = 'áno';
                 } else {
@@ -105,12 +107,12 @@ if (isset($_POST['id'])) {
                 $id_name = 'id[' . $id . ']';
 
                 // meno cell
-                echo '<td>';
+                echo '<td class="meno">';
                 echo $meno;
                 echo '</td>';
 
                 // priezvisko cell
-                echo '<td class="spec namefilter">';
+                echo '<td class="priezvisko spec namefilter">';
                 echo "<b>$priezvisko</b>";
                 echo '</td>';
 
@@ -142,6 +144,12 @@ if (isset($_POST['id'])) {
                 echo $printed;
                 echo '</td>';
 
+                echo '<td>';
+                if ($pid <> 0) {
+                    echo $time;
+                }
+                echo '</td>';
+                
                 echo '<td class="pidtd cssright">';
                 if ($pid <> 0) {
                     echo $pid;

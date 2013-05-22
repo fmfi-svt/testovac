@@ -3,17 +3,38 @@
  * and open the template in the editor.
  */
 
-var lastEdit = '';
-var img_cross_src_p = '<img src="cross.png" width="15" class="errorcontrol" />';
-var img_tick_src_p = '<img src="tick-ok.png" width="15" class="errorcontrol" />';
-var img_loading_small = '<img src="image.gif" width="15" class="errorcontrol" />';
+
 
 jQuery(document).ready(function($) {
     "use strict";
 
+    var img_cross_src_p = '<img src="cross.png" width="15" class="errorpriemery" />';
+    var img_tick_src_p = '<img src="tick-ok.png" width="15" class="errorpriemery" />';
+    var p1 = {};
+    var p2 = {};
+    var priemer1error;
+    var priemer2error;
+
+    var parseAverages = function() {
+        var trs = $("tr");
+
+        $.each(trs, function() {
+            var id = $(this).attr("id");
+            var p1val = $(this).find('.priemer1check').attr("value");
+            var p2val = $(this).find('.priemer2check').attr("value");
+            p1[id] = p1val;
+            p2[id] = p2val;
+        });
+        if (window.console)
+            console.log(p1);
+        if (window.console)
+            console.log(p2);
+    };
+
+    parseAverages();
 
     var hideErrorsForTd = function(element) {
-        element.closest("td").find('.errorcontrol').hide();
+        element.closest("td").find('.errorpriemery').hide();
     };
 
     var validateAverage = function(average) {
@@ -37,9 +58,9 @@ jQuery(document).ready(function($) {
     });
 
     $('td:not(.priemery)').click(function() {
-        if ($(this).closest("tr").find('.priemer1check').is(":visible")) {
+        if ($(this).closest("tr").find('.priemer1check').val().length < 1) {
             $(this).closest("tr").find('.priemer1check').focus();
-        } else if ($(this).closest("tr").find('.priemer2check').is(":visible")) {
+        } else if ($(this).closest("tr").find('.priemer2check').val().length < 1) {
             $(this).closest("tr").find('.priemer2check').focus();
         }
     });
@@ -49,25 +70,28 @@ jQuery(document).ready(function($) {
 
         hideErrorsForTd(element);
         priemer1error = false;
-        if ($(this).val().length < 1) {
-            priemer1error = true;
-            $(this).closest("td").append(img_cross_src_p);
-            return;
-        } else if (!validateAverage($(this).val())) {
+
+        var id = $(this).closest("tr").find('.idsub').val();
+        var p1zadany = $(this).val();
+
+        if (p1zadany === p1[id]) {
+            return; // nic sa nezmenilo
+        }
+
+        if (!validateAverage($(this).val())) {
             priemer1error = true;
         } else {
             priemer1error = false;
         }
 
-        var id = $(this).closest("tr").find('.idsub').val();
-        var p1zadany = $(this).val();
+
 
         if (priemer1error === true) {
             $(this).closest("td").append(img_cross_src_p);
             setTimeout(function() {
-                element.focus();
-                element.select();
-            }, 200);
+                element.val(p1[id]);
+                hideErrorsForTd(element);
+            }, 2500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
             $.ajax({
@@ -79,10 +103,10 @@ jQuery(document).ready(function($) {
                     priemer1: p1zadany
                 },
                 success: function() {
+                    p1[id] = p1zadany;
                     setTimeout(function() {
                         hideErrorsForTd(element);
-//                        element.closest("tr").find('.priemer2check').focus();
-                    }, 2000);
+                    }, 2500);
                 }
             });
         }
@@ -93,25 +117,26 @@ jQuery(document).ready(function($) {
 
         hideErrorsForTd(element);
         priemer2error = false;
-        if ($(this).val().length < 1) {
-            priemer2error = true;
-            $(this).closest("td").append(img_cross_src_p);
-            return;
-        } else if (!validateAverage($(this).val())) {
+
+        var id = $(this).closest("tr").find('.idsub').val();
+        var p2zadany = $(this).val();
+
+        if (p2zadany === p2[id]) {
+            return; // nic sa nezmenilo
+        }
+
+        if (!validateAverage($(this).val())) {
             priemer2error = true;
         } else {
             priemer2error = false;
         }
 
-        var id = $(this).closest("tr").find('.idsub').val();
-        var p2zadany = $(this).val();
-
         if (priemer2error === true) {
             $(this).closest("td").append(img_cross_src_p);
             setTimeout(function() {
-                element.focus();
-                element.select();
-            }, 200);
+                element.val(p2[id]);
+                hideErrorsForTd(element);
+            }, 2500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
             $.ajax({
@@ -123,9 +148,10 @@ jQuery(document).ready(function($) {
                     priemer2: p2zadany
                 },
                 success: function() {
+                    p2[id] = p2zadany;
                     setTimeout(function() {
                         hideErrorsForTd(element);
-                    }, 2000);
+                    }, 2500);
                 }
             });
         }

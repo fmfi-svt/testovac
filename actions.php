@@ -28,6 +28,20 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         return $query;
     }
 
+    function getStudentsForAverage() {
+        $this->db->query('SET NAMES UTF8;');
+        //$query = & $this->db->query('SELECT * from Students ORDER BY sign(pid), priezvisko');
+        $query = & $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
+left join Students as s2 on
+s1.meno = s2.meno and s1.priezvisko=s2.priezvisko and s1.datum_narodenia=s2.datum_narodenia and
+not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
+        // Always check that result is not an error
+        if (PEAR::isError($query)) {
+            die($query->getMessage());
+        }
+        return $query;
+    }
+
     function printStudents() {
         print_r('asdasd');
         $this->db->query('SET NAMES UTF8;');
@@ -89,6 +103,8 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
                 $sth = $this->db->prepare("UPDATE Students SET pid = (?) WHERE id=" . $id);
                 $data = $_POST['pid'];
                 $this->db->execute($sth, $data);
+                $sth2 = $this->db->prepare("UPDATE Students SET time_of_registration = NOW() WHERE id=" . $id);
+                $this->db->execute($sth2);
 
                 $logMessage = $logMessage . " , PID:" . $data;
             }

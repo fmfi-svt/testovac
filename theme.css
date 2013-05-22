@@ -43,10 +43,16 @@ input[type=button] {
     color: crimson;
 }
 
-.errorcontrol {
+.errorpid {
     font-size: 0.7em;
     color: #660000;
+}
 
+.errorpriemery {
+    font-size: 0.7em;
+    color: #660000;
+    position: absolute;
+    padding : 2px;
 }
 
 .priemerinput {
@@ -180,6 +186,7 @@ td.cssunlock {
 
 .priemery {
     text-align: right;
+    padding-right: 20px;
 }
 
 .filterbar {

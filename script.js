@@ -1,18 +1,11 @@
-var forma_studia = '';
-var priemer1error;
-var priemer2error;
-var piderror;
-var pidduplerror;
-var pidrocnikerror;
-var lastrow;
-var mistake;
-var img_cross_src = '<img src="cross.png" width="25" class="errorcontrol" />';
-var img_tick_src = '<img src="tick-ok.png" width="25" class="errorcontrol" />';
-var img_loading_src = '<img src="image.gif" width="50" class="errorcontrol loadingGif" />';
 
 jQuery(document).ready(function($) {
     "use strict";
-
+    var piderror;
+    var pidduplerror;
+    var pidrocnikerror;
+    var img_cross_src = '<img src="cross.png" width="25" class="errorpid" />';
+    var img_tick_src = '<img src="tick-ok.png" width="25" class="errorpid" />';
 
     $(".pid").keyup(function(e) {
         if (e.keyCode === 13) {
@@ -47,15 +40,20 @@ jQuery(document).ready(function($) {
     var checkPid = function(element) {
         var pidrocnikmsg = '&bull; zadaný PID je z ineho rocnika <br/>';
         var pidmsg = '&bull; zadaný PID nie je správny <br/>';
-        var pidduplmsg = '&bull; zadaný PID sa už nachádza v databáze, zlikvidujte duplikát <br/>';
+        var pidduplmsg1 = '&bull; zadaný PID sa už nachádza v databáze s menom: ';
+        var pidduplmsg2 = ', zlikvidujte duplikát! <br/>';
         var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: <br/>';
         var finalmsg = defaultmsg;
-        
+        var meno;
+        var priezvisko;
+
         var checkDuplicatePid = function(pidd) {
             var pidtds = $("td.pidtd");
             $.each(pidtds, function() {
                 if ($(this).text().length > 0) {
                     if (($(this).text() === pidd)) {
+                        meno = $(this).closest('tr').find('.meno').text();
+                        priezvisko = $(this).closest('tr').find('.priezvisko').text();
                         pidduplerror = true;
                         return;
                     }
@@ -113,7 +111,7 @@ jQuery(document).ready(function($) {
             finalmsg = finalmsg + pidmsg;
         }
         if (pidduplerror === true) {
-            finalmsg = finalmsg + pidduplmsg;
+            finalmsg = finalmsg + pidduplmsg1 + meno + ' ' + priezvisko + pidduplmsg2;
         }
         if (pidrocnikerror === true || piderror === true || pidduplerror === true) {
             focusedElement.closest("div").find('.errorcontrol').hide();
@@ -227,7 +225,7 @@ jQuery(document).ready(function($) {
         $("#lean_overlay").fadeOut(200);
         $(this).closest("div").css({
             "display": "none"
-        })
+        });
     });
 
     $('td').css('cursor', 'pointer');
@@ -256,7 +254,7 @@ jQuery(document).ready(function($) {
     });
 
     $("td").live('mouseover mouseout', function(event) {
-        if (event.type == 'mouseover') {
+        if (event.type === 'mouseover') {
             $(this).closest("tr").addClass("hover");
         } else {
             $(this).closest("tr").removeClass("hover");
