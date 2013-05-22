@@ -35,6 +35,7 @@ while ($line = fgets($f)) {
 	$num=$line[3];
 	$num=(13 - $num) % 10;
 	$line=substr($line, 0, 7) . $num . substr($line, 7);
-
-    echo appendVerhoeffAfter15DigitString($line)."\n";
+        if (($line[2]+$line[7]) !== 8) {
+            echo appendVerhoeffAfter15DigitString($line)."\n";
+        }
 }
