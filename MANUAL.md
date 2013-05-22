@@ -3,39 +3,39 @@ Prevádzkový manuál
 
 1. Zablokovanie prihlasovania.
 
-    ./console.py login block
+    `./console.py login block`
 2. Reštartnúť všetky počítače. Mali by zobrazovať úvodnú prihlasovaciu 
 obrazovku.
 3. Počkať kým koordinátor povie účastníkom všetky úvodné informácie.
 4. Po signále povoliť prihlasovanie.
 
-    ./console.py login unblock
+    `./console.py login unblock`
 5. Monitorovať priebeh prijímačiek - sledovať či sa účastníci prihlásili,
 či sa priebežne zvyšuje počet vyplnených odpovedí, či sa testy automaticky
 odovzdajú po vypršaní časového limitu.
 
-    ./console.py monitor
+    `./console.py monitor`
 Spraviť kolečko po počítačoch 
 a osobne skontrolovať či sedí kód na náramku s 
 kódom prihláseného.
 6. Keď niekto finálne odovzdá test, spustiť príkaz na tlačenie. 
 
-    ./console.py printfinished
+    `./console.py printfinished`
 Vytlačený test spárovať s titulnou stranou a scvaknúť.
 7. Keď všetci odovzdajú, odniesť na podpis. 
 8. Spustiť zálohu na USB kľúč.
 
 Pre ďaľší turnus pokračovať bodom 1.
 
-Na konci dňa exportovať vypočítané body, uploadnuť na stránka.
+Na konci dňa exportovať vypočítané body, uploadnuť na stránku.
 
-    ./console.py exportresults > hbody.php
+    `./console.py exportresults > hbody.php`
 
 Na konci prijímacích pohovorovu vytlačiť ohodnotené testy, vytlačiť
 štatistiku a urobiť export do AIS.
 
-    ./console.py bucketstats > stats.csv
-    ./console.py printevaluatedexam --all
+    `./console.py bucketstats > stats.csv`
+    `./console.py printevaluatedexam --all`
 
 FAQ
 
