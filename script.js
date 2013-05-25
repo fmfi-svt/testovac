@@ -92,7 +92,7 @@ jQuery(document).ready(function($) {
                     pidd: pid
                 },
                 success: function(data) {
-                    focusedElement.closest("td").find('.errorcontrol').hide();
+                    focusedElement.closest("td").find('.errorpid').hide();
                     isPidVerhoeff = data;
                     if (isPidVerhoeff === 'true' && pidrocnikerror === false) {
                         piderror = false;
@@ -114,16 +114,16 @@ jQuery(document).ready(function($) {
             finalmsg = finalmsg + pidduplmsg1 + meno + ' ' + priezvisko + pidduplmsg2;
         }
         if (pidrocnikerror === true || piderror === true || pidduplerror === true) {
-            focusedElement.closest("div").find('.errorcontrol').hide();
+            focusedElement.closest("div").find('.errorpid').hide();
             focusedElement.closest("div").append(img_cross_src);
-            var errorText = '<div class="errorcontrol">' + finalmsg + '</div>';
+            var errorText = '<div class="errorpid">' + finalmsg + '</div>';
             focusedElement.closest("div").append(errorText);
             return false;
         } else {
             focusedElement.val(addHyphens(pid));
-            focusedElement.closest("div").find('.errorcontrol').hide();
+            focusedElement.closest("div").find('.errorpid').hide();
             focusedElement.closest("div").append(img_tick_src);
-            var okText = '<div class="errorcontrol"> PID ok. Cakajte...';
+            var okText = '<div class="errorpid"> PID ok. Cakajte...';
             focusedElement.closest("div").append(okText);
             focusedElement.closest("div").append('</div>');
             return true;
@@ -155,50 +155,6 @@ jQuery(document).ready(function($) {
             novyForm.submit();
         }, 3000);
     };
-
-//    $(".subavgbtn").click(function(e) {
-//        var p1msg = 'III. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
-//        var p2msg = 'IV. roč. priemer \n -> musí byť v rozsahu 1 az 4, dve desatinné miesta \n';
-//        var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: \n';
-//        var finalmsg = defaultmsg;
-//
-//        if (priemer1error === true) {
-//            finalmsg = finalmsg + p1msg;
-//        }
-//        if (priemer2error === true) {
-//            finalmsg = finalmsg + p2msg;
-//        }
-//        if (priemer1error === true || priemer2error === true) {
-//            alert(finalmsg);
-//            return;
-//        }
-//
-//        var novyForm = $('<form/>').hide().appendTo('body');
-//        novyForm.attr('method', 'post');
-//        $('<input>').attr({
-//            type: 'hidden',
-//            name: 'id',
-//            value: $(this).closest("tr").find(".idsub").val()
-//        }).appendTo(novyForm);
-//        $('<input>').attr({
-//            type: 'hidden',
-//            name: 'info',
-//            value: $(this).closest("tr").find(".infosub").val()
-//        }).appendTo(novyForm);
-//        $('<input>').attr({
-//            type: 'hidden',
-//            name: 'priemer1',
-//            value: $(this).closest("tr").find(".priemer1sub").val()
-//        }).appendTo(novyForm);
-//        $('<input>').attr({
-//            type: 'hidden',
-//            name: 'priemer2',
-//            value: $(this).closest("tr").find(".priemer2sub").val()
-//        }).appendTo(novyForm);
-//        setTimeout(function() {
-//            novyForm.submit();
-//        }, 2000);
-//    });
 
     $(".subdelbtn").click(function(e) {
         var novyForm = $('<form/>').hide().appendTo('body');
