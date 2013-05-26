@@ -160,7 +160,7 @@ if (isset($_POST['id'])) {
                 echo "<div class=\"addPid\" id=addPid$id>";
                 echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
                 echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
-                echo "<h3>Registrácia uchádzača</h3> Meno:  <b>$meno</b><br/>Priezvisko:  <b>$priezvisko</b><br/><br/>";
+                echo "<h3>Registrácia uchádzača</h3> Prajete si prideliť zvolenému uchádzačovi zadaný PID? <br/><br/> Meno:  <b>$meno</b><br/>Priezvisko:  <b>$priezvisko</b><br/><br/>";
                 if ($row['printed'] == 1) {
                     echo '<div class="warning"> Pozor, registrujete už vytlačeného študenta!!!</div><br/>';
                 }

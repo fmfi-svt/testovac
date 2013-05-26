@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
     var piderror;
     var pidduplerror;
     var pidrocnikerror;
+    var piddemoerror;
     var img_cross_src = '<img src="cross.png" width="25" class="errorpid" />';
     var img_tick_src = '<img src="tick-ok.png" width="25" class="errorpid" />';
 
@@ -40,6 +41,7 @@ jQuery(document).ready(function($) {
     var checkPid = function(element) {
         var pidrocnikmsg = '&bull; zadaný PID je z ineho rocnika <br/>';
         var pidmsg = '&bull; zadaný PID nie je správny <br/>';
+        var piddemomsg = '&bull; zadaný PID pochádza z demo verzie <br/>';
         var pidduplmsg1 = '&bull; zadaný PID sa už nachádza v databáze s menom: ';
         var pidduplmsg2 = ', zlikvidujte duplikát! <br/>';
         var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: <br/>';
@@ -61,13 +63,45 @@ jQuery(document).ready(function($) {
             });
         };
 
+        var addErrorMsgs = function() {
+            if (pidrocnikerror === true) {
+                finalmsg = finalmsg + pidrocnikmsg;
+            }
+            if (piderror === true) {
+                finalmsg = finalmsg + pidmsg;
+            }
+            if (piddemoerror === true) {
+                finalmsg = finalmsg + piddemomsg;
+            }
+            if (pidduplerror === true) {
+                finalmsg = finalmsg + pidduplmsg1 + meno + ' ' + priezvisko + pidduplmsg2;
+            }
+            if (pidrocnikerror === true || piderror === true || pidduplerror === true || piddemoerror === true) {
+                focusedElement.closest("div").find('.errorpid').hide();
+                focusedElement.closest("div").append(img_cross_src);
+                var errorText = '<div class="errorpid">' + finalmsg + '</div>';
+                focusedElement.closest("div").append(errorText);
+                return false;
+            } else {
+                focusedElement.val(addHyphens(pid));
+                focusedElement.closest("div").find('.errorpid').hide();
+                focusedElement.closest("div").append(img_tick_src);
+                var okText = '<div class="errorpid"> PID ok. Cakajte...';
+                focusedElement.closest("div").append(okText);
+                focusedElement.closest("div").append('</div>');
+                return true;
+            }
+        };
+
         var pid = element.parent().find('.pid').val();
 
-        var isPidVerhoeff;
+        var isPidVerhoeff = '';
 
         var focusedElement = element;
 
         pidduplerror = false;
+        pidrocnikerror = false;
+        piddemoerror = false;
 
         if (pid.match(/^(\d{16})$/) !== null) {
             checkDuplicatePid(addHyphens(pid), focusedElement);
@@ -76,7 +110,6 @@ jQuery(document).ready(function($) {
             checkDuplicatePid(pid, focusedElement);
             pid = removeHyphens(pid);
         }
-
         if (pid.match(/^(\d{16})$/) && pidduplerror === false) {
             var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10;
             if (c === 2) {
@@ -94,39 +127,21 @@ jQuery(document).ready(function($) {
                 success: function(data) {
                     focusedElement.closest("td").find('.errorpid').hide();
                     isPidVerhoeff = data;
-                    if (isPidVerhoeff === 'true' && pidrocnikerror === false) {
+
+                    if (isPidVerhoeff === 'pidok' && pidrocnikerror === false) {
                         piderror = false;
+                    } else if (isPidVerhoeff === 'demopid') {
+                        piddemoerror = true;
+                        piderror = true;
                     } else {
                         piderror = true;
                     }
+                    return addErrorMsgs();
                 }
             });
         } else {
             piderror = true;
-        }
-        if (pidrocnikerror === true) {
-            finalmsg = finalmsg + pidrocnikmsg;
-        }
-        if (piderror === true) {
-            finalmsg = finalmsg + pidmsg;
-        }
-        if (pidduplerror === true) {
-            finalmsg = finalmsg + pidduplmsg1 + meno + ' ' + priezvisko + pidduplmsg2;
-        }
-        if (pidrocnikerror === true || piderror === true || pidduplerror === true) {
-            focusedElement.closest("div").find('.errorpid').hide();
-            focusedElement.closest("div").append(img_cross_src);
-            var errorText = '<div class="errorpid">' + finalmsg + '</div>';
-            focusedElement.closest("div").append(errorText);
-            return false;
-        } else {
-            focusedElement.val(addHyphens(pid));
-            focusedElement.closest("div").find('.errorpid').hide();
-            focusedElement.closest("div").append(img_tick_src);
-            var okText = '<div class="errorpid"> PID ok. Cakajte...';
-            focusedElement.closest("div").append(okText);
-            focusedElement.closest("div").append('</div>');
-            return true;
+            return addErrorMsgs();
         }
     };
 
