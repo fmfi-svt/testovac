@@ -95,10 +95,12 @@ body {
 }
 
 table {
+    margin-top:10px;
     margin-left:auto; 
     margin-right:auto;
     border-collapse:collapse;
 }
+
 
 th {
     font: bold 11px "Trebuchet MS", Verdana, Arial, Helvetica,

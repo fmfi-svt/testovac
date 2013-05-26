@@ -20,7 +20,21 @@ jQuery(document).ready(function($) {
                 $(this).select();
             }
         }
+
     });
+
+    $(document).keyup(function(e) {
+        if (e.keyCode === 27) {
+            closeModal($(this).find('.modal'));
+        }
+    });
+
+    var closeModal = function(e) {
+        $("#lean_overlay").fadeOut(200);
+        e.css({
+            "display": "none"
+        });
+    }
 
     var addHyphens = function(pid) {
         var str1 = pid.substr(0, 4);
@@ -193,10 +207,20 @@ jQuery(document).ready(function($) {
     });
 
     $(".closebtn").click(function(e) {
-        $("#lean_overlay").fadeOut(200);
-        $(this).closest("div").css({
-            "display": "none"
-        });
+        closeModal($(this).closest('div'));
+    });
+
+    $(".addbtn").click(function() {
+        piderror = false;
+        pidduplerror = false;
+        pidrocnikerror = false;
+        var element = $(this).closest('div').find('.pid');
+        if (checkPid(element)) {
+            sendPid(element);
+        } else {
+            element.focus();
+            element.select();
+        }
     });
 
     $('td').css('cursor', 'pointer');

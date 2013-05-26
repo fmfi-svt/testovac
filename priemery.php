@@ -27,7 +27,7 @@ include 'db.php';
         <div id="header">
 
             <div id="navigation">
-                <a href="index.php">Pridávanie PID / Registrácia</a>&nbsp;
+                <a href="index.php">Prideľovanie PID (registrácia)</a>&nbsp;
                 Ste prihlásení ako 
                 <?php
                 echo $_SERVER['REMOTE_USER'];

@@ -31,6 +31,17 @@ jQuery(document).ready(function($) {
             console.log(p2);
     };
 
+    var normalizeAverage = function(e) {
+        var priemer = e;
+        if (priemer.match(/^\d$/) !== null) {
+            priemer = priemer + '.00';
+        } else if (priemer.match(/^\d[,.]\d$/) !== null) {
+            priemer = priemer + '0';
+        }
+        return priemer;
+
+    };
+
     parseAverages();
 
     var hideErrorsForTd = function(element) {
@@ -103,9 +114,10 @@ jQuery(document).ready(function($) {
                     priemer1: p1zadany
                 },
                 success: function() {
-                    p1[id] = p1zadany;
+                    p1[id] = normalizeAverage(p1zadany);
                     setTimeout(function() {
                         hideErrorsForTd(element);
+                        element.val(p1[id]);
                     }, 2500);
                 }
             });
@@ -148,9 +160,11 @@ jQuery(document).ready(function($) {
                     priemer2: p2zadany
                 },
                 success: function() {
-                    p2[id] = p2zadany;
+                    
+                    p2[id] = normalizeAverage(p2zadany);
                     setTimeout(function() {
                         hideErrorsForTd(element);
+                        element.val(p2[id]);
                     }, 2500);
                 }
             });
