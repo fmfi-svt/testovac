@@ -13,14 +13,8 @@ jQuery(document).ready(function($) {
             piderror = false;
             pidduplerror = false;
             pidrocnikerror = false;
-            if (checkPid($(this))) {
-                sendPid($(this));
-            } else {
-                $(this).focus();
-                $(this).select();
-            }
+            checkPid($(this));
         }
-
     });
 
     $(document).keyup(function(e) {
@@ -34,7 +28,7 @@ jQuery(document).ready(function($) {
         e.css({
             "display": "none"
         });
-    }
+    };
 
     var addHyphens = function(pid) {
         var str1 = pid.substr(0, 4);
@@ -53,16 +47,9 @@ jQuery(document).ready(function($) {
     };
 
     var checkPid = function(element) {
-        var pidrocnikmsg = '&bull; zadaný PID je z ineho rocnika <br/>';
-        var pidmsg = '&bull; zadaný PID nie je správny <br/>';
-        var piddemomsg = '&bull; zadaný PID pochádza z demo verzie <br/>';
-        var pidduplmsg1 = '&bull; zadaný PID sa už nachádza v databáze s menom: ';
-        var pidduplmsg2 = ', zlikvidujte duplikát! <br/>';
-        var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: <br/>';
-        var finalmsg = defaultmsg;
+
         var meno;
         var priezvisko;
-
         var checkDuplicatePid = function(pidd) {
             var pidtds = $("td.pidtd");
             $.each(pidtds, function() {
@@ -76,8 +63,16 @@ jQuery(document).ready(function($) {
                 }
             });
         };
+        
+        var addErrors = function() {
+            var pidrocnikmsg = '&bull; zadaný PID je z ineho rocnika <br/>';
+            var pidmsg = '&bull; zadaný PID nie je správny <br/>';
+            var piddemomsg = '&bull; zadaný PID pochádza z demo verzie <br/>';
+            var pidduplmsg1 = '&bull; zadaný PID sa už nachádza v databáze s menom: ';
+            var pidduplmsg2 = ', zlikvidujte duplikát! <br/>';
+            var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: <br/>';
+            var finalmsg = defaultmsg;
 
-        var addErrorMsgs = function() {
             if (pidrocnikerror === true) {
                 finalmsg = finalmsg + pidrocnikmsg;
             }
@@ -90,12 +85,12 @@ jQuery(document).ready(function($) {
             if (pidduplerror === true) {
                 finalmsg = finalmsg + pidduplmsg1 + meno + ' ' + priezvisko + pidduplmsg2;
             }
+
             if (pidrocnikerror === true || piderror === true || pidduplerror === true || piddemoerror === true) {
                 focusedElement.closest("div").find('.errorpid').hide();
                 focusedElement.closest("div").append(img_cross_src);
                 var errorText = '<div class="errorpid">' + finalmsg + '</div>';
                 focusedElement.closest("div").append(errorText);
-                return false;
             } else {
                 focusedElement.val(addHyphens(pid));
                 focusedElement.closest("div").find('.errorpid').hide();
@@ -103,10 +98,17 @@ jQuery(document).ready(function($) {
                 var okText = '<div class="errorpid"> PID ok. Cakajte...';
                 focusedElement.closest("div").append(okText);
                 focusedElement.closest("div").append('</div>');
-                return true;
+            }
+
+            if (piderror === true) {
+                focusedElement.focus();
+                focusedElement.select();
+            } else {
+                sendPid(focusedElement);
             }
         };
-
+        
+        
         var pid = element.parent().find('.pid').val();
 
         var isPidVerhoeff = '';
@@ -116,6 +118,7 @@ jQuery(document).ready(function($) {
         pidduplerror = false;
         pidrocnikerror = false;
         piddemoerror = false;
+        piderror = false;
 
         if (pid.match(/^(\d{16})$/) !== null) {
             checkDuplicatePid(addHyphens(pid), focusedElement);
@@ -125,8 +128,8 @@ jQuery(document).ready(function($) {
             pid = removeHyphens(pid);
         }
         if (pid.match(/^(\d{16})$/) && pidduplerror === false) {
-            var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10;
-            if (c === 2) {
+            var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
+            if (c === 3) {
                 pidrocnikerror = false;
             } else {
                 pidrocnikerror = true;
@@ -141,7 +144,6 @@ jQuery(document).ready(function($) {
                 success: function(data) {
                     focusedElement.closest("td").find('.errorpid').hide();
                     isPidVerhoeff = data;
-
                     if (isPidVerhoeff === 'pidok' && pidrocnikerror === false) {
                         piderror = false;
                     } else if (isPidVerhoeff === 'demopid') {
@@ -150,15 +152,14 @@ jQuery(document).ready(function($) {
                     } else {
                         piderror = true;
                     }
-                    return addErrorMsgs();
+                    addErrors();
                 }
             });
         } else {
             piderror = true;
-            return addErrorMsgs();
+            addErrors();
         }
     };
-
 
     var sendPid = function(element) {
 
@@ -255,8 +256,6 @@ jQuery(document).ready(function($) {
             $(this).closest("tr").removeClass("hover");
         }
     });
-
-
 });
 
 
