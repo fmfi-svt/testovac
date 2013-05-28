@@ -51,13 +51,36 @@ include 'db.php';
                 </tr>
 
                 <?php
-                while ($query2->fetchInto($row)) {
-                    $numOfInputs = 0;
+                $before_row = array();
+                $after_row = array();
 
+                while ($query2->fetchInto($row)) {
+                    $testDateStr = strtotime($row['time_of_registration']);
+                    $minutesSinceRegistration = ($testDateStr - time()) / 60;
+
+                    if ($minutesSinceRegistration > -120) {
+                        $before_row[] = $row;
+                    } else {
+                        $after_row[] = $row;
+                    }
+                }
+                ?>
+                <tr>
+                    <td colspan="10"><b>Uchádzači zaregistrovaní za posledných 120 minút</b></td>
+                </tr>
+
+
+                <?php
+
+                function oneRow($row, $db) {
+
+                    $time = date("d.m.Y H:i:s", strtotime($row['time_of_registration']));
 
                     $id = $row['id'];
+
                     $meno = $row['meno'];
                     $priezvisko = $row['priezvisko'];
+
                     $datum = $db->sqlDateToRegular($row['datum_narodenia']);
                     $priemer1 = $row['priemer1'];
                     if (preg_match("/^\d$/", $priemer1) == 1) {
@@ -73,7 +96,7 @@ include 'db.php';
                     }
                     $forma = $row['forma_studia'];
 
-                    $time = $row['time_of_registration'];
+
                     $pid = $row['pid'];
                     $info = $meno . ' ' . $priezvisko;
 
@@ -117,7 +140,6 @@ include 'db.php';
                     if ($priemer1 == 0) {
                         $priemer1_name = 'priemer1[' . $id . ']';
                         echo "<input type=\"text\" class=\"priemer1check priemerinput \" size=\"3\" name=\"$priemer1_name\" value=\"\">";
-                        $numOfInputs++;
                     } else {
                         echo "<input type=\"text\" class=\"priemer1check priemerinput\" size=\"3\" name=\"$priemer1_name\" value=\"$priemer1\">";
                     }
@@ -128,7 +150,6 @@ include 'db.php';
                     if ($priemer2 == 0) {
                         $priemer2_name = 'priemer2[' . $id . ']';
                         echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"\">";
-                        $numOfInputs++;
                     } else {
                         echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"$priemer2\">";
                     }
@@ -156,8 +177,21 @@ include 'db.php';
                         echo 'Neregistrovaný.';
                     }
                     echo '</td>';
-
                     echo '</tr>';
+                }
+
+                foreach ($before_row as $row) {
+                    oneRow($row, $db);
+                }
+                ?>
+
+                <tr>
+                    <td colspan="10"><b>Uchádzači zaregistrovaní skôr</b></td>
+                </tr>
+
+                <?php
+                foreach ($after_row as $row) {
+                    oneRow($row, $db);
                 }
                 ?>
             </table>
