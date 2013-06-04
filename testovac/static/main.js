@@ -235,7 +235,7 @@ function showQuestions(questions, state) {
       ).appendTo($dialog);
     }
 
-    $dialog.append($('<p><input type="button" class="submit" value="Odovzdať test"> <input type="button" class="cancel" value="Storno"></p>'));
+    $dialog.append($('<p><input type="button" class="submit" value="Odovzdať test"> <input type="button" class="cancel" value="Pokračovať v teste"></p>'));
     $dialog.find('.cancel').on('click', function () { $overlay.trigger('close'); });
     $dialog.find('.submit').on('click', function () { $overlay.trigger('close'); doClose(); });
     $dialog.find(incomplete ? '.cancel' : '.submit').focus();
