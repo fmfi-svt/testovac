@@ -63,7 +63,7 @@ jQuery(document).ready(function($) {
                 }
             });
         };
-        
+
         var addErrors = function() {
             var pidrocnikmsg = '&bull; zadaný PID je z ineho rocnika <br/>';
             var pidmsg = '&bull; zadaný PID nie je správny <br/>';
@@ -72,6 +72,7 @@ jQuery(document).ready(function($) {
             var pidduplmsg2 = ', zlikvidujte duplikát! <br/>';
             var defaultmsg = 'Nepovolené odoslanie formulára, opravte chyby: <br/>';
             var finalmsg = defaultmsg;
+
 
             if (pidrocnikerror === true) {
                 finalmsg = finalmsg + pidrocnikmsg;
@@ -95,7 +96,7 @@ jQuery(document).ready(function($) {
                 focusedElement.val(addHyphens(pid));
                 focusedElement.closest("div").find('.errorpid').hide();
                 focusedElement.closest("div").append(img_tick_src);
-                var okText = '<div class="errorpid"> PID ok. Cakajte...';
+                var okText = '<div class="errorpid"> PID OK. Uchádzač bol presunutý do druhej časti zoznamu (medzi zaregistrovaných uchádzačov).';
                 focusedElement.closest("div").append(okText);
                 focusedElement.closest("div").append('</div>');
             }
@@ -107,8 +108,8 @@ jQuery(document).ready(function($) {
                 sendPid(focusedElement);
             }
         };
-        
-        
+
+
         var pid = element.parent().find('.pid').val();
 
         var isPidVerhoeff = '';
@@ -127,13 +128,8 @@ jQuery(document).ready(function($) {
             checkDuplicatePid(pid, focusedElement);
             pid = removeHyphens(pid);
         }
+
         if (pid.match(/^(\d{16})$/) && pidduplerror === false) {
-            var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
-            if (c === 3) {
-                pidrocnikerror = false;
-            } else {
-                pidrocnikerror = true;
-            }
             $.ajax({
                 type: 'POST',
                 url: 'verhoeffChecker.php',
@@ -144,7 +140,13 @@ jQuery(document).ready(function($) {
                 success: function(data) {
                     focusedElement.closest("td").find('.errorpid').hide();
                     isPidVerhoeff = data;
-                    if (isPidVerhoeff === 'pidok' && pidrocnikerror === false) {
+                    if (isPidVerhoeff === 'pidok') {
+                        var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
+                        if (c === 3) {
+                            pidrocnikerror = false;
+                        } else {
+                            pidrocnikerror = true;
+                        }
                         piderror = false;
                     } else if (isPidVerhoeff === 'demopid') {
                         piddemoerror = true;

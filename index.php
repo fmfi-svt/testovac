@@ -46,6 +46,7 @@ if (isset($_POST['id'])) {
                 <?php
                 echo $_SERVER['REMOTE_USER'];
                 ?>
+                <a href="http://fakeuser:fakepass@localhost/cserver">Logout</a>
             </div>
         </div>
 
@@ -93,7 +94,7 @@ if (isset($_POST['id'])) {
                         $priemer2 = $priemer2 . '0';
                     }
                     $pid = $row['pid'];
-                    $time = $row['time_of_registration'];
+                    $time = date("d.m.Y H:i:s", strtotime($row['time_of_registration']));
                     if ($row['printed'] == 1) {
                         $printed = 'áno';
                     } else {

@@ -127,6 +127,10 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
                 $data = $_POST['priemer1'];
                 $this->db->execute($sth, str_replace(',', '.', $data));
                 $logMessage = $logMessage . " , priemer1:" . $data;
+            } else {
+                $sth = $this->db->prepare("UPDATE Students SET priemer1 = NULL WHERE id=" . $id);
+                $this->db->execute($sth);
+                $logMessage = $logMessage . "vymazany priemer1 pre studenta , PID:" . $data;
             }
         }
         if (isset($_POST['priemer2'])) {
@@ -135,6 +139,10 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
                 $data = $_POST['priemer2'];
                 $this->db->execute($sth, str_replace(',', '.', $data));
                 $logMessage = $logMessage . " , priemer2:" . $data;
+            } else {
+                $sth = $this->db->prepare("UPDATE Students SET priemer2 = NULL WHERE id=" . $id);
+                $this->db->execute($sth);
+                $logMessage = $logMessage . "vymazany priemer2 pre studenta , PID:" . $data;
             }
         }
         $logMessage = $logMessage . " , edit_by:" . $_SERVER['REMOTE_USER'] . " , time:" . date('G-i-s+j/m/y');

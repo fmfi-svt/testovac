@@ -33,13 +33,15 @@ jQuery(document).ready(function($) {
 
     var normalizeAverage = function(e) {
         var priemer = e;
+        if (priemer === 0) {
+            return null;
+        }
         if (priemer.match(/^\d$/) !== null) {
             priemer = priemer + '.00';
         } else if (priemer.match(/^\d[,.]\d$/) !== null) {
             priemer = priemer + '0';
         }
         return priemer;
-
     };
 
     parseAverages();
@@ -50,6 +52,9 @@ jQuery(document).ready(function($) {
 
     var validateAverage = function(average) {
         // priemer moze byt v rangi 1-4
+        if (average.length === 0) {
+            return true;
+        }
         if (average < 1 || average > 4 || !average.match(/^\d([,.]\d{0,2})?$/)) {
             return false;
         }
@@ -89,13 +94,11 @@ jQuery(document).ready(function($) {
             return; // nic sa nezmenilo
         }
 
-        if (!validateAverage($(this).val())) {
+        if (!validateAverage(p1zadany)) {
             priemer1error = true;
         } else {
             priemer1error = false;
         }
-
-
 
         if (priemer1error === true) {
             $(this).closest("td").append(img_cross_src_p);
@@ -105,6 +108,9 @@ jQuery(document).ready(function($) {
             }, 2500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
+            if (p1zadany.length === 0) {
+                p1zadany = 0;
+            }
             $.ajax({
                 type: 'POST',
                 url: 'db.php',
@@ -137,7 +143,7 @@ jQuery(document).ready(function($) {
             return; // nic sa nezmenilo
         }
 
-        if (!validateAverage($(this).val())) {
+        if (!validateAverage(p2zadany)) {
             priemer2error = true;
         } else {
             priemer2error = false;
@@ -151,6 +157,9 @@ jQuery(document).ready(function($) {
             }, 2500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
+            if (p2zadany.length === 0) {
+                p2zadany = 0;
+            }
             $.ajax({
                 type: 'POST',
                 url: 'db.php',
@@ -160,7 +169,7 @@ jQuery(document).ready(function($) {
                     priemer2: p2zadany
                 },
                 success: function() {
-                    
+
                     p2[id] = normalizeAverage(p2zadany);
                     setTimeout(function() {
                         hideErrorsForTd(element);

@@ -58,7 +58,7 @@ include 'db.php';
                     $testDateStr = strtotime($row['time_of_registration']);
                     $minutesSinceRegistration = ($testDateStr - time()) / 60;
 
-                    if ($minutesSinceRegistration > -120) {
+                    if ($minutesSinceRegistration > -90) {
                         $before_row[] = $row;
                     } else {
                         $after_row[] = $row;
@@ -66,7 +66,7 @@ include 'db.php';
                 }
                 ?>
                 <tr>
-                    <td colspan="10"><b>Uchádzači zaregistrovaní za posledných 120 minút</b></td>
+                    <td colspan="10"><b>Uchádzači zaregistrovaní za posledných 90 minút</b></td>
                 </tr>
 
 
