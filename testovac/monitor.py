@@ -35,7 +35,7 @@ def monitor(app):
             subdesc = 'expirovane'
             num_expired += 1
         else:
-            subdesc = ' cas: %02d:%02d' % (their_time // 60, their_time % 60)
+            subdesc = 'cas: %02d:%02d' % (their_time // 60, their_time % 60)
 
         if row[1]:
             idledesc = '%02d:%02d' % (row[3] // 60, row[3] % 60)
