@@ -1,4 +1,5 @@
 
+// Immediately Invoked Function Expression
 (function ($, undefined) {
 "use strict";
 
