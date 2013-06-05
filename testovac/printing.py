@@ -64,6 +64,9 @@ def format_questions(questions, sub_info=None):
 def render_pdf(pid, target_dir, **template_args):
     content = template.render(**template_args)
 
+    if not os.path.isdir('aux'):
+        os.mkdir('aux', 0700)
+
     with open('aux/%s.tex' % pid, 'w') as f:
         f.write(content.encode('utf-8'))
 
