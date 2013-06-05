@@ -1,6 +1,11 @@
 <?php
 include 'db.php';
 
+if ($_SESSION['login'] != true) {
+   header("location:login.php");
+   exit;
+}
+
 if (isset($_POST['id'])) {
     header("location: index.php");
 }
@@ -32,11 +37,11 @@ if (isset($_POST['id'])) {
                         echo $_SESSION['sprava'];
                         $_SESSION['counter'] = $_SESSION['counter'] - 1;
                     } else {
-                        echo 'Momentálne sa neodohrali žiadne udalosti zasluhujúce upozornenie.';
+                        echo 'Momentálne sa neodohrali žiadne udalosti.';
                     }
                 }
             } else {
-                echo 'Momentálne sa neodohrali žiadne udalosti zasluhujúce upozornenie.';
+                echo 'Momentálne sa neodohrali žiadne udalosti.';
             }
             ?>
             <div id="navigation">

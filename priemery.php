@@ -1,9 +1,11 @@
 <?php
 include 'db.php';
 
-//if (isset($_POST['id'])) {
-//    header("location: priemery.php");
-//}
+
+if ($_SESSION['login'] != true) {
+   header("location:login.php");
+   exit;
+}
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,13 +1,14 @@
 <?php
-include 'db.php';
+session_start();
 include 'users.php';
 
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    if ($users[$username] == $password) {
+    if ($users[$username] == $password && strlen($username) > 0) {
         $_SESSION['user'] = $_POST["username"];
+        $_SESSION['login'] = true;
         header("location:index.php");
     } else {
         echo "Nespravne heslo pre username: $username. ";
