@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-require_once 'actions.php';
+require_once __DIR__ . '/../src/actions.php';
 
 $db = new Repository();
 

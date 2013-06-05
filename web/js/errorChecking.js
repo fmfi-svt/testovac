@@ -8,8 +8,8 @@
 jQuery(document).ready(function($) {
     "use strict";
 
-    var img_cross_src_p = '<img src="cross.png" width="15" class="errorpriemery" />';
-    var img_tick_src_p = '<img src="tick-ok.png" width="15" class="errorpriemery" />';
+    var img_cross_src_p = '<img src="images/cross.png" width="15" class="errorpriemery" />';
+    var img_tick_src_p = '<img src="images/tick-ok.png" width="15" class="errorpriemery" />';
     var p1 = {};
     var p2 = {};
     var priemer1error;

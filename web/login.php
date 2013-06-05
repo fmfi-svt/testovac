@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'users.php';
+include __DIR__ . '/../src/users.php';
 
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     $username = $_POST["username"];

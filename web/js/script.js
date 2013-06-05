@@ -5,8 +5,8 @@ jQuery(document).ready(function($) {
     var pidduplerror;
     var pidrocnikerror;
     var piddemoerror;
-    var img_cross_src = '<img src="cross.png" width="25" class="errorpid" />';
-    var img_tick_src = '<img src="tick-ok.png" width="25" class="errorpid" />';
+    var img_cross_src = '<img src="images/cross.png" width="25" class="errorpid" />';
+    var img_tick_src = '<img src="images/tick-ok.png" width="25" class="errorpid" />';
 
     $(".pid").keyup(function(e) {
         if (e.keyCode === 13) {
