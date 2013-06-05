@@ -1,6 +1,7 @@
 <?php
 include 'db.php';
 
+$query2 = $db->getStudentsForAverage();
 
 if ($_SESSION['login'] != true) {
    header("location:login.php");

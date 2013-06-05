@@ -10,5 +10,3 @@ if (isset($_POST['id'])) {
     $db->updateStudents();
 }
 
-$query1 = $db->getAllStudents();
-$query2 = $db->getStudentsForAverage();

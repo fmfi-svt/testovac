@@ -1,5 +1,6 @@
 <?php
 include 'db.php';
+$query1 = $db->getAllStudents();
 
 if ($_SESSION['login'] != true) {
    header("location:login.php");
