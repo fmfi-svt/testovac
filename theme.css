@@ -178,7 +178,20 @@ td.cssunlock {
 }
 
 #header {
-    overflow: hidden;
+    position:fixed;
+    width:98%;
+    top:0px;
+    left: 0px;
+    height:1em;
+    padding:7px;
+    background: #FFFFFF;
+    z-index: 1;
+    border-bottom: 1px solid darkblue;
+}
+
+#main {
+    position:relative;
+    top:1.5em;
 }
 
 .input_row {

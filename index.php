@@ -54,6 +54,7 @@ if (isset($_POST['id'])) {
         <?php
         //print_r($_POST);
         ?>
+        <div id="main">
         <form id="form" name="studentform" method="post">
             <table id="mytable" cellspacing="0">
                 <tr>
@@ -211,5 +212,6 @@ if (isset($_POST['id'])) {
                 </tr>
             </table>
         </form>
+        </div>
     </body>
 </html>

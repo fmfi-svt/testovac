@@ -34,7 +34,7 @@ include 'db.php';
                 ?>
             </div>
         </div>
-
+        <div id="main">
         <form id="form" name="studentform" method="post">
             <table id="mytable" cellspacing="0">
                 <tr>
@@ -196,5 +196,6 @@ include 'db.php';
                 ?>
             </table>
         </form>
+    </div>
     </body>
 </html>
