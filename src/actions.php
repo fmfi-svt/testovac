@@ -1,75 +1,40 @@
 <?php
 
+use PDO;
+
 require_once __DIR__ . '/../config.php';
 
 class Repository {
 
+    /** @var PDO $db */
     private $db;
 
     function __construct() {
         $this->db = connect_db();
-        if (PEAR::isError($this->db)) {
-            die($this->db->getMessage());
-        }
-        $this->db->setFetchMode(DB_FETCHMODE_ASSOC);
     }
 
     function getAllStudents() {
-        $this->db->query('SET NAMES UTF8;');
-        //$query = & $this->db->query('SELECT * from Students ORDER BY sign(pid), priezvisko');
-        $query = & $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
+        $query = $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
 left join Students as s2 on
 s1.meno = s2.meno and s1.priezvisko=s2.priezvisko and s1.datum_narodenia=s2.datum_narodenia and
 not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
-        // Always check that result is not an error
-        if (PEAR::isError($query)) {
-            die($query->getMessage());
-        }
         return $query;
     }
 
     function getStudentsForAverage() {
-//        SELECT * 
-//FROM 
-//(SELECT Students.priezvisko
-//FROM Students
-//WHERE time_of_registration >= DATE_SUB( NOW( ) , INTERVAL 1 HOUR ) 
-//ORDER BY priezvisko) DUMMY_ALIAS1
-//UNION ALL
-//SELECT * 
-//FROM 
-//(SELECT Students.priezvisko
-//FROM Students
-//ORDER BY sign(pid), priezvisko) DUMMY_ALIAS2
-        $this->db->query('SET NAMES UTF8;');
-        //$query = & $this->db->query('SELECT * from Students ORDER BY sign(pid), priezvisko');
-        $query = & $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
+        $query = $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
 left join Students as s2 on
 s1.meno = s2.meno and s1.priezvisko=s2.priezvisko and s1.datum_narodenia=s2.datum_narodenia and
 not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
-        // Always check that result is not an error
-        if (PEAR::isError($query)) {
-            die($query->getMessage());
-        }
         return $query;
     }
 
     function printStudents() {
-        print_r('asdasd');
-        $this->db->query('SET NAMES UTF8;');
-        $query = & $this->db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
-        $retquery = & $this->db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
-        $printquery = & $this->db->query('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
-        // Always check that result is not an error
-        if (PEAR::isError($query)) {
-            die($query->getMessage());
-        }
-        if (PEAR::isError($printquery)) {
-            die($printquery->getMessage());
-        }
+        $query = $this->db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
 
+        $students = $query->fetchAll(PDO::FETCH_ASSOC);
         $logmsg = 'PRINT; ';
-        while ($query->fetchInto($row)) {
+        foreach ($students as $row) {
             $pid = $row['pid'];
             $logmsg = $logmsg . $pid . ' ';
         }
@@ -77,17 +42,13 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         $logmsg = $logmsg . " , edit_by:admin , time:" . date('G-i-s+j/m/y');
 
         $this->writeToLog($logmsg);
-        return $retquery;
+        $this->db->exec('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
+        return $students;
     }
 
     function exportStudents() {
-        $this->db->query('SET NAMES UTF8;');
-        $query = & $this->db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
-        $exportquery = $this->db->query('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
-        // Always check that result is not an error
-        if (PEAR::isError($query)) {
-            die($query->getMessage());
-        }
+        $query = $this->db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
+        $this->db->exec('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
         $logmsg = 'EXPORT; ';
 
         $logmsg = $logmsg . " edit_by:admin , time:" . date('G-i-s+j/m/y');
@@ -104,45 +65,59 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         $logMessage = "UPDATE; ID:" . $id;
         print_r($_POST);
         if ($_POST['delete'] == 'yes') {
-            $sth = $this->db->prepare("UPDATE Students SET pid = NULL WHERE id=" . $id);
-            $this->db->execute($sth);
+            $sth = $this->db->prepare("UPDATE Students SET pid = NULL WHERE id=:id");
+            $sth->bindParam(':id', $id);
+            $sth->execute();
 
-            $logMessage = $logMessage . " , PID:" . $data . "  !!! POZOR VYMAZANY PID !!!";
+            $logMessage = $logMessage . " , ID: " . $id . "  !!! POZOR VYMAZANY PID !!!";
         }
 
         if (isset($_POST['pid'])) {
             if ($_POST['pid'] != 0) {
-                $sth = $this->db->prepare("UPDATE Students SET pid = (?) WHERE id=" . $id);
-                $data = $_POST['pid'];
-                $this->db->execute($sth, $data);
-                $sth2 = $this->db->prepare("UPDATE Students SET time_of_registration = NOW() WHERE id=" . $id);
-                $this->db->execute($sth2);
+                $sth = $this->db->prepare("UPDATE Students SET pid = :pid WHERE id=:id");
+                $pid = $_POST['pid'];
+                $sth->bindParam(':id', $id);
+                $sth->bindParam(':pid', $pid);
+                $sth->execute();
+                
+                $sth2 = $this->db->prepare("UPDATE Students SET time_of_registration = NOW() WHERE id=:id");
+                $sth2->bindParam(':id', $id);
+                $sth2->execute();
 
-                $logMessage = $logMessage . " , PID:" . $data;
+                $logMessage = $logMessage . " , PID:" . $pid;
             }
         }
         if (isset($_POST['priemer1'])) {
             if ($_POST['priemer1'] != 0) {
-                $sth = $this->db->prepare("UPDATE Students SET priemer1 = (?) WHERE id=" . $id);
-                $data = $_POST['priemer1'];
-                $this->db->execute($sth, str_replace(',', '.', $data));
-                $logMessage = $logMessage . " , priemer1:" . $data;
+                $sth = $this->db->prepare("UPDATE Students SET priemer1 = :priemer1 WHERE id=:id");
+                $priemer1 = $_POST['priemer1'];
+                $priemer1_bodka = str_replace(',', '.', $priemer1);
+                $sth->bindParam(':priemer1', $priemer1_bodka);
+                $sth->bindParam(':id', $id);
+                $sth->execute();
+                $logMessage = $logMessage . " , priemer1:" . $priemer1;
             } else {
-                $sth = $this->db->prepare("UPDATE Students SET priemer1 = NULL WHERE id=" . $id);
-                $this->db->execute($sth);
-                $logMessage = $logMessage . "vymazany priemer1 pre studenta , PID:" . $data;
+                $sth = $this->db->prepare("UPDATE Students SET priemer1 = NULL WHERE id=:id");
+                $sth->bindParam(':id', $id);
+                $sth->execute();
+                $logMessage = $logMessage . "vymazany priemer1 pre studenta , ID:" . $id;
             }
         }
+
         if (isset($_POST['priemer2'])) {
             if ($_POST['priemer2'] != 0) {
-                $sth = $this->db->prepare("UPDATE Students SET priemer2 = (?) WHERE id=" . $id);
-                $data = $_POST['priemer2'];
-                $this->db->execute($sth, str_replace(',', '.', $data));
-                $logMessage = $logMessage . " , priemer2:" . $data;
+                $sth = $this->db->prepare("UPDATE Students SET priemer2 = :priemer2 WHERE id=:id");
+                $priemer2 = $_POST['priemer2'];
+                $priemer2_bodka = str_replace(',', '.', $priemer2);
+                $sth->bindParam(':priemer2', $priemer2_bodka);
+                $sth->bindParam(':id', $id);
+                $sth->execute();
+                $logMessage = $logMessage . " , priemer2:" . $priemer2;
             } else {
-                $sth = $this->db->prepare("UPDATE Students SET priemer2 = NULL WHERE id=" . $id);
-                $this->db->execute($sth);
-                $logMessage = $logMessage . "vymazany priemer2 pre studenta , PID:" . $data;
+                $sth = $this->db->prepare("UPDATE Students SET priemer2 = NULL WHERE id=:id");
+                $sth->bindParam(':id', $id);
+                $sth->execute();
+                $logMessage = $logMessage . "vymazany priemer2 pre studenta , ID:" . $id;
             }
         }
         $logMessage = $logMessage . " , edit_by:" . $_SERVER['REMOTE_USER'] . " , time:" . date('G-i-s+j/m/y');

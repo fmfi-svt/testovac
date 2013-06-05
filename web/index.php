@@ -76,7 +76,7 @@ if (isset($_POST['id'])) {
                 </tr>
 
                 <?php
-                while ($query1->fetchInto($row)) {
+                foreach ($query1 as $row) {
                     $numOfInputs = 0;
 
                     if ($row['exported'] == 1) {

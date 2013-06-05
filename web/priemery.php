@@ -58,7 +58,7 @@ if ($_SESSION['login'] != true) {
                 $before_row = array();
                 $after_row = array();
 
-                while ($query2->fetchInto($row)) {
+                foreach ($query2 as $row) {
                     $testDateStr = strtotime($row['time_of_registration']);
                     $minutesSinceRegistration = ($testDateStr - time()) / 60;
 

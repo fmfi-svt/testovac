@@ -8,7 +8,7 @@ require_once 'actions.php';
 $db = new Repository();
 
 
-$query = $db->exportStudents();
+$students = $db->exportStudents();
 
 $fileloc = "logs/cbody.php";
 $handle = fopen($fileloc, 'w');
@@ -16,7 +16,7 @@ $msg = '<?php '."\n";
 $msg = $msg . '$bodyC = array(' . " \n";
 
 try {
-    while ($query->fetchInto($row)) {
+    foreach ($students as $row) {
         $id = $row['id'];
         $meno = $row['meno'];
         $priezvisko = $row['priezvisko'];

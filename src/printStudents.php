@@ -8,7 +8,7 @@ require_once 'actions.php';
 $db = new Repository();
 
 
-$query = $db->printStudents();
+$students = $db->printStudents();
 
 
 $linefeed = "\n";
@@ -33,8 +33,7 @@ $doc = '\documentclass[12pt]{book}
 print_r("Vytvaram pdf-ka pre studentov, ktori maju pid a este nie su vytlaceni." . "\n");
 
 try {
-    while ($query->fetchInto($row)) {
-
+    foreach ($students as $row) {
         $id = $row['id'];
         $meno = $row['meno'];
         $priezvisko = $row['priezvisko'];
