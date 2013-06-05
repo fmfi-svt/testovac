@@ -30,8 +30,9 @@ include 'db.php';
                 <a href="index.php">Prideľovanie PID (registrácia)</a>&nbsp;
                 Ste prihlásení ako 
                 <?php
-                echo $_SERVER['REMOTE_USER'];
+                echo $_SESSION['user'];
                 ?>
+                <a href="logout.php">Logout</a>
             </div>
         </div>
         <div id="main">

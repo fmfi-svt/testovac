@@ -185,7 +185,7 @@ jQuery(document).ready(function($) {
 
         setTimeout(function() {
             novyForm.submit();
-        }, 3000);
+        }, 1000);
     };
 
     $(".subdelbtn").click(function(e) {

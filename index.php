@@ -44,9 +44,9 @@ if (isset($_POST['id'])) {
                 <a href="priemery.php">Editácia priemerov</a>&nbsp;
                 Ste prihlásení ako
                 <?php
-                echo $_SERVER['REMOTE_USER'];
+                echo $_SESSION['user'];
                 ?>
-                <a href="http://fakeuser:fakepass@localhost/cserver">Logout</a>
+                <a href="logout.php">Logout</a>
             </div>
         </div>
 

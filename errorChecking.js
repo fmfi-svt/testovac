@@ -25,10 +25,6 @@ jQuery(document).ready(function($) {
             p1[id] = p1val;
             p2[id] = p2val;
         });
-        if (window.console)
-            console.log(p1);
-        if (window.console)
-            console.log(p2);
     };
 
     var normalizeAverage = function(e) {
@@ -105,7 +101,7 @@ jQuery(document).ready(function($) {
             setTimeout(function() {
                 element.val(p1[id]);
                 hideErrorsForTd(element);
-            }, 2500);
+            }, 1500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
             if (p1zadany.length === 0) {
@@ -124,7 +120,7 @@ jQuery(document).ready(function($) {
                     setTimeout(function() {
                         hideErrorsForTd(element);
                         element.val(p1[id]);
-                    }, 2500);
+                    }, 1500);
                 }
             });
         }
@@ -154,7 +150,7 @@ jQuery(document).ready(function($) {
             setTimeout(function() {
                 element.val(p2[id]);
                 hideErrorsForTd(element);
-            }, 2500);
+            }, 1500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
             if (p2zadany.length === 0) {
@@ -174,7 +170,7 @@ jQuery(document).ready(function($) {
                     setTimeout(function() {
                         hideErrorsForTd(element);
                         element.val(p2[id]);
-                    }, 2500);
+                    }, 1500);
                 }
             });
         }
