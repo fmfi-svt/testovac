@@ -5,8 +5,6 @@ jQuery(document).ready(function($) {
     var img_tick_src_p = '<img src="images/tick-ok.png" width="15" class="errorpriemery" />';
     var p1 = {};
     var p2 = {};
-    var error;
-    var priemer2error;
 
     var parseAverages = function() {
         var trs = $("tr");
@@ -78,8 +76,7 @@ jQuery(document).ready(function($) {
     
     function savePriemer(input, oldValues, fieldName) {
         hideErrorsForTd(input);
-        error = false;
-
+        
         var id = input.closest("tr").find('.idsub').val();
         var zadany = input.val();
 
@@ -88,12 +85,6 @@ jQuery(document).ready(function($) {
         }
 
         if (!validateAverage(zadany)) {
-            error = true;
-        } else {
-            error = false;
-        }
-
-        if (error === true) {
             input.closest("td").append(img_cross_src_p);
             setTimeout(function() {
                 input.val(oldValues[id]);
