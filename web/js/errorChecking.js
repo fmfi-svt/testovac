@@ -34,7 +34,7 @@ jQuery(document).ready(function($) {
     parseAverages();
 
     var hideErrorsForTd = function(element) {
-        element.closest("td").find('.errorpriemery').hide();
+        element.closest("td").find('.errorpriemery').remove();
     };
 
     var validateAverage = function(average) {
