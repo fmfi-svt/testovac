@@ -7,6 +7,10 @@ require_once __DIR__ . '/../src/verhoeffChecker.php';
 
 $db = new Repository();
 
+function e($text) {
+    return htmlspecialchars($text, 0, 'UTF-8');
+}
+
 function renderTemplate($filename, $params = array()) {
     // jednoduche templaty
     foreach ($params as $param => $val) {
@@ -68,6 +72,7 @@ if (current_user() === null) {
     
 }
 else {
+    $templateParams = array('user' => current_user(), 'db' => $db);
     if (is_post()) {
         $action = param_post('action');
         if ($action == 'logout') {
@@ -99,10 +104,29 @@ else {
             redirect(array('action' => 'login'));
         }
         else if ($action == 'zoznam') {
-            renderTemplate('zoznam.php', array('db' => $db));
+            $templateParams['students'] = $db->getAllStudents();
+            renderTemplate('zoznam.php', $templateParams);
         }
         else if ($action == 'priemery') {
-            renderTemplate('priemery.php', array('db' => $db));
+            $students = $db->getStudentsForAverage();
+            
+            $before_row = array();
+            $after_row = array();
+
+            foreach ($students as $row) {
+                $testDateStr = strtotime($row['time_of_registration']);
+                $minutesSinceRegistration = ($testDateStr - time()) / 60;
+
+                if ($minutesSinceRegistration > -90) {
+                    $before_row[] = $row;
+                } else {
+                    $after_row[] = $row;
+                }
+            }
+            
+            $templateParams['before_row'] = $before_row;
+            $templateParams['after_row'] = $after_row;
+            renderTemplate('priemery.php', $templateParams);
         }
     }
 }

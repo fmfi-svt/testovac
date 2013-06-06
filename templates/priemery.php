@@ -1,6 +1,3 @@
-<?php
-$query2 = $db->getStudentsForAverage();
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,10 +21,7 @@ $query2 = $db->getStudentsForAverage();
 
             <div id="navigation">
                 <a href="index.php">Prideľovanie PID (registrácia)</a>&nbsp;
-                Ste prihlásení ako 
-                <?php
-                echo $_SESSION['user'];
-                ?>
+                Ste prihlásení ako <?php echo e($user) ?>
                 <a href="index.php?action=logout">Logout</a>
             </div>
         </div>
@@ -47,21 +41,6 @@ $query2 = $db->getStudentsForAverage();
                     <th style="min-width:5em" class="cssright">PID</th>
                 </tr>
 
-                <?php
-                $before_row = array();
-                $after_row = array();
-
-                foreach ($query2 as $row) {
-                    $testDateStr = strtotime($row['time_of_registration']);
-                    $minutesSinceRegistration = ($testDateStr - time()) / 60;
-
-                    if ($minutesSinceRegistration > -90) {
-                        $before_row[] = $row;
-                    } else {
-                        $after_row[] = $row;
-                    }
-                }
-                ?>
                 <tr>
                     <td colspan="10"><b>Uchádzači zaregistrovaní za posledných 90 minút</b></td>
                 </tr>
@@ -110,66 +89,68 @@ $query2 = $db->getStudentsForAverage();
                     echo "<tr id=\"$id\" class=\"name_listing\">";
 
                     $id_name = 'id[' . $id . ']';
-                    echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
-                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
+                    echo "<input type=\"hidden\" class=\"idsub\" name=\"".e($id_name)."\" value=\"".e($id)."\">";
+                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"".e($info)."\">";
                     // meno cell
                     echo '<td>';
-                    echo $meno;
+                    echo e($meno);
                     echo '</td>';
 
                     // priezvisko cell
                     echo '<td class="spec namefilter">';
-                    echo $priezvisko;
+                    echo e($priezvisko);
                     echo '</td>';
 
                     // datum cell
                     echo '<td>';
-                    echo $datum;
+                    echo e($datum);
                     echo '</td>';
 
                     // forma cell
                     echo '<td>';
-                    echo $forma;
+                    echo e($forma);
                     echo '</td>';
 
                     // priemer1 cell
                     echo '<td class="priemery priemer1td">';
+                    $priemer1_name = 'priemer1[' . $id . ']';
                     if ($priemer1 == 0) {
-                        $priemer1_name = 'priemer1[' . $id . ']';
-                        echo "<input type=\"text\" class=\"priemer1check priemerinput \" size=\"3\" name=\"$priemer1_name\" value=\"\">";
+                        $priemer1_value = '';
                     } else {
-                        echo "<input type=\"text\" class=\"priemer1check priemerinput\" size=\"3\" name=\"$priemer1_name\" value=\"$priemer1\">";
+                        $priemer1_value = (string) $priemer1;
                     }
+                    echo "<input type=\"text\" class=\"priemer1check priemerinput\" size=\"3\" name=\"".e($priemer1_name)."\" value=\"".e($priemer1_value)."\">";
                     echo '</td>';
 
                     // priemer2 cell
                     echo '<td class="priemery priemer2td">';
+                    $priemer2_name = 'priemer2[' . $id . ']';
                     if ($priemer2 == 0) {
-                        $priemer2_name = 'priemer2[' . $id . ']';
-                        echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"\">";
+                        $priemer2_value = '';
                     } else {
-                        echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"$priemer2_name\" value=\"$priemer2\">";
+                        $priemer2_value = (string) $priemer1;
                     }
+                    echo "<input type=\"text\" class=\"priemer2check priemerinput\" size=\"3\" name=\"".e($priemer2_name)."\" value=\"".e($priemer2)."\">";
                     echo '</td>';
 
                     echo '<td>';
-                    echo $printed;
+                    echo e($printed);
                     echo '</td>';
 
                     echo '<td>';
-                    echo $exported;
+                    echo e($exported);
                     echo '</td>';
 
                     echo '<td>';
                     if ($pid <> 0) {
-                        echo $time;
+                        echo e($time);
                     }
                     echo '</td>';
 
                     // pid cell
                     echo '<td class="pidtd cssright">';
                     if ($pid != 0) {
-                        echo $pid;
+                        echo e($pid);
                     } else {
                         echo 'Neregistrovaný.';
                     }

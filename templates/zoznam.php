@@ -1,6 +1,3 @@
-<?php
-$query1 = $db->getAllStudents();
-?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -38,18 +35,12 @@ $query1 = $db->getAllStudents();
             <div id="navigation">
 
                 <a href="index.php?action=priemery">Editácia priemerov</a>&nbsp;
-                Ste prihlásení ako
-                <?php
-                echo $_SESSION['user'];
-                ?>
+                Ste prihlásení ako <?php echo e($user) ?>
                 <a href="index.php?action=logout">Logout</a>
             </div>
         </div>
 
 
-        <?php
-        //print_r($_POST);
-        ?>
         <div id="main">
         <form id="form" name="studentform" method="post">
             <table id="mytable" cellspacing="0">
@@ -66,7 +57,7 @@ $query1 = $db->getAllStudents();
                 </tr>
 
                 <?php
-                foreach ($query1 as $row) {
+                foreach ($students as $row) {
                     $numOfInputs = 0;
 
                     if ($row['exported'] == 1) {
@@ -105,68 +96,68 @@ $query1 = $db->getAllStudents();
 
                     // meno cell
                     echo '<td class="meno">';
-                    echo $meno;
+                    echo e($meno);
                     echo '</td>';
 
                     // priezvisko cell
                     echo '<td class="priezvisko spec namefilter">';
-                    echo "<b>$priezvisko</b>";
+                    echo "<b>".e($priezvisko)."</b>";
                     echo '</td>';
 
                     // datum cell
                     echo '<td>';
-                    echo $datum;
+                    echo e($datum);
                     echo '</td>';
 
                     // forma cell
                     echo '<td>';
-                    echo $forma;
+                    echo e($forma);
                     echo '</td>';
 
                     // priemer1 cell
                     echo '<td class="priemery">';
                     if ($priemer1 != 0) {
-                        echo $priemer1;
+                        echo e($priemer1);
                     }
                     echo '</td>';
 
                     // priemer2 cell
                     echo '<td class="priemery">';
                     if ($priemer2 != 0) {
-                        echo $priemer2;
+                        echo e($priemer2);
                     }
                     echo '</td>';
 
                     echo '<td>';
-                    echo $printed;
+                    echo e($printed);
                     echo '</td>';
 
                     echo '<td>';
                     if ($pid <> 0) {
-                        echo $time;
+                        echo e($time);
                     }
                     echo '</td>';
 
                     echo '<td class="pidtd cssright">';
                     if ($pid != 0) {
-                        echo $pid;
+                        echo e($pid);
                     } else {
                         echo 'Neregistrovaný.';
                     }
                     echo '</td>';
 
                     // modal window pre pridanie PID
-                    echo "<div class=\"addPid modal\" id=addPid$id>";
-                    echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
-                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
-                    echo "<h3>Registrácia uchádzača</h3> Prajete si prideliť zvolenému uchádzačovi zadaný PID? <br/><br/> Meno:  <b>$meno</b><br/>Priezvisko:  <b>$priezvisko</b><br/><br/>";
+                    echo "<div class=\"addPid modal\" id=\"addPid".e($id)."\">";
+                    echo "<input type=\"hidden\" class=\"idsub\" name=\"".e($id_name)."\" value=\"".e($id)."\">";
+                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"".e($info)."\">";
+                    echo "<h3>Registrácia uchádzača</h3> Prajete si prideliť zvolenému uchádzačovi zadaný PID? <br/><br/> Meno:  <b>".e($meno)."</b><br/>Priezvisko:  <b>".e($priezvisko)."</b><br/><br/>";
                     if ($row['printed'] == 1) {
                         echo '<div class="warning"> Pozor, registrujete už vytlačeného študenta!!!</div><br/>';
                     }
                     if ($pid == 0) {
-                        echo "PID: <input type=\"text\" id=\"input$id\" size=\"18\" class=\"pidcheck pid pidsub\" name=\"inputText$id\" value=\"\">";
+                        echo "PID: <input type=\"text\" id=\"input".e($id)."\" size=\"18\" class=\"pidcheck pid pidsub\" name=\"inputText".e($id)."\" value=\"\">";
                     } else {
-                        echo $pid;
+                        echo e($pid);
                     }
                     echo '<br/><br/>';
                     echo "<input type=\"button\" class=\"addbtn\" value=\"Áno, prideliť zadaný PID.\">";
@@ -175,10 +166,10 @@ $query1 = $db->getAllStudents();
 
                     // modal window pre vymazanie usera
                     echo "<div class=\"deletePid modal\" id=deletePid$id>";
-                    echo "<input type=\"hidden\" class=\"idsub\" name=\"$id_name\" value=\"$id\">";
-                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"$info\">";
+                    echo "<input type=\"hidden\" class=\"idsub\" name=\"".e($id_name)."\" value=\"".e($id)."\">";
+                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"".e($info)."\">";
                     echo "<h1> Zrušenie registrácie </h1> Chcete zrušiť registráciu pre tohto uchádzača?<br/>";
-                    echo "<p><b>Meno:</b>  $meno <br/> <b>Priezvisko:</b>  $priezvisko<br/> <b>PID:</b>  $pid</p>";
+                    echo "<p><b>Meno:</b>  ".e($meno)." <br/> <b>Priezvisko:</b>  ".e($priezvisko)."<br/> <b>PID:</b>  ".e($pid)."</p>";
 
                     echo "<input type=\"button\" class=\"subdelbtn\" name=\"delete\" value=\"Áno, zruš registráciu.\">";
                     echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechať registráciu.\">";
@@ -192,9 +183,9 @@ $query1 = $db->getAllStudents();
                     echo '</td>';
                     echo '<td>';
                     if ($pid <> 0) {
-                        echo "<a id=\"go$id\" rel=\"leanModal\" href=\"#deletePid$id\">Zrus registraciu.</a>";
+                        echo "<a id=\"go".e($id)."\" rel=\"leanModal\" href=\"#deletePid".e($id)."\">Zrus registraciu.</a>";
                     } else {
-                        echo "<a id=\"go$id\" class=\"addClick\"rel=\"leanModal\" href=\"#addPid$id\">Pridaj PID</a>";
+                        echo "<a id=\"go".e($id)."\" class=\"addClick\"rel=\"leanModal\" href=\"#addPid".e($id)."\">Pridaj PID</a>";
                     }
                     echo '</td>';
                     echo '</tr>';
