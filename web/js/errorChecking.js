@@ -1,10 +1,3 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
 jQuery(document).ready(function($) {
     "use strict";
 
@@ -12,7 +5,7 @@ jQuery(document).ready(function($) {
     var img_tick_src_p = '<img src="images/tick-ok.png" width="15" class="errorpriemery" />';
     var p1 = {};
     var p2 = {};
-    var priemer1error;
+    var error;
     var priemer2error;
 
     var parseAverages = function() {
@@ -76,104 +69,61 @@ jQuery(document).ready(function($) {
             $(this).closest("tr").find('.priemer2check').focus();
         }
     });
+    
+    function savePriemer(input, oldValues, fieldName) {
+        hideErrorsForTd(input);
+        error = false;
 
-    $(':input.priemer1check').blur(function() {
-        var element = $(this);
+        var id = input.closest("tr").find('.idsub').val();
+        var zadany = input.val();
 
-        hideErrorsForTd(element);
-        priemer1error = false;
-
-        var id = $(this).closest("tr").find('.idsub').val();
-        var p1zadany = $(this).val();
-
-        if (p1zadany === p1[id]) {
+        if (zadany === oldValues[id]) {
             return; // nic sa nezmenilo
         }
 
-        if (!validateAverage(p1zadany)) {
-            priemer1error = true;
+        if (!validateAverage(zadany)) {
+            error = true;
         } else {
-            priemer1error = false;
+            error = false;
         }
 
-        if (priemer1error === true) {
-            $(this).closest("td").append(img_cross_src_p);
+        if (error === true) {
+            input.closest("td").append(img_cross_src_p);
             setTimeout(function() {
-                element.val(p1[id]);
-                hideErrorsForTd(element);
+                input.val(oldValues[id]);
+                hideErrorsForTd(input);
             }, 1500);
         } else {
             $(this).closest("td").append(img_tick_src_p);
-            if (p1zadany.length === 0) {
-                p1zadany = 0;
+            if (zadany.length === 0) {
+                zadany = 0;
             }
+            var data = {
+                id: id
+            };
+            data[fieldName] = zadany;
             $.ajax({
                 type: 'POST',
                 url: 'db.php',
                 dataType: 'html',
-                data: {
-                    id: id,
-                    priemer1: p1zadany
-                },
+                data: data,
                 success: function() {
-                    p1[id] = normalizeAverage(p1zadany);
+                    oldValues[id] = normalizeAverage(zadany);
                     setTimeout(function() {
-                        hideErrorsForTd(element);
-                        element.val(p1[id]);
+                        hideErrorsForTd(input);
+                        input.val(oldValues[id]);
                     }, 1500);
                 }
             });
         }
+    }
+
+    $(':input.priemer1check').blur(function() {
+        savePriemer($(this), p1, "priemer1");
     });
 
     $(':input.priemer2check').blur(function() {
-        var element = $(this);
-
-        hideErrorsForTd(element);
-        priemer2error = false;
-
-        var id = $(this).closest("tr").find('.idsub').val();
-        var p2zadany = $(this).val();
-
-        if (p2zadany === p2[id]) {
-            return; // nic sa nezmenilo
-        }
-
-        if (!validateAverage(p2zadany)) {
-            priemer2error = true;
-        } else {
-            priemer2error = false;
-        }
-
-        if (priemer2error === true) {
-            $(this).closest("td").append(img_cross_src_p);
-            setTimeout(function() {
-                element.val(p2[id]);
-                hideErrorsForTd(element);
-            }, 1500);
-        } else {
-            $(this).closest("td").append(img_tick_src_p);
-            if (p2zadany.length === 0) {
-                p2zadany = 0;
-            }
-            $.ajax({
-                type: 'POST',
-                url: 'db.php',
-                dataType: 'html',
-                data: {
-                    id: id,
-                    priemer2: p2zadany
-                },
-                success: function() {
-
-                    p2[id] = normalizeAverage(p2zadany);
-                    setTimeout(function() {
-                        hideErrorsForTd(element);
-                        element.val(p2[id]);
-                    }, 1500);
-                }
-            });
-        }
+        savePriemer($(this), p2, "priemer2");
     });
 
 
