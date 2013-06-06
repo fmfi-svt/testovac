@@ -132,9 +132,10 @@ jQuery(document).ready(function($) {
         if (pid.match(/^(\d{16})$/) && pidduplerror === false) {
             $.ajax({
                 type: 'POST',
-                url: 'verhoeffChecker.php',
+                url: 'index.php',
                 dataType: 'html',
                 data: {
+                    action: 'check-pid',
                     pidd: pid
                 },
                 success: function(data) {
@@ -183,6 +184,16 @@ jQuery(document).ready(function($) {
             name: 'pid',
             value: element.closest("div").find(".pidsub").val()
         }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'action',
+            value: 'update'
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'next',
+            value: 'zoznam'
+        }).appendTo(novyForm);
 
         setTimeout(function() {
             novyForm.submit();
@@ -206,6 +217,16 @@ jQuery(document).ready(function($) {
             type: 'hidden',
             name: 'delete',
             value: 'yes'
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'action',
+            value: 'update'
+        }).appendTo(novyForm);
+        $('<input>').attr({
+            type: 'hidden',
+            name: 'next',
+            value: 'zoznam'
         }).appendTo(novyForm);
         novyForm.submit();
     });

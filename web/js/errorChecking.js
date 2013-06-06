@@ -96,12 +96,13 @@ jQuery(document).ready(function($) {
                 zadany = 0;
             }
             var data = {
+                action: 'update',
                 id: id
             };
             data[fieldName] = zadany;
             $.ajax({
                 type: 'POST',
-                url: 'db.php',
+                url: 'index.php',
                 dataType: 'html',
                 data: data,
                 success: function() {

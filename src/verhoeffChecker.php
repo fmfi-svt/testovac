@@ -1,10 +1,5 @@
 <?php
 
-if (isset($_POST['pidd'])) {
-    $vc = new VerhoeffChecker();
-    echo $vc->check($_POST['pidd']);
-}
-
 // 3646-1387-5530-8172
 class VerhoeffChecker {
 
@@ -63,5 +58,3 @@ class VerhoeffChecker {
     }
 
 }
-
-?>

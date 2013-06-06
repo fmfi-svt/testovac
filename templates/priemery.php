@@ -1,12 +1,5 @@
 <?php
-include 'db.php';
-
 $query2 = $db->getStudentsForAverage();
-
-if ($_SESSION['login'] != true) {
-   header("location:login.php");
-   exit;
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +28,7 @@ if ($_SESSION['login'] != true) {
                 <?php
                 echo $_SESSION['user'];
                 ?>
-                <a href="logout.php">Logout</a>
+                <a href="index.php?action=logout">Logout</a>
             </div>
         </div>
         <div id="main">

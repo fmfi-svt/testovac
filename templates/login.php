@@ -1,31 +1,11 @@
-<?php
-session_start();
-include __DIR__ . '/../src/users.php';
-
-if (isset($_POST["username"]) && isset($_POST["password"])) {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    if ($users[$username] == $password && strlen($username) > 0) {
-        $_SESSION['user'] = $_POST["username"];
-        $_SESSION['login'] = true;
-        header("location:index.php");
-    } else {
-        echo "Nespravne heslo pre username: $username. ";
-        echo "Skuste znova.";
-        exit;
-    }
-}
-
-?>
-
 <html>
     <head>
         <title>Login</title>
     </head>
     <body>
         <div id="containt" align="center">
-            <form action="login.php" method="post">
+            <form action="index.php" method="post">
+                <input type="hidden" name="action" value="login" />
                 <div id="header"><h2>C-Server Login</h2></div>
                 <table>
 
