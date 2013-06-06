@@ -1,18 +1,26 @@
 #!/usr/bin/php
 
 <?php
+require_once __DIR__ . '/../config.php';
 
-require_once 'actions.php';
+$db = connect_db();
+
+$query = $db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
+
+$students = $query->fetchAll(PDO::FETCH_ASSOC);
+$logmsg = 'PRINT; ';
+foreach ($students as $row) {
+    $pid = $row['pid'];
+    $logmsg = $logmsg . $pid . ' ';
+}
+
+$logmsg = $logmsg . " , edit_by:admin , time:" . date('G-i-s+j/m/y');
+
+//$this->writeToLog($logmsg);
+$db->exec('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
 
 
-$db = new Repository();
-
-
-$students = $db->printStudents();
-
-
-$linefeed = "\n";
-$fileloc = "logs/printed.tex";
+$fileloc = __DIR__ . "/../output/printed.tex";
 $handle = fopen($fileloc, 'w');
 
 $doc = '\documentclass[12pt]{book}
@@ -37,23 +45,12 @@ try {
         $id = $row['id'];
         $meno = $row['meno'];
         $priezvisko = $row['priezvisko'];
-        $datum = $db->sqlDateToRegular($row['datum_narodenia']);
-        $priemer1 = $row['priemer1'];
-        if (preg_match("/^\d$/", $priemer1) == 1) {
-            $priemer1 = $priemer1 . '.00';
-        } else if (preg_match("/^\d[.]\d$/", $priemer1) == 1) {
-            $priemer1 = $priemer1 . '0';
-        }
-        $priemer2 = $row['priemer2'];
-        if (preg_match("/^\d$/", $priemer2) == 1) {
-            $priemer2 = $priemer2 . '.00';
-        } else if (preg_match("/^\d[.]\d$/", $priemer2) == 1) {
-            $priemer2 = $priemer2 . '0';
-        }
+        $dateparts = preg_split("/[-]+/", $row['datum_narodenia']);
+        $datum = $dateparts[2] . '.' . $dateparts[1] . '.' . $dateparts[0];
         $forma = $row['forma_studia'];
         $pid = $row['pid'];
-    	print_r('Tlacim studenta s pid: ' . $pid . "\n");
-	$doc = $doc . '
+        print_r('Tlacim studenta s pid: ' . $pid . "\n");
+        $doc = $doc . '
 \newpage
 \thispagestyle{empty}
 \noindent
@@ -91,7 +88,7 @@ svoj súhlas na spracovanie mojich osobných údajov v zmysle zákona o ochrane 
 \vspace{0.5in}
 \begin{description}
 \item[Podpis uchádzača:] \hskip0.5cm \Qline{3cm}
-\end{description} ';    
+\end{description} ';
     }
 } catch (Exception $e) {
     throw $e;

@@ -144,10 +144,11 @@ jQuery(document).ready(function($) {
                         var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
                         if (c === 3) {
                             pidrocnikerror = false;
+                            piderror = false;
                         } else {
                             pidrocnikerror = true;
+                            piderror = true;
                         }
-                        piderror = false;
                     } else if (isPidVerhoeff === 'demopid') {
                         piddemoerror = true;
                         piderror = true;

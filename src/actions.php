@@ -29,46 +29,16 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         return $query;
     }
 
-    function printStudents() {
-        $query = $this->db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
-
-        $students = $query->fetchAll(PDO::FETCH_ASSOC);
-        $logmsg = 'PRINT; ';
-        foreach ($students as $row) {
-            $pid = $row['pid'];
-            $logmsg = $logmsg . $pid . ' ';
-        }
-
-        $logmsg = $logmsg . " , edit_by:admin , time:" . date('G-i-s+j/m/y');
-
-        $this->writeToLog($logmsg);
-        $this->db->exec('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
-        return $students;
-    }
-
-    function exportStudents() {
-        $query = $this->db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
-        $this->db->exec('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
-        $logmsg = 'EXPORT; ';
-
-        $logmsg = $logmsg . " edit_by:admin , time:" . date('G-i-s+j/m/y');
-
-        $this->writeToLog($logmsg);
-        return $query;
-    }
-
     function updateStudents() {
         $id = $_POST['id'];
         if ($id == -1) {
             return;
         }
         $logMessage = "UPDATE; ID:" . $id;
-        print_r($_POST);
         if ($_POST['delete'] == 'yes') {
-            $sth = $this->db->prepare("UPDATE Students SET pid = NULL WHERE id=:id");
+            $sth = $this->db->prepare("UPDATE Students SET pid = NULL, time_of_registration = NULL WHERE id=:id");
             $sth->bindParam(':id', $id);
             $sth->execute();
-
             $logMessage = $logMessage . " , ID: " . $id . "  !!! POZOR VYMAZANY PID !!!";
         }
 
@@ -120,7 +90,7 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
                 $logMessage = $logMessage . "vymazany priemer2 pre studenta , ID:" . $id;
             }
         }
-        $logMessage = $logMessage . " , edit_by:" . $_SERVER['REMOTE_USER'] . " , time:" . date('G-i-s+j/m/y');
+        $logMessage = $logMessage . " , edit_by:" . $_SESSION['user'] . " , time:" . date('G-i-s+j/m/y');
 
         if (isset($_POST['info'])) {
             $studentname = $_POST['info'];
