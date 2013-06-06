@@ -63,10 +63,16 @@ jQuery(document).ready(function($) {
     });
 
     $('td:not(.priemery)').click(function() {
-        if ($(this).closest("tr").find('.priemer1check').val().length < 1) {
-            $(this).closest("tr").find('.priemer1check').focus();
-        } else if ($(this).closest("tr").find('.priemer2check').val().length < 1) {
-            $(this).closest("tr").find('.priemer2check').focus();
+        var tr = $(this).closest("tr");
+        var priemer1 = tr.find('.priemer1check');
+        var priemer2 = tr.find('.priemer2check');
+        var priemer1val = priemer1.val();
+        var priemer2val = priemer2.val();
+        
+        if (priemer1val !== undefined && priemer1val.length < 1) {
+            priemer1.focus();
+        } else if (priemer2val !== undefined && priemer2val.length < 1) {
+            priemer2.focus();
         }
     });
     
