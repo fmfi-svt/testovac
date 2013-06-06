@@ -91,7 +91,7 @@ jQuery(document).ready(function($) {
                 hideErrorsForTd(input);
             }, 1500);
         } else {
-            $(this).closest("td").append(img_tick_src_p);
+            input.closest("td").append(img_tick_src_p);
             if (zadany.length === 0) {
                 zadany = 0;
             }
