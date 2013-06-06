@@ -93,8 +93,7 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         if (isset($_POST['info'])) {
             $studentname = $_POST['info'];
         }
-        $_SESSION['sprava'] = "Študent $studentname úspešne uložený.";
-        $_SESSION['counter'] = 2;
+        set_flash("Študent $studentname úspešne uložený.");
         $this->writeToLog($logMessage);
     }
 

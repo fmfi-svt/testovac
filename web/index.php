@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+require_once __DIR__ . '/../src/flash.php';
 require_once __DIR__ . '/../src/actions.php';
 require_once __DIR__ . '/../src/login.php';
 require_once __DIR__ . '/../src/verhoeffChecker.php';
@@ -105,6 +106,7 @@ else {
         }
         else if ($action == 'zoznam') {
             $templateParams['students'] = $db->getAllStudents();
+            $templateParams['sprava'] = get_flash_and_clear();
             renderTemplate('zoznam.php', $templateParams);
         }
         else if ($action == 'priemery') {
@@ -126,6 +128,7 @@ else {
             
             $templateParams['before_row'] = $before_row;
             $templateParams['after_row'] = $after_row;
+            $templateParams['sprava'] = get_flash_and_clear();
             renderTemplate('priemery.php', $templateParams);
         }
     }

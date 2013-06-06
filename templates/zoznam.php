@@ -19,15 +19,8 @@
     <body>          
         <div id="header">
             <?php
-            if (isset($_SESSION['sprava'])) {
-                if (isset($_SESSION['counter'])) {
-                    if ($_SESSION['counter'] != 0) {
-                        echo $_SESSION['sprava'];
-                        $_SESSION['counter'] = $_SESSION['counter'] - 1;
-                    } else {
-                        echo 'Momentálne sa neodohrali žiadne udalosti.';
-                    }
-                }
+            if ($sprava !== null) {
+                echo e($sprava);
             } else {
                 echo 'Momentálne sa neodohrali žiadne udalosti.';
             }
