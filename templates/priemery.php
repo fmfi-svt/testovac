@@ -5,8 +5,8 @@
         <title></title>
         <link rel="stylesheet" type="text/css" href="./css/theme.css" />
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+        <script src="./js/jquery.min.js"></script>
+        <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="./js/script.js"></script>
         <script type="text/javascript" src="./js/errorChecking.js"></script>   
         <script type="text/javascript" src="./js/jquery.leanModal.min.js"></script>
