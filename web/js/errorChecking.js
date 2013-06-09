@@ -5,6 +5,7 @@ jQuery(document).ready(function($) {
     var img_tick_src_p = '<img src="images/tick-ok.png" width="15" class="errorpriemery" />';
     var p1 = {};
     var p2 = {};
+    var timeouts = {};
 
     var parseAverages = function() {
         var trs = $("tr");
@@ -64,6 +65,7 @@ jQuery(document).ready(function($) {
         }
     });
 
+
     $('td:not(.priemery)').click(function() {
         var tr = $(this).closest("tr");
         var priemer1 = tr.find('.priemer1check');
@@ -75,7 +77,14 @@ jQuery(document).ready(function($) {
             priemer1.focus();
         } else if (priemer2val !== undefined && priemer2val.length < 1) {
             priemer2.focus();
+        } else {
+            priemer1.focus();
         }
+    });
+
+    $("input.priemerinput").focus(function() {
+        var inputid = $(this).closest('tr').attr('id');
+        clearTimeout(timeouts[inputid]);
     });
 
     function savePriemer(input, oldValues, fieldName) {
@@ -93,10 +102,11 @@ jQuery(document).ready(function($) {
 
         if (!validateAverage(zadany)) {
             input.closest("td").append(img_cross_src_p);
-            setTimeout(function() {
+            var timeoutId = setTimeout(function() {
                 input.val(oldValues[id]);
                 hideErrorsForTd(input);
             }, 1500);
+            timeouts[id] = timeoutId;
         } else {
             var data = {
                 action: 'update',
