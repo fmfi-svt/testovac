@@ -44,7 +44,7 @@ class Repository {
             $sth->execute();
             $this->logger->writeToLog('delete', 'pid', $id, $info, $user);
         }
-        
+
         if (isset($_POST['pid'])) {
             $pid = $_POST['pid'];
             $sth = $this->db->prepare("UPDATE Students SET pid = :pid WHERE id=:id");
@@ -56,9 +56,9 @@ class Repository {
             $sth2->bindParam(':id', $id);
             $sth2->execute();
 
-            $this->logger->writeToLog('update', 'pid', $id, $info, $user,$pid);
+            $this->logger->writeToLog('update', 'pid', $id, $info, $user, $pid);
         }
-        
+
         if (isset($_POST['priemer1'])) {
             if ($_POST['priemer1'] != 0) {
                 $sth = $this->db->prepare("UPDATE Students SET priemer1 = :priemer1 WHERE id=:id");
@@ -91,6 +91,26 @@ class Repository {
                 $sth->execute();
                 $this->logger->writeToLog('delete', 'priemer2', $id, $info, $user);
             }
+        }
+    }
+
+    function isDuplicate($pid) {
+        $sth = $this->db->prepare('
+            SELECT *
+            FROM Students 
+            where pid=:pid');
+        $sth->bindParam(':pid',$pid);
+        $sth->execute();
+        $result = $sth->fetchAll();
+        $ret = array();
+        if (count($result) > 0) {
+            $ret['duplicate'] = 1;
+            $ret['meno'] = $result[0]['meno'];
+            $ret['priezvisko'] = $result[0]['priezvisko'];
+            return $ret;
+        } else {
+            $ret['duplicate'] = 0;
+            return $ret;
         }
     }
 

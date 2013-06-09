@@ -106,20 +106,7 @@ jQuery(document).ready(function($) {
 
         var meno;
         var priezvisko;
-        var checkDuplicatePid = function(pidd) {
-            var pidtds = $("td.pidtd");
-            $.each(pidtds, function() {
-                if ($(this).text().length > 0) {
-                    if (($(this).text() === pidd)) {
-                        meno = $(this).closest('tr').find('.meno').text();
-                        priezvisko = $(this).closest('tr').find('.priezvisko').text();
-                        pidduplerror = true;
-                        return;
-                    }
-                }
-            });
-        };
-
+        
         var addHyphens = function(pid) {
             var str1 = pid.substr(0, 4);
             var str2 = pid.substr(4, 4);
@@ -184,7 +171,7 @@ jQuery(document).ready(function($) {
 
         var pid = element.parent().find('.pid').val();
 
-        var isPidVerhoeff = '';
+        var response = '';
 
         var focusedElement = element;
 
@@ -193,28 +180,31 @@ jQuery(document).ready(function($) {
         piddemoerror = false;
         piderror = false;
 
-        if (pid.match(/^(\d{16})$/) !== null) {
-            checkDuplicatePid(addHyphens(pid), focusedElement);
-        }
         if (pid.match(/^((\d{4})-(\d{4})-(\d{4})-(\d{4}))$/) !== null) {
-            checkDuplicatePid(pid, focusedElement);
             pid = removeHyphens(pid);
         }
 
-        if (pid.match(/^(\d{16})$/) && pidduplerror === false) {
+        if (pid.match(/^(\d{16})$/)) {
             var request = $.ajax({
                 type: 'POST',
                 url: 'index.php',
-                dataType: 'html',
+                dataType: 'json',
                 data: {
                     action: 'check-pid',
-                    pidd: pid
+                    pid: pid,
+                    pidh: addHyphens(pid)
                 }
             });
             request.done(function(data) {
                 focusedElement.closest("td").find('.errorpid').hide();
-                isPidVerhoeff = data;
-                if (isPidVerhoeff === 'pidok') {
+                response = data;
+                console.log(response['duplicate']);
+                if (response['duplicate'] === 1) {
+                    meno = response['meno'];
+                    priezvisko = response['priezvisko'];
+                    pidduplerror = true;
+                    piderror = true;
+                } else if (response['vhcheck'] === 'pidok') {
                     var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
                     if (c === 3) {
                         pidrocnikerror = false;
@@ -223,7 +213,7 @@ jQuery(document).ready(function($) {
                         pidrocnikerror = true;
                         piderror = true;
                     }
-                } else if (isPidVerhoeff === 'demopid') {
+                } else if (response['vhcheck'] === 'demopid') {
                     piddemoerror = true;
                     piderror = true;
                 } else {

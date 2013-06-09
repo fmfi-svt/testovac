@@ -70,7 +70,6 @@ if (current_user() === null) {
     else {
         renderTemplate('login.php');
     }
-    
 }
 else {
     $templateParams = array('user' => current_user(), 'db' => $db);
@@ -79,18 +78,22 @@ else {
         if ($action == 'logout') {
             logout();
             redirect(array('action' => 'login'));
-        }
-        else if ($action == 'check-pid') {
-            $pid = param_post('pidd');
+        } else if ($action == 'check-pid') {
+            $pid = param_post('pid');
+            $pidhyphens = param_post('pidh');
             if ($pid == null) {
                 echo 'bad request'; // TODO
+            } else {
+                $result = $db->isDuplicate($pidhyphens);
+                if ($result['duplicate'] == 1) {
+                    echo json_encode($result);
+                } else {
+                    $vc = new VerhoeffChecker();
+                    $result['vhcheck'] = $vc->check($pid);
+                    echo json_encode($result);
+                }
             }
-            else {
-                $vc = new VerhoeffChecker();
-                echo $vc->check($pid);
-            }
-        }
-        else if ($action == 'update') {
+        } else if ($action == 'update') {
             $db->updateStudents();
             echo $time = date("d.m.Y H:i:s", time());
             $next = param_post('next');
@@ -112,7 +115,7 @@ else {
         }
         else if ($action == 'priemery') {
             $students = $db->getStudentsForAverage();
-            
+
             $before_row = array();
             $after_row = array();
 
@@ -126,7 +129,7 @@ else {
                     $after_row[] = $row;
                 }
             }
-            
+
             $templateParams['before_row'] = $before_row;
             $templateParams['after_row'] = $after_row;
             $templateParams['sprava'] = get_flash_and_clear();
