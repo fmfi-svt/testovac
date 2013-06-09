@@ -29,11 +29,24 @@ jQuery(document).ready(function($) {
         $('tr.maintr').leanModal({top: 200});
     });
 
-    var setMessage = function(name,action,pid) {
+    var setMessage = function(name, action, pid) {
         if (action === 'delete') {
-            $('#message').html('Registrácia študenta <b>' + name + '</b> bola úspešne zrušená.');
+            var frag = document.createDocumentFragment();
+            frag.appendChild(document.createTextNode('Registrácia študenta '));
+            var b = document.createElement('b');
+            b.appendChild(document.createTextNode(name));
+            frag.appendChild(b);
+            frag.appendChild(document.createTextNode(' bola úspešne zrušená.'));
+            $('#message').empty().append(frag);
         } else if (action === 'update') {
-            $('#message').html('Študent <b>' + name + '</b> bol úspešne uložený s PID: ' + pid);
+            var frag = document.createDocumentFragment();
+            frag.appendChild(document.createTextNode('Študent '));
+            var b = document.createElement('b');
+            b.appendChild(document.createTextNode(name));
+            frag.appendChild(b);
+            frag.appendChild(document.createTextNode(' bol úspešne uložený s PID: '));
+            frag.appendChild(document.createTextNode(pid));
+            $('#message').empty().append(frag);
         }
     };
 
@@ -245,7 +258,7 @@ jQuery(document).ready(function($) {
                 pid: pid
             },
             success: function(data) {
-                setMessage(info,'update',pid);
+                setMessage(info, 'update', pid);
                 var riadok = $(openId);
                 riadok.find('.regtime').text(data);
                 riadok.find('.pidtd').text(pid);
@@ -256,7 +269,7 @@ jQuery(document).ready(function($) {
                 riadok.addClass("registered");
                 var deleteModal = "#deletePid" + riadok.attr('id');
                 $(deleteModal).find('.pid').text(pid);
-                
+
                 setTimeout(function() {
                     closeModal($(document).find('.modal'));
                     clearModal(element);
@@ -279,7 +292,7 @@ jQuery(document).ready(function($) {
                 info: info
             },
             success: function() {
-                setMessage(info,'delete',null);
+                setMessage(info, 'delete', null);
                 var riadok = $(openId);
                 riadok.find('.regtime').text('');
                 riadok.find('.pidtd').text('Neregistrovaný.');
