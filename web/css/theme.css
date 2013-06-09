@@ -189,6 +189,10 @@ td.cssunlock {
     border-bottom: 1px solid darkblue;
 }
 
+#message {
+    float:left;
+}
+
 #main {
     position:relative;
     top:1.5em;

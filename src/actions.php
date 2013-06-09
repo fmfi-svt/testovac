@@ -12,18 +12,21 @@ class Repository {
     }
 
     function getAllStudents() {
-        $query = $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
-left join Students as s2 on
-s1.meno = s2.meno and s1.priezvisko=s2.priezvisko and s1.datum_narodenia=s2.datum_narodenia and
-not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
-        return $query;
+        $query1 = $this->db->query('SET @rank := 0;');
+        $query2 = $this->db->query('
+            SELECT * FROM  
+            (SELECT *,@rank := @rank+1 AS rank 
+            FROM Students 
+            ORDER BY priezvisko,meno) as LOL
+            ORDER BY sign(pid),priezvisko;');
+        return $query2;
     }
 
     function getStudentsForAverage() {
-        $query = $this->db->query('SELECT s1.*, s2.id as duplicate FROM Students as s1
-left join Students as s2 on
-s1.meno = s2.meno and s1.priezvisko=s2.priezvisko and s1.datum_narodenia=s2.datum_narodenia and
-not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
+        $query = $this->db->query('
+            SELECT *
+            FROM Students 
+            ORDER BY priezvisko,meno;');
         return $query;
     }
 
@@ -47,7 +50,7 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
                 $sth->bindParam(':id', $id);
                 $sth->bindParam(':pid', $pid);
                 $sth->execute();
-                
+
                 $sth2 = $this->db->prepare("UPDATE Students SET time_of_registration = NOW() WHERE id=:id");
                 $sth2->bindParam(':id', $id);
                 $sth2->execute();
@@ -90,10 +93,6 @@ not(s1.forma_studia = s2.forma_studia) ORDER BY sign(s1.pid), s1.priezvisko');
         }
         $logMessage = $logMessage . " , edit_by:" . $_SESSION['user'] . " , time:" . date('G-i-s+j/m/y');
 
-        if (isset($_POST['info'])) {
-            $studentname = $_POST['info'];
-        }
-        set_flash("Študent $studentname úspešne uložený.");
         $this->writeToLog($logMessage);
     }
 

@@ -92,6 +92,7 @@ else {
         }
         else if ($action == 'update') {
             $db->updateStudents();
+            echo $time = date("d.m.Y H:i:s", time());
             $next = param_post('next');
             if ($next !== null) {
                 redirect(array('action' => $next));

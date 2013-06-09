@@ -8,25 +8,15 @@
         <script src="./js/jquery.min.js"></script>
         <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
         <script type="text/javascript" src="./js/script.js"></script>
-        <!--<script type="text/javascript" src="errorChecking.js"></script>-->   
         <script type="text/javascript" src="./js/jquery.leanModal.min.js"></script>
-        <script type="text/javascript">
-            $(function() {
-                $('a[rel*=leanModal]').leanModal({top: 200, closeButton: ".modal_close"});
-            });
-        </script>
     </head>
     <body>          
         <div id="header">
-            <?php
-            if ($sprava !== null) {
-                echo e($sprava);
-            } else {
-                echo 'Momentálne sa neodohrali žiadne udalosti.';
-            }
-            ?>
+            <div id="message">
+                Momentálne sa neodohrali žiadne udalosti.
+            </div>
+            
             <div id="navigation">
-
                 <a href="index.php?action=priemery">Editácia priemerov</a>&nbsp;
                 Ste prihlásení ako <?php echo e($user) ?>
                 <a href="index.php?action=logout">Logout</a>
@@ -35,9 +25,8 @@
 
 
         <div id="main">
-        <form id="form" name="studentform" method="post">
             <table id="mytable" cellspacing="0">
-                <tr>
+                <tr id="0">
                     <th style="min-width:12em" class="cssleft">Meno</th>
                     <th style="min-width:18em">Priezvisko</th>
                     <th style="min-width:8em">Dátum nar.</th>
@@ -58,6 +47,7 @@
                     }
 
                     $id = $row['id'];
+                    $rank = $row['rank'];
                     $meno = $row['meno'];
                     $priezvisko = $row['priezvisko'];
                     $datum = $db->sqlDateToRegular($row['datum_narodenia']);
@@ -83,7 +73,12 @@
                     }
                     $info = $meno . ' ' . $priezvisko;
 
-                    echo "<tr id=\"$id\" class=\"name_listing\">";
+                    if ($pid <> 0) {
+                        $class = 'registered';
+                    } else {
+                        $class = '';
+                    }
+                    echo "<tr id=\"$id\" class=\"maintr $class\" poradie=\"$rank\">";
 
                     $id_name = 'id[' . $id . ']';
 
@@ -93,8 +88,8 @@
                     echo '</td>';
 
                     // priezvisko cell
-                    echo '<td class="priezvisko spec namefilter">';
-                    echo "<b>".e($priezvisko)."</b>";
+                    echo '<td class="priezvisko">';
+                    echo "<b>" . e($priezvisko) . "</b>";
                     echo '</td>';
 
                     // datum cell
@@ -125,7 +120,7 @@
                     echo e($printed);
                     echo '</td>';
 
-                    echo '<td>';
+                    echo '<td class="regtime">';
                     if ($pid <> 0) {
                         echo e($time);
                     }
@@ -140,18 +135,14 @@
                     echo '</td>';
 
                     // modal window pre pridanie PID
-                    echo "<div class=\"addPid modal\" id=\"addPid".e($id)."\">";
-                    echo "<input type=\"hidden\" class=\"idsub\" name=\"".e($id_name)."\" value=\"".e($id)."\">";
-                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"".e($info)."\">";
-                    echo "<h3>Registrácia uchádzača</h3> Prajete si prideliť zvolenému uchádzačovi zadaný PID? <br/><br/> Meno:  <b>".e($meno)."</b><br/>Priezvisko:  <b>".e($priezvisko)."</b><br/><br/>";
+                    echo "<div class=\"addPid modal\" id=\"addPid" . e($id) . "\">";
+                    echo "<input type=\"hidden\" class=\"idsub\" name=\"" . e($id_name) . "\" value=\"" . e($id) . "\">";
+                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"" . e($info) . "\">";
+                    echo "<h3>Registrácia uchádzača</h3> Prajete si prideliť zvolenému uchádzačovi zadaný PID? <br/><br/> Meno:  <b>" . e($meno) . "</b><br/>Priezvisko:  <b>" . e($priezvisko) . "</b><br/><br/>";
                     if ($row['printed'] == 1) {
                         echo '<div class="warning"> Pozor, registrujete už vytlačeného študenta!!!</div><br/>';
                     }
-                    if ($pid == 0) {
-                        echo "PID: <input type=\"text\" id=\"input".e($id)."\" size=\"18\" class=\"pidcheck pid pidsub\" name=\"inputText".e($id)."\" value=\"\">";
-                    } else {
-                        echo e($pid);
-                    }
+                    echo "PID: <input type=\"text\" id=\"input" . e($id) . "\" size=\"18\" class=\"pidcheck pid pidsub\" name=\"inputText" . e($id) . "\" value=\"\">";
                     echo '<br/><br/>';
                     echo "<input type=\"button\" class=\"addbtn\" value=\"Áno, prideliť zadaný PID.\">";
                     echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechať bez PID.\">";
@@ -159,39 +150,20 @@
 
                     // modal window pre vymazanie usera
                     echo "<div class=\"deletePid modal\" id=deletePid$id>";
-                    echo "<input type=\"hidden\" class=\"idsub\" name=\"".e($id_name)."\" value=\"".e($id)."\">";
-                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"".e($info)."\">";
+                    echo "<input type=\"hidden\" class=\"idsub\" name=\"" . e($id_name) . "\" value=\"" . e($id) . "\">";
+                    echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"" . e($info) . "\">";
                     echo "<h1> Zrušenie registrácie </h1> Chcete zrušiť registráciu pre tohto uchádzača?<br/>";
-                    echo "<p><b>Meno:</b>  ".e($meno)." <br/> <b>Priezvisko:</b>  ".e($priezvisko)."<br/> <b>PID:</b>  ".e($pid)."</p>";
+                    echo "<p><b>Meno:</b>  " . e($meno) . " <br/> <b>Priezvisko:</b>  " . e($priezvisko) . "<br/> <b>PID:</b>  <span class=\"pid\">" . e($pid) . "</span></p>";
 
                     echo "<input type=\"button\" class=\"subdelbtn\" name=\"delete\" value=\"Áno, zruš registráciu.\">";
                     echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechať registráciu.\">";
-
                     echo '</div>';
 
                     echo '</tr>';
-                    echo '<tr class=hiddentr>';
-                    echo '<td>';
-
-                    echo '</td>';
-                    echo '<td>';
-                    if ($pid <> 0) {
-                        echo "<a id=\"go".e($id)."\" rel=\"leanModal\" href=\"#deletePid".e($id)."\">Zrus registraciu.</a>";
-                    } else {
-                        echo "<a id=\"go".e($id)."\" class=\"addClick\"rel=\"leanModal\" href=\"#addPid".e($id)."\">Pridaj PID</a>";
-                    }
-                    echo '</td>';
-                    echo '</tr>';
                 }
                 ?>
-                <tr class=hiddentr>
-                    <td>
-                        <input type="hidden" class="idsub">"
-                    </td>
-                    <td>
-                </tr>
+
             </table>
-        </form>
         </div>
     </body>
 </html>
