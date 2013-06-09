@@ -2,23 +2,23 @@
 
 <?php
 require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/logger.php';
 
 $db = connect_db();
+$logger = new Logger($db);
 
 $query = $db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
 
 $students = $query->fetchAll(PDO::FETCH_ASSOC);
-$logmsg = 'PRINT; ';
+$pids = '';
 foreach ($students as $row) {
     $pid = $row['pid'];
-    $logmsg = $logmsg . $pid . ' ';
+    $pids .= $pid . ' ';
 }
 
-$logmsg = $logmsg . " , edit_by:admin , time:" . date('G-i-s+j/m/y');
-
-//$this->writeToLog($logmsg);
 $db->exec('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
 
+$logger->writeToLog('print', 'first pages', null, null, 'administrator', $pids);
 
 $fileloc = __DIR__ . "/../output/printed.tex";
 $handle = fopen($fileloc, 'w');

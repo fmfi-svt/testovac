@@ -2,16 +2,15 @@
 
 <?php
 require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/logger.php';
 
 $db = connect_db();
+$logger = new Logger($db);
 
 $students = $db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
 $db->exec('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
-$logmsg = 'EXPORT; ';
 
-$logmsg = $logmsg . " edit_by:admin , time:" . date('G-i-s+j/m/y');
-
-// $this->writeToLog($logmsg);
+$logger->writeToLog('export', 'students averages', null, null, 'administrator');
 
 $fileloc = __DIR__ . "/../output/cbody.php";
 $handle = fopen($fileloc, 'w');
