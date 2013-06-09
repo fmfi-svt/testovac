@@ -202,34 +202,37 @@ jQuery(document).ready(function($) {
         }
 
         if (pid.match(/^(\d{16})$/) && pidduplerror === false) {
-            $.ajax({
+            var request = $.ajax({
                 type: 'POST',
                 url: 'index.php',
                 dataType: 'html',
                 data: {
                     action: 'check-pid',
                     pidd: pid
-                },
-                success: function(data) {
-                    focusedElement.closest("td").find('.errorpid').hide();
-                    isPidVerhoeff = data;
-                    if (isPidVerhoeff === 'pidok') {
-                        var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
-                        if (c === 3) {
-                            pidrocnikerror = false;
-                            piderror = false;
-                        } else {
-                            pidrocnikerror = true;
-                            piderror = true;
-                        }
-                    } else if (isPidVerhoeff === 'demopid') {
-                        piddemoerror = true;
-                        piderror = true;
+                }
+            });
+            request.done(function(data) {
+                focusedElement.closest("td").find('.errorpid').hide();
+                isPidVerhoeff = data;
+                if (isPidVerhoeff === 'pidok') {
+                    var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
+                    if (c === 3) {
+                        pidrocnikerror = false;
+                        piderror = false;
                     } else {
+                        pidrocnikerror = true;
                         piderror = true;
                     }
-                    addErrors();
+                } else if (isPidVerhoeff === 'demopid') {
+                    piddemoerror = true;
+                    piderror = true;
+                } else {
+                    piderror = true;
                 }
+                addErrors();
+            });
+            request.fail(function(jqXHR, textStatus) {
+                alert("Request failed: " + textStatus + ' ' + jqXHR.status + ' \nKontaktuje technicku podporu!');
             });
         } else {
             piderror = true;

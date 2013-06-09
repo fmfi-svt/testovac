@@ -98,24 +98,27 @@ jQuery(document).ready(function($) {
                 hideErrorsForTd(input);
             }, 1500);
         } else {
-            input.closest("td").append(img_tick_src_p);
             var data = {
                 action: 'update',
                 id: id
             };
             data[fieldName] = zadany;
-            $.ajax({
+            var request = $.ajax({
                 type: 'POST',
                 url: 'index.php',
                 dataType: 'html',
-                data: data,
-                success: function() {
-                    oldValues[id] = normalizeAverage(zadany);
-                    setTimeout(function() {
-                        hideErrorsForTd(input);
-                        input.val(oldValues[id]);
-                    }, 1500);
-                }
+                data: data
+            });
+            request.done(function() {
+                input.closest("td").append(img_tick_src_p);
+                oldValues[id] = normalizeAverage(zadany);
+                setTimeout(function() {
+                    hideErrorsForTd(input);
+                    input.val(oldValues[id]);
+                }, 1500);
+            });
+            request.fail(function(jqXHR, textStatus) {
+                alert("Request failed: " + textStatus + ' ' + jqXHR.status + ' \nKontaktuje technicku podporu!');
             });
         }
     }
