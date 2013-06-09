@@ -8,19 +8,23 @@ jQuery(document).ready(function($) {
 
     var parseAverages = function() {
         var trs = $("tr");
-
         $.each(trs, function() {
             var id = $(this).attr("id");
             var p1val = $(this).find('.priemer1check').attr("value");
             var p2val = $(this).find('.priemer2check').attr("value");
+            if (p1val == 0) {
+                p1val = null;
+            }
+            if (p2val == 0) {
+                p2val = null;
+            }
             p1[id] = p1val;
             p2[id] = p2val;
         });
     };
 
-    var normalizeAverage = function(e) {
-        var priemer = e;
-        if (priemer === 0) {
+    var normalizeAverage = function(priemer) {
+        if (priemer === null) {
             return null;
         }
         if (priemer.match(/^\d$/) !== null) {
@@ -37,12 +41,12 @@ jQuery(document).ready(function($) {
         element.closest("td").find('.errorpriemery').remove();
     };
 
-    var validateAverage = function(average) {
+    var validateAverage = function(priemer) {
         // priemer moze byt v rangi 1-4
-        if (average.length === 0) {
+        if (priemer === null) {
             return true;
         }
-        if (average < 1 || average > 4 || !average.match(/^\d([,.]\d{0,2})?$/)) {
+        if (priemer < 1 || priemer > 4 || !priemer.match(/^\d([,.]\d{0,2})?$/)) {
             return false;
         }
         return true;
@@ -66,20 +70,23 @@ jQuery(document).ready(function($) {
         var priemer2 = tr.find('.priemer2check');
         var priemer1val = priemer1.val();
         var priemer2val = priemer2.val();
-        
+
         if (priemer1val !== undefined && priemer1val.length < 1) {
             priemer1.focus();
         } else if (priemer2val !== undefined && priemer2val.length < 1) {
             priemer2.focus();
         }
     });
-    
+
     function savePriemer(input, oldValues, fieldName) {
         hideErrorsForTd(input);
-        
+
         var id = input.closest("tr").find('.idsub').val();
         var zadany = input.val();
 
+        if (zadany.length === 0) {
+            zadany = null;
+        }
         if (zadany === oldValues[id]) {
             return; // nic sa nezmenilo
         }
@@ -92,9 +99,6 @@ jQuery(document).ready(function($) {
             }, 1500);
         } else {
             input.closest("td").append(img_tick_src_p);
-            if (zadany.length === 0) {
-                zadany = 0;
-            }
             var data = {
                 action: 'update',
                 id: id
