@@ -10,7 +10,7 @@ $logger = new Logger($db);
 $students = $db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
 $db->exec('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
 
-$logger->writeToLog('export', 'students averages', null, null, 'administrator');
+$logger->writeToLog('export', 'student averages', null, null, 'administrator');
 
 $fileloc = __DIR__ . "/../output/cbody.php";
 $handle = fopen($fileloc, 'w');

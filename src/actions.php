@@ -15,7 +15,6 @@ class Repository {
     }
 
     function getAllStudents() {
-        $this->logger->writeToLog('lol');
         $query1 = $this->db->query('SET @rank := 0;');
         $query2 = $this->db->query('
             SELECT * FROM  
@@ -39,7 +38,7 @@ class Repository {
         $info = $_POST['info'];
         $user = $_SESSION['user'];
 
-        if ($_POST['delete'] == 'yes') {
+        if (isset($_POST['delete'])) {
             $sth = $this->db->prepare("UPDATE Students SET pid = NULL, time_of_registration = NULL WHERE id=:id");
             $sth->bindParam(':id', $id);
             $sth->execute();

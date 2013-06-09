@@ -18,3 +18,16 @@ CREATE TABLE `Students` (
 CREATE INDEX students_datum_idx ON Students (datum_narodenia);
 CREATE INDEX students_priezvisko_idx ON Students (priezvisko);
 CREATE INDEX students_meno_idx ON Students (meno);
+
+
+CREATE TABLE IF NOT EXISTS `Log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(10) COLLATE utf8_slovak_ci NOT NULL,
+  `changed_item` varchar(255) COLLATE utf8_slovak_ci DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `student_name` varchar(255) COLLATE utf8_slovak_ci DEFAULT NULL,
+  `new_value` text COLLATE utf8_slovak_ci,
+  `user` varchar(100) COLLATE utf8_slovak_ci NOT NULL,
+  `time_of_edit` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_slovak_ci AUTO_INCREMENT=12 ;
