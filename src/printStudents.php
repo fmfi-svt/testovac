@@ -6,6 +6,19 @@ require_once __DIR__ . '/logger.php';
 
 $db = connect_db();
 $logger = new Logger($db);
+$fileloc = __DIR__ . "/../output/printed.tex";
+
+echo "Command printStudents currently in progress...\n\n";
+
+$handle = fopen($fileloc, 'w');
+
+if ($handle === false) {
+    echo "Neuspesne otvorenie suboru: " . $fileloc . "\n";
+    return;
+} else {
+    echo "Uspesne vytvoreny subor: " . $fileloc . "\n";
+    ;
+}
 
 $query = $db->query('SELECT * from Students WHERE printed = 0 AND pid is not null ORDER BY pid');
 
@@ -20,8 +33,9 @@ $db->exec('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null
 
 $logger->writeToLog('print', 'first pages', null, null, 'administrator', $pids);
 
-$fileloc = __DIR__ . "/../output/printed.tex";
-$handle = fopen($fileloc, 'w');
+echo "Vytvaram prve strany pre studentov, ktori maju pid a este nie su vytlaceni." . "\n";
+
+$counter = 0;
 
 $doc = '\documentclass[12pt]{book}
 \usepackage[slovak]{babel}
@@ -38,10 +52,9 @@ $doc = '\documentclass[12pt]{book}
 
 \begin{document} ';
 
-print_r("Vytvaram pdf-ka pre studentov, ktori maju pid a este nie su vytlaceni." . "\n");
-
 try {
     foreach ($students as $row) {
+        $counter++;
         $id = $row['id'];
         $meno = $row['meno'];
         $priezvisko = $row['priezvisko'];
@@ -95,6 +108,8 @@ svoj súhlas na spracovanie mojich osobných údajov v zmysle zákona o ochrane 
 }
 
 $doc = $doc . '\end{document} ';
+
+echo "\nUspesne pripravene prve strany pre $counter studentov. \n";
 
 fputs($handle, $doc);
 

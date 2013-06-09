@@ -23,7 +23,7 @@ class Logger {
         } else if ($action == 'export') {
             $msg = 'EXPORT ' . $what . ' | by user: ' . $who . ' | at ' . date("d.m.Y H:i:s", time());
         }
-        
+
         $stmt = $this->dbh->prepare("INSERT INTO Log (action, changed_item, student_id, student_name, new_value, user)
                 values (:action,:changed_item, :student_id, :student_name, :new_value, :user)");
         $stmt->bindParam(':action', $action);
@@ -33,9 +33,13 @@ class Logger {
         $stmt->bindParam(':new_value', $value);
         $stmt->bindParam(':user', $who);
         $stmt->execute();
-        
+
         $msg .= " \n";
         $handle = fopen($this->log_location, 'a');
+        if ($handle === false) {
+            echo "Neuspesne otvorenie suboru: " . $log_location . "\n";
+            return;
+        }
         fputs($handle, $msg);
         fclose($handle);
     }

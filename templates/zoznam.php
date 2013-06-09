@@ -154,7 +154,9 @@
                     echo "<input type=\"hidden\" class=\"infosub\" name=\"info\" value=\"" . e($info) . "\">";
                     echo "<h1> Zrušenie registrácie </h1> Chcete zrušiť registráciu pre tohto uchádzača?<br/>";
                     echo "<p><b>Meno:</b>  " . e($meno) . " <br/> <b>Priezvisko:</b>  " . e($priezvisko) . "<br/> <b>PID:</b>  <span class=\"pid\">" . e($pid) . "</span></p>";
-
+                    if ($row['printed'] == 1) {
+                        echo '<div class="warning"> Pozor, idete zrušiť registráciu už vytlačeného študenta!!!</div><br/>';
+                    }
                     echo "<input type=\"button\" class=\"subdelbtn\" name=\"delete\" value=\"Áno, zruš registráciu.\">";
                     echo "<input type=\"button\" class=\"closebtn\" value=\"Nie, ponechať registráciu.\">";
                     echo '</div>';
