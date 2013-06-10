@@ -77,7 +77,9 @@ try {
 $msg = $msg . ');' . "\n";
 $msg = $msg . '?>' . "\n";
 //print_r($msg);
-echo "POZOR! V databaze sa nachadza $studentsWithoutPid vytlacenych studentov so zrusenou registraciou! \n";
+if ($studentsWithoutPid > 0) {
+    echo "POZOR! V databaze sa nachadza $studentsWithoutPid vytlacenych studentov so zrusenou registraciou! \n";
+}
 echo "\nUspesne vyexportovane body za priemery pre $counter studentov. \n";
 
 fputs($handle, $msg);
