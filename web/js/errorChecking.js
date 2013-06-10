@@ -33,6 +33,7 @@ jQuery(document).ready(function($) {
         } else if (priemer.match(/^\d[,.]\d$/) !== null) {
             priemer = priemer + '0';
         }
+        priemer = priemer.replace(',', '.');
         return priemer;
     };
 
