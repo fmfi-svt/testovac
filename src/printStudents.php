@@ -68,7 +68,7 @@ try {
 \thispagestyle{empty}
 \noindent
 \begin{minipage}{0.2\textwidth}
-\includegraphics[width=\textwidth]{praflogocol}\\\\[-\baselineskip]
+\includegraphics[width=\textwidth]{praflogocol.pdf}\\\\[-\baselineskip]
 \end{minipage}
 \hfill
 \begin{minipage}{0.7\textwidth}
