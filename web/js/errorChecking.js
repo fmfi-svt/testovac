@@ -30,6 +30,8 @@ jQuery(document).ready(function($) {
         }
         if (priemer.match(/^\d$/) !== null) {
             priemer = priemer + '.00';
+        } else if (priemer.match(/^\d[,.]$/) !== null) {
+            priemer = priemer + '00';
         } else if (priemer.match(/^\d[,.]\d$/) !== null) {
             priemer = priemer + '0';
         }
