@@ -1,0 +1,62 @@
+#!/bin/bash
+
+USB_KEY=REMOVED
+USB_MNT=/media/`whoami`/$USB_KEY
+USB_DIR=${USB_MNT}/`date +%Y`/H-server/
+DB_USER=REMOVED
+DB_PASS=REMOVED
+DB_NAME=REMOVED
+
+cd "$(dirname "$0")"   # utils/
+cd ..   # h-server/
+
+if [ -z "$1" ]
+then
+  echo "backup <name of current archived dir>"
+  echo "  ex. backup Pon1"
+  exit 85
+fi
+
+if ! [ -d "$USB_MNT" ]
+then
+  echo "USB key not mounted! Exiting."
+  exit 1
+fi
+
+DB_FILE_BACKUP=${USB_DIR}${1}.sql
+PDF_DIR=$PWD/spool/$1/
+PDF_DIR_BACKUP=${USB_DIR}$1/
+
+dump_database() {
+  mkdir -p ${USB_DIR}
+  if ! [ -f "$DB_FILE_BACKUP" ]
+  then
+    echo "Dumping database"
+    echo "    To: $DB_FILE_BACKUP"
+    mysqldump -u$DB_USER -p$DB_PASS $DB_NAME > $DB_FILE_BACKUP
+  else
+    echo "Backup of database exists! Skipping"
+  fi
+}
+
+backup_pdfs() {
+  if [ -e "$PDF_DIR" ]
+  then
+    if ! [ -e "$PDF_DIR_BACKUP" ]
+    then
+      echo "Backing up PDFs ..."
+      echo "  From: $PDF_DIR"
+      echo "    To: $PDF_DIR_BACKUP"
+      cp -a $PDF_DIR $USB_DIR
+    else
+      echo "PDF dir backup does exist! Skipping"
+    fi
+  else
+    echo "PDF dir does not exist! Skipping"
+  fi
+}
+
+dump_database
+backup_pdfs
+
+exit 0

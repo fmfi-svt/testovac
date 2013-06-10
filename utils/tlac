@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"   # utils/
+cd ..   # h-server/
+
+count=1
+
+for fn in spool/*.pdf
+do
+  echo "$count. printing $fn"
+  lpr $fn
+  count=$(($count+1))
+done
