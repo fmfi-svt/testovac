@@ -91,6 +91,7 @@ jQuery(document).ready(function($) {
         hideErrorsForTd(input);
 
         var id = input.closest("tr").find('.idsub').val();
+        var info = input.closest("tr").find(".infosub").val();
         var zadany = input.val();
 
         if (zadany.length === 0) {
@@ -110,7 +111,8 @@ jQuery(document).ready(function($) {
         } else {
             var data = {
                 action: 'update',
-                id: id
+                id: id,
+                info: info
             };
             data[fieldName] = zadany;
             var request = $.ajax({
