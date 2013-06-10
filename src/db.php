@@ -7,7 +7,7 @@ function executeStmt(PDOStatement $ps) {
 }
 
 function executeSQL(PDO $pdo, $sql) {
-    if ($pdo->exec($pdo, $sql)) {
+    if ($pdo->exec($sql) === false) {
         throw new Exception('Databazova chyba: '.$pdo->errorCode(). ' '.join(' ', $pdo->errorInfo()));
     }
 }
