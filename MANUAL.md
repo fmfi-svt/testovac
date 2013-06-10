@@ -20,10 +20,11 @@ a osobne skontrolovať či sedí kód na náramku s
 kódom prihláseného.
 6. Keď niekto finálne odovzdá test, spustiť príkaz na tlačenie. 
 
-    `./console.py printfinished`
+    `utils/printfinished <den><skupina>`
 Vytlačený test spárovať s titulnou stranou a scvaknúť.
 7. Keď všetci odovzdajú, odniesť na podpis. 
 8. Spustiť zálohu na USB kľúč.
+    `utils/backup <den><skupina>`
 
 Pre ďaľší turnus pokračovať bodom 1.
 
