@@ -23,10 +23,11 @@ mkdir "$BACKUPDIR/$BATCH"
 case "$1" in
 	'print')
 		cd output
-		php ../src/printStudents.php
-		pdflatex printed.tex
-		cp "printed.pdf" "$BACKUPDIR/$BATCH/printed.pdf"
-		lpr "$BACKUPDIR/$BATCH/printed.pdf"
+		php ../src/printStudents.php &&
+		pdflatex printed.tex --interaction=nonstopmode &&
+		cp "printed.pdf" "$BACKUPDIR/$BATCH/printed.pdf" &&
+		lp "$BACKUPDIR/$BATCH/printed.pdf" &&
+		echo "Uspesne vytlacene" 
 		cd ..
 	;;
 	'export')
