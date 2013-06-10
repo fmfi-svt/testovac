@@ -1,26 +1,26 @@
 <$ if large_header $>
-\documentclass[a4paper,20pt,BCOR10mm,oneside,headsepline]{scrartcl}
+\documentclass[a4wide,20pt]{extarticle}
+\sloppy
 <$ else $>
-\documentclass[a4paper,twocolumn,10pt,BCOR10mm,oneside,headsepline]{scrartcl}
+\documentclass[a4wide,twocolumn]{article}
 <$ endif $>
+\usepackage[cm,myheadings]{fullpage}
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
 \usepackage{wasysym}% provides \ocircle and \Box
 \usepackage{enumitem}% easy control of topsep and leftmargin for lists
-\usepackage{typearea}
-\areaset{17cm}{26cm}
-\setlength{\topmargin}{-1cm}
-\usepackage{scrpage2}
-\pagestyle{scrheadings}
+
 <$ if show_pid $>
-\ihead{<<show_pid>>}
+\fancyhead[L]{<<show_pid>>}
 <$ endif $>
+\fancyhead[R]{\thepage}
 <$ if show_sign $>
-\ifoot{Podpis:}
+\fancyfoot[L]{Podpis:}
 <$ endif $>
-\ohead{\pagemark}
-\chead{}
-\cfoot{}
+\fancyfoot[C]{}
 
 \DeclareUnicodeCharacter{00A0}{~}
 \newcommand{\degree}{\ensuremath{^\circ}}
