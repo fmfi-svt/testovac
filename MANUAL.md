@@ -13,7 +13,7 @@ H-server
 
 1. Zablokovanie prihlasovania.
 
-    `./console.py login block`
+    ./console.py login block
 2. Reštartnúť všetky počítače pomocou `Alt-Sysrq-b`, po nabootovaní zapnúť NumLock a stlačiť Enter
 pre prihlásenie do Guest-Kiosk módu. 
 
