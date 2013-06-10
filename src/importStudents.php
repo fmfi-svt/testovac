@@ -1,6 +1,7 @@
 <?php
  
 require_once __DIR__. '/../config.php';
+require_once __DIR__. '/db.php';
 //Priezvisko;Meno;Datum nar.;III. RoÄŤnĂ­k;IV. RoÄŤnĂ­k;Forma
 //Abx;Marxx;4.10.19xx;1,81;2,15;dennĂˇ
 //Adx;Martxx;2.4.19xx;2,55;1,3;dennĂˇ
@@ -49,7 +50,7 @@ try {
         $stmt->bindParam(':priemer1',$priemer1);
         $stmt->bindParam(':priemer2',$priemer2);
         $stmt->bindParam(':forma',$forma);
-        $stmt->execute();
+        executeStmt($stmt);
        
     }
 } catch (Exception $e) {

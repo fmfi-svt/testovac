@@ -3,6 +3,7 @@
 <?php
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/logger.php';
+require_once __DIR__ . '/db.php';
 
 $db = connect_db();
 $logger = new Logger($db);
@@ -19,7 +20,7 @@ if ($handle === false) {
 }
 
 $students = $db->query('SELECT * from Students WHERE printed = 1 ORDER BY pid');
-$db->exec('UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
+executeSQL($db, 'UPDATE Students SET exported = 1 WHERE exported = 0 AND printed = 1');
 
 $logger->writeToLog('export', 'student averages', null, null, 'administrator');
 

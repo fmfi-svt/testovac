@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/logger.php';
+require_once __DIR__ . '/db.php';
+
 
 class Repository {
 
@@ -41,7 +43,7 @@ class Repository {
         if (isset($_POST['delete'])) {
             $sth = $this->db->prepare("UPDATE Students SET pid = NULL, time_of_registration = NULL WHERE id=:id");
             $sth->bindParam(':id', $id);
-            $sth->execute();
+            executeStmt($sth);
             $this->logger->writeToLog('delete', 'pid', $id, $info, $user);
         }
 
@@ -50,11 +52,11 @@ class Repository {
             $sth = $this->db->prepare("UPDATE Students SET pid = :pid WHERE id=:id");
             $sth->bindParam(':id', $id);
             $sth->bindParam(':pid', $pid);
-            $sth->execute();
+            executeStmt($sth);;
 
             $sth2 = $this->db->prepare("UPDATE Students SET time_of_registration = NOW() WHERE id=:id");
             $sth2->bindParam(':id', $id);
-            $sth2->execute();
+            executeStmt($sth2);
 
             $this->logger->writeToLog('update', 'pid', $id, $info, $user, $pid);
         }
@@ -66,12 +68,12 @@ class Repository {
                 $priemer1_bodka = str_replace(',', '.', $priemer1);
                 $sth->bindParam(':priemer1', $priemer1_bodka);
                 $sth->bindParam(':id', $id);
-                $sth->execute();
+                executeStmt($sth);
                 $this->logger->writeToLog('update', 'priemer1', $id, $info, $user, $priemer1_bodka);
             } else {
                 $sth = $this->db->prepare("UPDATE Students SET priemer1 = NULL WHERE id=:id");
                 $sth->bindParam(':id', $id);
-                $sth->execute();
+                executeStmt($sth);;
                 $this->logger->writeToLog('delete', 'priemer1', $id, $info, $user);
             }
         }
@@ -83,12 +85,12 @@ class Repository {
                 $priemer2_bodka = str_replace(',', '.', $priemer2);
                 $sth->bindParam(':priemer2', $priemer2_bodka);
                 $sth->bindParam(':id', $id);
-                $sth->execute();
+                executeStmt($sth);
                 $this->logger->writeToLog('update', 'priemer2', $id, $info, $user, $priemer2_bodka);
             } else {
                 $sth = $this->db->prepare("UPDATE Students SET priemer2 = NULL WHERE id=:id");
                 $sth->bindParam(':id', $id);
-                $sth->execute();
+                executeStmt($sth);
                 $this->logger->writeToLog('delete', 'priemer2', $id, $info, $user);
             }
         }
@@ -100,7 +102,7 @@ class Repository {
             FROM Students 
             where pid=:pid');
         $sth->bindParam(':pid',$pid);
-        $sth->execute();
+        executeStmt($sth);
         $result = $sth->fetchAll();
         $ret = array();
         if (count($result) > 0) {

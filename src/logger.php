@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/db.php');
+
 class Logger {
 
     private $dbh;
@@ -32,7 +34,7 @@ class Logger {
         $stmt->bindParam(':student_name', $name);
         $stmt->bindParam(':new_value', $value);
         $stmt->bindParam(':user', $who);
-        $stmt->execute();
+        executeStmt($stmt);
 
         $msg .= " \n";
         $handle = fopen($this->log_location, 'a');
