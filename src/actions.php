@@ -34,6 +34,25 @@ class Repository {
             ORDER BY priezvisko,meno;');
         return $query;
     }
+    
+    function updatePriemer($stlpec, $id, $info, $user) {
+        if (isset($_POST[$stlpec])) {
+            if ($_POST[$stlpec] != 0) {
+                $sth = $this->db->prepare("UPDATE Students SET $stlpec = :novy WHERE id=:id");
+                $novy = $_POST[$stlpec];
+                $novy_bodka = str_replace(',', '.', $novy);
+                $sth->bindParam(':novy', $novy_bodka);
+                $sth->bindParam(':id', $id);
+                executeStmt($sth);
+                $this->logger->writeToLog('update', $stlpec, $id, $info, $user, $novy_bodka);
+            } else {
+                $sth = $this->db->prepare("UPDATE Students SET $stlpec = NULL WHERE id=:id");
+                $sth->bindParam(':id', $id);
+                executeStmt($sth);
+                $this->logger->writeToLog('delete', $stlpec, $id, $info, $user);
+            }
+        }
+    }
 
     function updateStudents() {
         $id = $_POST['id'];
@@ -61,39 +80,8 @@ class Repository {
             $this->logger->writeToLog('update', 'pid', $id, $info, $user, $pid);
         }
 
-        if (isset($_POST['priemer1'])) {
-            if ($_POST['priemer1'] != 0) {
-                $sth = $this->db->prepare("UPDATE Students SET priemer1 = :priemer1 WHERE id=:id");
-                $priemer1 = $_POST['priemer1'];
-                $priemer1_bodka = str_replace(',', '.', $priemer1);
-                $sth->bindParam(':priemer1', $priemer1_bodka);
-                $sth->bindParam(':id', $id);
-                executeStmt($sth);
-                $this->logger->writeToLog('update', 'priemer1', $id, $info, $user, $priemer1_bodka);
-            } else {
-                $sth = $this->db->prepare("UPDATE Students SET priemer1 = NULL WHERE id=:id");
-                $sth->bindParam(':id', $id);
-                executeStmt($sth);;
-                $this->logger->writeToLog('delete', 'priemer1', $id, $info, $user);
-            }
-        }
-
-        if (isset($_POST['priemer2'])) {
-            if ($_POST['priemer2'] != 0) {
-                $sth = $this->db->prepare("UPDATE Students SET priemer2 = :priemer2 WHERE id=:id");
-                $priemer2 = $_POST['priemer2'];
-                $priemer2_bodka = str_replace(',', '.', $priemer2);
-                $sth->bindParam(':priemer2', $priemer2_bodka);
-                $sth->bindParam(':id', $id);
-                executeStmt($sth);
-                $this->logger->writeToLog('update', 'priemer2', $id, $info, $user, $priemer2_bodka);
-            } else {
-                $sth = $this->db->prepare("UPDATE Students SET priemer2 = NULL WHERE id=:id");
-                $sth->bindParam(':id', $id);
-                executeStmt($sth);
-                $this->logger->writeToLog('delete', 'priemer2', $id, $info, $user);
-            }
-        }
+        $this->updatePriemer('priemer1', $id, $info, $user);
+        $this->updatePriemer('priemer2', $id, $info, $user);
     }
 
     function isDuplicate($pid) {
