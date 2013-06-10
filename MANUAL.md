@@ -1,6 +1,15 @@
 Prevádzkový manuál
 ==================
 
+C-server
+--------
+1. Po každej registrácií treba spustiť `./batch.sh print <den><cislo>`
+2. Na konci dňa `./batch.sh export <den>`
+
+
+H-server
+--------
+
 1. Zablokovanie prihlasovania.
 
     `./console.py login block`
