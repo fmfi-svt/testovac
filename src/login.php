@@ -2,7 +2,7 @@
 
 function login($username, $password)
 {
-    include __DIR__ . '/users.php';
+    include __DIR__ . '/../users.php';
     if ($users[$username] == $password && strlen($username) > 0) {
         $_SESSION['user'] = $_POST["username"];
         $_SESSION['login'] = true;
