@@ -25,9 +25,16 @@ $query = $db->query('SELECT * from Students WHERE printed = 0 AND pid is not nul
 
 $students = $query->fetchAll(PDO::FETCH_ASSOC);
 $pids = '';
+$have_data = false;
 foreach ($students as $row) {
     $pid = $row['pid'];
     $pids .= $pid . ' ';
+    $have_data = true;
+}
+
+if (!$have_data) {
+    echo "Nemame ziadnych studentov na tlac\n";
+    exit(1);
 }
 
 executeSQL($db, 'UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
