@@ -3,6 +3,7 @@
 <?php
 require_once __DIR__ . '/../config.php';
 require_once __DIR__ . '/logger.php';
+require_once __DIR__ . '/db.php';
 
 $db = connect_db();
 $logger = new Logger($db);
@@ -29,7 +30,7 @@ foreach ($students as $row) {
     $pids .= $pid . ' ';
 }
 
-$db->exec('UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
+executeSQL($db, 'UPDATE Students SET printed = 1 WHERE printed = 0 AND pid is not null');
 
 $logger->writeToLog('print', 'first pages', null, null, 'administrator', $pids);
 
