@@ -13,7 +13,7 @@ CREATE TABLE `Students` (
   `exported` tinyint(1) NOT NULL,
   `edited_by` varchar(255) CHARACTER SET utf8 COLLATE utf8_slovak_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1501 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE INDEX students_datum_idx ON Students (datum_narodenia);
 CREATE INDEX students_priezvisko_idx ON Students (priezvisko);
