@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=Kiosk
+Comment=This session logs you into kiosk
+Exec=/usr/share/xsessions/kiosk.sh
+Type=Application
