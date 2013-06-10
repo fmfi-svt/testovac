@@ -3,8 +3,9 @@ Prevádzkový manuál
 
 C-server
 --------
-1. Po každej registrácií treba spustiť `./batch.sh print <den><cislo>`
-2. Na konci dňa `./batch.sh export <den>`
+1. Po každej registrácií treba spustiť `./batch.sh print <den><cislo>` napr.
+`./batch.sh print Pon1`
+2. Na konci dňa `./batch.sh export <den>` napr. `./batch.sh export Pon` 
 
 
 H-server
@@ -13,8 +14,11 @@ H-server
 1. Zablokovanie prihlasovania.
 
     `./console.py login block`
-2. Reštartnúť všetky počítače. Mali by zobrazovať úvodnú prihlasovaciu 
-obrazovku.
+2. Reštartnúť všetky počítače pomocou `Alt-Sysrq-b`, po nabootovaní zapnúť NumLock a stlačiť Enter
+pre prihlásenie do Guest-Kiosk módu. 
+
+Mali by zobrazovať 
+obrazovku vyžadujúcu zadanie PIDu.
 3. Počkať kým koordinátor povie účastníkom všetky úvodné informácie.
 4. Po signále povoliť prihlasovanie.
 
@@ -30,10 +34,14 @@ kódom prihláseného.
 6. Keď niekto finálne odovzdá test, spustiť príkaz na tlačenie. 
 
     `utils/printfinished <den><skupina>`
+    napr. 
+    `utils/printfinished Pon1`
 Vytlačený test spárovať s titulnou stranou a scvaknúť.
 7. Keď všetci odovzdajú, odniesť na podpis. 
 8. Spustiť zálohu na USB kľúč.
     `utils/backup <den><skupina>`
+    napr. 
+    `utils/backup Pon1`
 
 Pre ďaľší turnus pokračovať bodom 1.
 
@@ -41,7 +49,7 @@ Na konci dňa exportovať vypočítané body, uploadnuť na stránku.
 
     ./console.py exportresults > hbody.php
 
-Na konci prijímacích pohovorovu vytlačiť ohodnotené testy, vytlačiť
+Na konci prijímacích pohovorov vytlačiť ohodnotené testy, vytlačiť
 štatistiku a urobiť export do AIS.
 
     ./console.py bucketstats > stats.csv
@@ -51,7 +59,7 @@ FAQ
 
 Q: Ako zablokovať otázku?
 
-A:
+A: Je potrebné zistiť v databáze číslo otázky a spustiť
 
     ./console.py disable <pid> <qorder>
 
