@@ -39,13 +39,13 @@ Pre ďaľší turnus pokračovať bodom 1.
 
 Na konci dňa exportovať vypočítané body, uploadnuť na stránku.
 
-    `./console.py exportresults > hbody.php`
+    ./console.py exportresults > hbody.php
 
 Na konci prijímacích pohovorovu vytlačiť ohodnotené testy, vytlačiť
 štatistiku a urobiť export do AIS.
 
-    `./console.py bucketstats > stats.csv`
-    `./console.py printevaluatedexam --all`
+    ./console.py bucketstats > stats.csv
+    ./console.py printevaluatedexam --all
 
 FAQ
 
