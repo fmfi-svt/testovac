@@ -70,7 +70,7 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
       append($('<span class="pid" />').text(demoPid));
   }
   else {
-    $('<p/>').appendTo($form).text('Vaše ID je napísané na vašom náramku.');
+    $('<p/>').appendTo($form).text('Vaše ID je napísané na vašom náramku. (Zadávajte aj s pomlčkami.)');
   }
   $form.on('submit', function (event) {
     Tester.doLogin($pidInput.val(), loginSuccess, loginFailure);
