@@ -12,21 +12,17 @@ H-server
 --------
 
 1. Zablokovanie prihlasovania.
-
-    ./console.py login block
+    `./console.py login block`
 2. Reštartnúť všetky počítače pomocou `Alt-Sysrq-b`, po nabootovaní zapnúť NumLock a stlačiť Enter
 pre prihlásenie do Guest-Kiosk módu. 
-
 Mali by zobrazovať 
 obrazovku vyžadujúcu zadanie PIDu.
 3. Počkať kým koordinátor povie účastníkom všetky úvodné informácie.
 4. Po signále povoliť prihlasovanie.
-
     `./console.py login unblock`
 5. Monitorovať priebeh prijímačiek - sledovať či sa účastníci prihlásili,
 či sa priebežne zvyšuje počet vyplnených odpovedí, či sa testy automaticky
 odovzdajú po vypršaní časového limitu.
-
     `./console.py monitor`
 Spraviť kolečko po počítačoch 
 a osobne skontrolovať či sedí kód na náramku s 
