@@ -34,10 +34,12 @@ try {
         $priemer1 = $row['priemer1'];
         $priemer2 = $row['priemer2'];
         $forma = $row['forma_studia'];
-        if ($forma == 'denná') {
+        if (substr($forma, 0, 1) === 'd') {
             $forma = 'denna';
-        } else {
+        } else if (substr($forma, 0, 1) === 'e') {
             $forma = 'externa';
+        } else {
+            printf('Neznáma forma štúdia: %s %s\n', $row['pid'], $forma);
         }
         $pid = $row['pid'];
         if ($pid == null) { 
