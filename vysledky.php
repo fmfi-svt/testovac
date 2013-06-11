@@ -1,6 +1,11 @@
 <?php
 $page = 'vysledky';
 require 'include/header.php';
+
+function pid2anchor($pid) {
+    return 'pid'.$pid;
+}
+
 ?>
 
 <h1>Výsledky</h1>
@@ -85,7 +90,8 @@ function vypisTabulku($body, $forma, $vybranaForma, $vybranyKod) {
 		}
 		else echo "<tr>";
 		$escapedPid = htmlspecialchars($pid, 0, 'UTF-8');
-		printf("<td align=right>%d.</td><td>%s</td><td>%.03f</td></tr>\n", $vypisporadie, $escapedPid, $skore);
+		printf("<td id=\"%s\" align=right>%d.</td><td>%s</td><td>%.03f</td></tr>\n",
+			pid2anchor($pid), $vypisporadie, $escapedPid, $skore);
 	}
 }
 
