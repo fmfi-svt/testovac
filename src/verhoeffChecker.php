@@ -45,7 +45,7 @@ class VerhoeffChecker {
     public function check($pid) {
         if (!preg_match('/^[1-9][0-9]{15}$/', $pid))
             return 'pidfalse';
-        $cs = $pid[4] + $pid[8];
+        $cs = $pid[2] + $pid[7];
         if ($cs === 8)
             return 'demopid';
         else if ($cs !== 8) {
