@@ -9,6 +9,9 @@ require 'include/header.php';
     použitý pri prijímacích skúškach.
 </p>
 <p>
+    Jedná sa o skúšobný test, ktorý nebude vyhodnocovaný.
+</p>
+<p>
 <a href="http://prijimacky.flaw.uniba.sk/demo/">Spustiť testovací systém</a>
 </p>
 
