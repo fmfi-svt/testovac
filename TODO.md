@@ -1,2 +1,2 @@
-1. NUMLOCK ON pri štarte systému
-2. Nerušivý screensaver.
+1. Remap aj po replugu.
+2. Autologin + kombinacia do shellu.
