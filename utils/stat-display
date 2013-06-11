@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"   # utils/
+
+../console.py bucketstats | ./hviezdy.py | column -s, -t
