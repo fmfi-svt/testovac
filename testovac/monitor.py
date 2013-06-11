@@ -29,16 +29,16 @@ def monitor(app):
         their_time = now - row.begintime
 
         if row.submitted:
-            subdesc = 'odovzdane '
+            subdesc = 'odovzdane  '
             num_submitted += 1
         elif their_time > exam.server_time_limit:
-            subdesc = 'expirovane'
+            subdesc = 'expirovane '
             num_expired += 1
         else:
-            subdesc = 'cas: %02d:%02d' % (their_time // 60, their_time % 60)
+            subdesc = 'cas: %+03d:%02d' % (their_time // 60, their_time % 60)
 
         if row[1]:
-            idledesc = '%02d:%02d' % (row[3] // 60, row[3] % 60)
+            idledesc = '%+03d:%02d' % (row[3] // 60, row[3] % 60)
         else:
             idledesc = ' N/A '
 
