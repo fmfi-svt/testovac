@@ -1,6 +1,11 @@
 <?php
 $page = 'vysledky';
 require 'include/header.php';
+
+function pid2anchor($pid) {
+    return 'pid'.$pid;
+}
+
 ?>
 
 <h1>Výsledky</h1>
@@ -22,7 +27,6 @@ doručené do vlastných rúk.
 
 	$vybranyKod = empty($_GET['pid'])?null:$_GET['pid'];
 	$vybranaForma = 'denna';
-	$vybraneBody = -1;
         if ($vybranyKod !== null) {
             $vybranyKod = preg_replace('@[^0-9]@', '', $vybranyKod);
             $vybranyKod = preg_replace('@([0-9]{4})([0-9]{4})([0-9]{4})([0-9]{4})@', '\1-\2-\3-\4', $vybranyKod);
@@ -43,8 +47,6 @@ doručené do vlastných rúk.
 
 	arsort($body['denna']);
 	arsort($body['externa']);
-
-        if (isset($body[$vybranaForma][$vybranyKod])) $vybraneBody = $body[$vybranaForma][$vybranyKod];
 ?>
 <script>
 	function show(id) {
@@ -62,34 +64,38 @@ Zvýrazni výsledok podľa kódu:
 <button type="submit">Vyhľadaj</button>
 </form>
 <?php
-if ($vybranyKod!==null && $vybraneBody === -1) {
+if ($vybranyKod!==null && empty($body[$vybranaForma][$vybranyKod])) {
 	echo '<br/><span class="warning">Zadaný kód sa vo výsledkovej listine nenašiel.</span>';
 }
 ?>
 </p>
 <hr/>
-<h2>Priebežné výsledky prijímacích pohovorov, 11.-13.6.2012</h2>
+<h2>Priebežné výsledky prijímacích pohovorov, 11.6.2013</h2>
 <div id="denna-forma"<?php if ($vybranaForma != 'denna') echo ' style="display:none;"'?>>
 <p><a href="javascript:hide('denna-forma');show('externa-forma');void(0);">zobraz výsledky pre externú formu</a></p>
 <h2>Denná forma štúdia</h2>
 <table>
 <tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
+function vypisTabulku($body, $forma, $vybranaForma, $vybranyKod) {
 	$poradie = 0;
 	$vypisporadie = 0;
 	$posledne = -1;
-	foreach ($body['denna'] as $pid => $skore) {
+	foreach ($body[$forma] as $pid => $skore) {
 		$poradie++;
 		if ($skore != $posledne) $vypisporadie = $poradie; 
 		$posledne = $skore;
-		if ($vybranaForma == 'denna' && $vybraneBody == $skore) {
+		if ($vybranaForma == $forma && $vybranyKod == $pid) {
 			echo '<tr class="selected-score">';
-			//$vybraneBody = -1;
 		}
 		else echo "<tr>";
-		printf("<td align=right>%d.</td><td>$pid</td><td>%.03f</td></tr>\n",$vypisporadie,$skore);
+		$escapedPid = htmlspecialchars($pid, 0, 'UTF-8');
+		printf("<td id=\"%s\" align=right>%d.</td><td>%s</td><td>%.03f</td></tr>\n",
+			pid2anchor($pid), $vypisporadie, $escapedPid, $skore);
 	}
-	
+}
+
+vypisTabulku($body, 'denna', $vybranaForma, $vybranyKod);
 ?>
 </table>
 </div>
@@ -100,18 +106,7 @@ if ($vybranyKod!==null && $vybraneBody === -1) {
 <table>
 <tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
-	$poradie = 0;
-	$posledne = -1;
-	foreach ($body['externa'] as $pid => $skore) {
-		if ($skore != $posledne) $poradie++;
-		$posledne = $skore;
-		if ($vybranaForma == 'externa' && $vybraneBody == $skore) {
-			echo '<tr class="selected-score">';
-			$vybraneBody = -1;
-		}		else echo "<tr>";
-		echo "<td>$poradie.</td><td>$pid</td><td>$skore</td></tr>";
-	}
-	
+vypisTabulku($body, 'externa', $vybranaForma, $vybranyKod);
 ?>
 </table>
 </div>
