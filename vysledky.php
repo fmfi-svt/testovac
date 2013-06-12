@@ -55,6 +55,17 @@ doručené do vlastných rúk.
 	function hide(id) {
 		document.getElementById(id).style.display='none';
 	}
+	function scrollTo(id) {
+		var el = document.getElementById(id);
+		if (!el) return;
+		var curtop = 0;
+		if (el.offsetParent) {
+			do {
+				curtop += el.offsetTop;
+			} while (el = el.offsetParent);	
+		}
+		window.scroll(0, curtop);
+	}
 </script>
 <hr/>
 <p>
@@ -110,6 +121,9 @@ vypisTabulku($body, 'externa', $vybranaForma, $vybranyKod);
 ?>
 </table>
 </div>
+<script type="text/javacript">
+scrollTo("<?php echo pid2anchor($pid); ?>");
+</script>
 <?php
     }
     require 'include/footer.php';
