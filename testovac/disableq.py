@@ -1,5 +1,5 @@
 
-from models import UserQuestions, Questions
+from models import UserQuestions, Questions, Subquestions
 from sqlalchemy.orm.exc import NoResultFound
 
 
@@ -17,6 +17,15 @@ def disable(app, pid, qorder):
     print 'Question ID:', qid
     print
     print question.body
+    print
+    for s in db.query(Subquestions).filter(Subquestions.c.qid == qid):
+        print u'{s.qsubord}) {s.body} [{s.value}]'.format(s=s)
+    print
+    numuq = 0
+    for uq in db.query(UserQuestions).filter(UserQuestions.c.qid == qid):
+        print u'Je v teste pre:', uq.pid
+        numuq += 1
+    print 'Dokopy v %d testoch' % numuq
     print
 
     if question.disabled:
