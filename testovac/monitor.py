@@ -9,6 +9,10 @@ from termcolor import colored
 columns = 2
 
 
+def maybecolor(text, color, when):
+    return colored(text, color, attrs=['bold']) if when else text
+
+
 def monitor(app):
     db = app.DbSession()
     now = int(time.time())
@@ -47,9 +51,9 @@ def monitor(app):
 
         line = '{} {} odp: {} (ev: {:3d} last: {})'.format(
             row.pid, subdesc,
-            colored('%3d' % row[2], 'green', attrs=['bold']) if row[2] == 116 else '%3d' % row[2],
+            maybecolor('%3d' % row[2], 'green', row[2] == 116),
             row[1],
-            colored(idledesc, 'yellow', attrs=['bold']) if delta_time > 10 * 60 else idledesc)
+            maybecolor(idledesc, 'yellow', delta_time > 10*60))
 
         num += 1
         if num % columns == 0:
@@ -61,17 +65,8 @@ def monitor(app):
     print ''
 
     print 'Celkovy pocet: %2d' % num
-
-    text = ' - odovzdane : %2d' % num_submitted
-    if num_submitted > 0:
-        text = colored(text, 'red', attrs=['bold'])
-    print text
-
-    text = ' - expirovane: %2d' % num_expired
-    if num_expired > 0:
-        text = colored(text, 'red', attrs=['bold'])
-    print text
-
+    print maybecolor(' - odovzdane : %2d' % num_submitted, 'red', num_submitted > 0)
+    print maybecolor(' - expirovane: %2d' % num_expired, 'red', num_expired > 0)
     print ' - vyplna    : %2d' % (num - num_submitted - num_expired)
 
     db.close()
