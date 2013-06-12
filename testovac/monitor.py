@@ -1,5 +1,6 @@
 
 import os
+import sys
 import time
 from models import Users
 from .settings import exam
@@ -74,6 +75,12 @@ def monitor(app):
 monitor.help = '  $0 monitor'
 
 
+def monitorwatch(app):
+    os.execlp('watch', 'watch', '-c', sys.argv[0], 'monitor')
+monitorwatch.help = '  $0 monitorwatch'
+
+
 commands = {
     'monitor': monitor,
+    'monitorwatch': monitorwatch,
 }
