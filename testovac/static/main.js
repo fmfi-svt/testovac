@@ -384,7 +384,7 @@ function doClose(timedOut) {
 
   function attemptClose() {
     if (Tester.eventsBegin != Tester.eventsEnd) {
-      sendEvents();
+      saveEvents();
       setTimeout(attemptClose, 500);
       return;
     }
