@@ -10,15 +10,20 @@ from termcolor import colored
 columns = 2
 
 
+login_block_file = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                'loginblock')
+
+
 def maybecolor(text, color, when):
     return colored(text, color, attrs=['bold']) if when else text
 
 
 def monitor(app):
+    print "Prihlasovanie:", maybecolor("zakazane", "green", True) if os.path.exists(login_block_file) else maybecolor("POVOLENE", "red", True)
+    print
+
     db = app.DbSession()
     now = int(time.time())
-
-    print 'Vytlacene:', db.query(Users).filter_by(printed=True).count()
 
     results = db.execute('''SELECT
         u.pid, COUNT(e.serial), COUNT(DISTINCT e.qorder, e.qsubord),
@@ -48,7 +53,7 @@ def monitor(app):
             idledesc = '%+03d:%02d' % (row[3] // 60, row[3] % 60)
             delta_time -= row[3]
         else:
-            idledesc = ' N/A  '
+            idledesc = '  N/A '
 
         line = '{} {} odp: {} (ev: {:3d} last: {})'.format(
             row.pid, subdesc,
@@ -69,6 +74,9 @@ def monitor(app):
     print maybecolor(' - odovzdane : %2d' % num_submitted, 'red', num_submitted > 0)
     print maybecolor(' - expirovane: %2d' % num_expired, 'red', num_expired > 0)
     print ' - vyplna    : %2d' % (num - num_submitted - num_expired)
+
+    print
+    print 'Vytlacenych:', '%4d' % db.query(Users).filter_by(printed=True).count()
 
     db.close()
 
