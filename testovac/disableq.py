@@ -21,11 +21,11 @@ def disable(app, pid, qorder):
     for s in db.query(Subquestions).filter(Subquestions.c.qid == qid):
         print u'{s.qsubord}) {s.body} [{s.value}]'.format(s=s)
     print
-    numuq = 0
-    for uq in db.query(UserQuestions).filter(UserQuestions.c.qid == qid):
-        print u'Je v teste pre:', uq.pid
-        numuq += 1
-    print 'Dokopy v %d testoch' % numuq
+
+    pids = [uq.pid for uq in db.query(UserQuestions).filter(UserQuestions.c.qid == qid)];
+    numuq = len(pids)
+    print 'This question is already used in tests for following pids (%d in total):' % numuq
+    print '\n'.join(pids)
     print
 
     if question.disabled:
