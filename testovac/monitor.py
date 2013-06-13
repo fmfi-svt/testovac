@@ -65,7 +65,7 @@ def monitor(app):
         if num % columns == 0:
             print line
         else:
-            print line + ' | ',
+            print line, '|',
 
     if num % columns != 0: print ''
     print ''
