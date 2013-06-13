@@ -31,7 +31,7 @@ def disable(app, pid, qorder):
     if question.disabled:
         print 'Already disabled!'
     else:
-        print 'Disable this question? (y/n)',
+        print 'Disable this question? (y/N)',
         if raw_input().lower()[0:1] == 'y':
             db.execute(Questions.update().where(Questions.c.qid==qid).
                        values(disabled=True))
