@@ -146,29 +146,26 @@ def send_to_printer_and_backup(pids, backup_dir_name):
         os.rename(os.path.join(spool_dir, pdfname), os.path.join(backup_dir_path, pdfname))
 
 def printwatch(app, backup_dir_name):
-    db = app.DbSession()
     time_limit = 2 * 60
     first_pid = None
-    try:
-        while True:
-            pids = [user.pid for user in db.query(Users)
-                    if user_closed(user) and not user.printed]
-            if len(pids) > 0:
-                if first_pid == None:
-                    first_pid = time.time()
-                time_delta = time.time() - first_pid
-                if time_delta > time_limit or len(pids) > 10:
-                    printfinished_pids(db, pids)
-                    send_to_printer_and_backup(pids, backup_dir_name)
-                    first_pid = None
-                else:
-                    print '%s (%s) Waiting: time_delta: %ds, pids: %d' % (time.ctime(), backup_dir_name, int(time_delta), len(pids))
+    while True:
+        db = app.DbSession()
+        pids = list([user.pid for user in db.query(Users)
+                if user_closed(user) and not user.printed])
+        if len(pids) > 0:
+            if first_pid == None:
+                first_pid = time.time()
+            time_delta = time.time() - first_pid
+            if time_delta > time_limit or len(pids) > 10:
+                printfinished_pids(db, pids)
+                send_to_printer_and_backup(pids, backup_dir_name)
+                first_pid = None
             else:
-                print '%s (%s) Nothing to print yet.' % (time.ctime(), backup_dir_name)
-            time.sleep(5)
-    except KeyboardInterrupt:
-        pass
-    db.close()
+                print '%s (%s) Waiting: time_delta: %ds, pids: %d' % (time.ctime(), backup_dir_name, int(time_delta), len(pids))
+        else:
+            print '%s (%s) Nothing to print yet.' % (time.ctime(), backup_dir_name)
+        db.close()
+        time.sleep(5)
 printwatch.help = '  $0 printwatch backup_dir_name'
 
 
