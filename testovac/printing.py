@@ -150,13 +150,17 @@ def printwatch(app, backup_dir_name):
     first_pid = None
     while True:
         db = app.DbSession()
-        pids = list([user.pid for user in db.query(Users)
-                if user_closed(user) and not user.printed])
+        vyplna = len([user.pid for user in db.query(Users)
+                if not user_closed(user) and not user.printed])
+        pids = [user.pid for user in db.query(Users)
+                if user_closed(user) and not user.printed]
+        if vyplna == 0 and len(pids) == 0:
+            break
         if len(pids) > 0:
             if first_pid == None:
                 first_pid = time.time()
             time_delta = time.time() - first_pid
-            if time_delta > time_limit or len(pids) > 10:
+            if time_delta > time_limit or len(pids) > 10 or vyplna == 0:
                 printfinished_pids(db, pids)
                 send_to_printer_and_backup(pids, backup_dir_name)
                 first_pid = None
@@ -165,7 +169,9 @@ def printwatch(app, backup_dir_name):
         else:
             print '%s (%s) Nothing to print yet.' % (time.ctime(), backup_dir_name)
         db.close()
-        time.sleep(5)
+        if vyplna > 0:
+            time.sleep(5)
+    print '%s (%s) Printing finished.' % (time.ctime(), backup_dir_name)
 printwatch.help = '  $0 printwatch backup_dir_name'
 
 
