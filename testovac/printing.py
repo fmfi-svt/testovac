@@ -145,9 +145,17 @@ def send_to_printer_and_backup(pids, backup_dir_name):
         print 'Backuping: %s' % pdfname
         os.rename(os.path.join(spool_dir, pdfname), os.path.join(backup_dir_path, pdfname))
 
+def notification(title, message=None):
+    # TODO: pouzime pynotify, teraz tu nie je, tak pouzijeme notify-send
+    args = ['notify-send', title]
+    if message != None:
+        args += [message]
+    check_call(args)
+
 def printwatch(app, backup_dir_name):
     time_limit = 2 * 60
     first_pid = None
+    printed_batches = []
     while True:
         db = app.DbSession()
         vyplna = len([user.pid for user in db.query(Users)
@@ -157,21 +165,31 @@ def printwatch(app, backup_dir_name):
         if vyplna == 0 and len(pids) == 0:
             break
         if len(pids) > 0:
-            if first_pid == None:
+            is_first_pid = first_pid == None
+            if is_first_pid:
                 first_pid = time.time()
             time_delta = time.time() - first_pid
             if time_delta > time_limit or len(pids) > 10 or vyplna == 0:
+                notification('Tlacim %d testov' % len(pids))
                 printfinished_pids(db, pids)
                 send_to_printer_and_backup(pids, backup_dir_name)
+                printed_batches.append(len(pids))
                 first_pid = None
             else:
+                if is_first_pid:
+                    notification('Prvy odovzdal, cakam', 'Pidov: %d' % len(pids))
                 print '%s (%s) Waiting: time_delta: %ds, pids: %d' % (time.ctime(), backup_dir_name, int(time_delta), len(pids))
         else:
             print '%s (%s) Nothing to print yet.' % (time.ctime(), backup_dir_name)
         db.close()
         if vyplna > 0:
             time.sleep(5)
-    print '%s (%s) Printing finished.' % (time.ctime(), backup_dir_name)
+    batches_descr = '+'.join(str(x) for x in printed_batches) + ' = ' + str(sum(printed_batches))
+    if len(printed_batches) == 0:
+        batches_descr = 'Nic nevytlacene'
+    notification('Tlac %s dokoncena' % backup_dir_name,
+        'Vytlacene: %s' % batches_descr)
+    print '%s (%s) Printing finished: %s' % (time.ctime(), backup_dir_name, batches_descr)
 printwatch.help = '  $0 printwatch backup_dir_name'
 
 
