@@ -130,7 +130,7 @@ def get_results(db, pids):
     points = exam.get_question_scores(models, db)
     results = dict((pid, Fraction(0)) for pid in pids)
     details = dict((pid, {}) for pid in pids)
-    if not pids: return results
+    if not pids: return results, details
     for pid, their_answer, qid, qsubord, correct_answer in (db
             .query(CurrentEvents.c.pid, CurrentEvents.c.value,
                    Subquestions.c.qid, Subquestions.c.qsubord,

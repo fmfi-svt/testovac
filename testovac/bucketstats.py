@@ -1,13 +1,20 @@
 
+from calendar import timegm
 from fractions import Fraction
 from models import Questions, Users, Buckets, user_closed, get_results
 from subprocess import Popen, PIPE
 
 
-def genstats(app):
+def genstats(app, tfrom=None, tto=None):
     db = app.DbSession()
 
-    pids = [user.pid for user in db.query(Users) if user_closed(user)]
+    if tfrom:
+        convert = lambda d: timegm(map(int, d.split('-')) + [0, 0, 0])
+        tfrom, tto = convert(tfrom), convert(tto or tfrom) + 86400
+
+    users = [user for user in db.query(Users) if user_closed(user)]
+    if tfrom: users = [user for user in users if tfrom < user.begintime < tto]
+    pids = [user.pid for user in users]
     results, details = get_results(db, pids)
 
     bucket_of = dict((q.qid, q.bid) for q in db.query(Questions))
@@ -30,19 +37,19 @@ def genstats(app):
     db.close()
 
 
-def bucketstats(app):
-    for line in genstats(app):
+def bucketstats(app, tfrom=None, tto=None):
+    for line in genstats(app, tfrom, tto):
         print ','.join(line[:-1])
-bucketstats.help = '  $0 bucketstats > stats.csv'
+bucketstats.help = '  $0 bucketstats [YYYY-MM-DD [YYYY-MM-DD]] > stats.csv'
 
 
-def bucketstars(app):
+def bucketstars(app, tfrom=None, tto=None):
     p = Popen(['column', '-s,', '-t'], stdin=PIPE)
-    for line in genstats(app):
+    for line in genstats(app, tfrom, tto):
         p.stdin.write(','.join(line) + '\n')
     p.stdin.close()
     if p.wait() != 0: raise OSError("zly returncode")
-bucketstars.help = '  $0 bucketstars'
+bucketstars.help = '  $0 bucketstars [YYYY-MM-DD [YYYY-MM-DD]]'
 
 
 commands = {
