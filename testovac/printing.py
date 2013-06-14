@@ -8,6 +8,7 @@ from . import models
 from models import (Users, CurrentEvents, Subquestions,
     user_closed, get_user_questions, get_results)
 from jinja2 import Template
+import time
 
 
 # allow changing the binary with an environment variable
@@ -105,7 +106,12 @@ def printfinished(app, pid):
         if not user: raise ValueError('invalid pid')
         if not user_closed(user): raise ValueError('user not yet closed')
         pids = [pid]
+    printfinished_pids(db, pids)
 
+    db.close()
+printfinished.help = '  $0 printfinished --notprinted\n  $0 printfinished <pid>'
+
+def printfinished_pids(db, pids):
     for pid in pids:
         questions = get_user_questions(db, pid, with_qid=True)
         answers = {}
@@ -124,8 +130,46 @@ def printfinished(app, pid):
                    values(printed=True))
         db.commit()
 
+
+def send_to_printer_and_backup(pids, backup_dir_name):
+    spool_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'spool')
+    backup_dir_path = os.path.join(spool_dir, backup_dir_name)
+    if not os.path.isdir(backup_dir_path):
+        print 'Creating backup directory: %s' % backup_dir_path
+        os.mkdir(backup_dir_path)
+   
+    for pid in pids:
+        pdfname = '%s.pdf' % pid
+        print 'Printing: %s' % pdfname
+        check_call(['lpr', pdfname], cwd=spool_dir)
+        print 'Backuping: %s' % pdfname
+        os.rename(os.path.join(spool_dir, pdfname), os.path.join(backup_dir_path, pdfname))
+
+def printwatch(app, backup_dir_name):
+    db = app.DbSession()
+    time_limit = 2 * 60
+    first_pid = None
+    try:
+        while True:
+            pids = [user.pid for user in db.query(Users)
+                    if user_closed(user) and not user.printed]
+            if len(pids) > 0:
+                if first_pid == None:
+                    first_pid = time.time()
+                time_delta = time.time() - first_pid
+                if time_delta > time_limit or len(pids) > 10:
+                    printfinished_pids(db, pids)
+                    send_to_printer_and_backup(pids, backup_dir_name)
+                    first_pid = None
+                else:
+                    print '%s (%s) Waiting: time_delta: %ds, pids: %d' % (time.ctime(), backup_dir_name, int(time_delta), len(pids))
+            else:
+                print '%s (%s) Nothing to print yet.' % (time.ctime(), backup_dir_name)
+            time.sleep(5)
+    except KeyboardInterrupt:
+        pass
     db.close()
-printfinished.help = '  $0 printfinished --notprinted\n  $0 printfinished <pid>'
+printwatch.help = '  $0 printwatch backup_dir_name'
 
 
 def printevaluatedexam(app, pid):
@@ -179,6 +223,7 @@ printevaluatedexam.help = '  $0 printevaluatedexam <pid>\n  $0 printevaluatedexa
 
 
 commands = {
+    'printwatch': printwatch, 
     'printfinished': printfinished,
     'printexamlarge': printexamlarge,
     'printevaluatedexam': printevaluatedexam,
