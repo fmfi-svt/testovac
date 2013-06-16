@@ -1,11 +1,10 @@
 <?php
-$url = 'http://prijimacky.flaw.uniba.sk/vysledky/';
 $separatory = false;
 
 function generateLatexHeader() {
         global $separatory;
         $result = '\documentclass[18pt]{article}'."\n" .
-	'\usepackage[papersize={210mm,297mm},top=12mm,bottom=3mm,left=0mm,right=0mm,nohead,nofoot]{geometry}'."\n".
+	'\usepackage[papersize={210mm,297mm},top=13.216mm,bottom=3mm,left=1mm,right=0mm,nohead,nofoot]{geometry}'."\n".
 	'\usepackage{tikz}'."\n".
 	'\usepackage{tabls}'."\n".
 	//'\usepackage{verbatim}'."\n".
@@ -24,13 +23,13 @@ function generateLatexHeader() {
         '\setlength{\extrarowheight}{1.5pt}' . "\n".
 	'\newsavebox\TBox'."\n".
 	'\tabcolsep=1mm'."\n".
-	'\arrayrulewidth=1mm'."\n".
+	'\arrayrulewidth=0.784mm'."\n".
 	'\newenvironment{saveTBox}'."\n".
 	'  {\begin{lrbox}{\TBox}\varwidth{\linewidth}}'."\n".
 	'  {\endvarwidth\end{lrbox}%'."\n".
 	'   \fboxrule=0pt\fboxsep=2pt\fbox{\usebox\TBox}}'."\n".
 	''."\n".
-	'\newcolumntype{B}{@{}>{\saveTBox}c<{\endsaveTBox}@{}}'."\n".
+	'\newcolumntype{B}{@{}>{\saveTBox}c<{\endsaveTBox}@{\hspace{1mm}}}'."\n".
 	'\newcolumntype{M}{>{\centering\arraybackslash}c}'."\n".
 	''."\n".
 	'\def\padded#1#2{%'."\n".
@@ -50,7 +49,7 @@ function generateLatexHeader() {
         } else {
 	    $result = $result . '\begin{longtable}{MMM}'."\n";
         }
-	$result = $result . '\vspace{0mm}'."\n";
+	$result = $result . '\vspace{\arrayrulewidth}'."\n";
         
 	return $result;	
 }
@@ -64,7 +63,7 @@ function generateLatexFooter() {
 $counter = 0;
 
 function generateLatexQrBarcode($payload) {
-	global $counter, $url, $separatory;
+	global $counter, $separatory;
 
 	$result =
 '   \begin{tabular}{B}'."\n".
