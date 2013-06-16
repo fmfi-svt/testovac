@@ -1,16 +1,18 @@
 generator-nalepiek
 ==================
 
-Demo PIDy: tretia cifra + osma cifra == 8
+### Demo PIDy
+1. tretia cifra + osma cifra == 8
 
-Ostre PIDy: tretia cifra + osma cifra != 8, AND
-(stvrta cifra + osma cifra) mod 10 == rok mod 10
+### Ostre PIDy
+1. tretia cifra + osma cifra != 8, AND
+2. (stvrta cifra + osma cifra) mod 10 == rok mod 10
 
 Prerekvizity:
 -------------
-apt-get install php5-cli
-apt-get install texlive
-apt-get install texlive-latex-extra
+* `apt-get install php5-cli`
+* `apt-get install texlive`
+* `apt-get install texlive-latex-extra`
 
 TODO:
 -----
