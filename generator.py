@@ -10,6 +10,7 @@ import sys
 import time
 from Crypto.Random import random
 from subprocess import check_call
+from itertools import islice
 
 
 D = (
@@ -73,15 +74,19 @@ def generate_pid():
     return ''.join(map(str, digits))
 
 
-def uniq_pid_generator():
-    previous_pids = set()
+def fn_to_gen(fn):
     while True:
-        new = generate_pid()
-        if new not in previous_pids:
-            previous_pids.add(new)
-            yield new
+        yield fn()
+
+
+def uniq_filter(iterable):
+    previous_values = set()
+    for value in iterable:
+        if value not in previous_values:
+            previous_values.add(value)
+            yield value
         else:
-            print 'Skipping duplicated pid %s.' % new
+            print 'Skipping duplicated value %s.' % value
 
 
 def generate_stickers(stickers_needed):
@@ -91,10 +96,9 @@ def generate_stickers(stickers_needed):
 
     count = pages * stickers_per_page
 
-    pid_generator=uniq_pid_generator()
     with open('result.txt', 'w') as f:
-        for i in xrange(count):
-            f.write(pid_generator.next())
+        for pid in islice(uniq_filter(fn_to_gen(generate_pid)), count):
+            f.write(pid)
             f.write('\n')
 
     with open('result.txt', 'r') as input_file:
