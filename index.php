@@ -5,7 +5,7 @@ require 'include/header.php';
 
 <h1>Prijímacie konanie</h1>
 <p>    
-Prijímacie konanie sa koná v dňoch 11.6.2013-14.6.2013 v priestoroch 
+Prijímacie konanie sa koná v priestoroch 
     Fakulty matematiky, fyziky a informatiky Univerzity Komenského v Bratislave.
     Účastníci prijímacieho konania dostali bližšie pokyny o mieste a čase 
     v ktorom sa treba dostaviť na prijímacie skúšky poštou.

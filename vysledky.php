@@ -1,4 +1,7 @@
 <?php
+header('Location: /');
+exit;
+
 $page = 'vysledky';
 require 'include/header.php';
 
@@ -85,7 +88,7 @@ if ($vybranyKod!==null && empty($body[$vybranaForma][$vybranyKod])) {
 ?>
 </p>
 <hr/>
-<h2>Priebežné výsledky prijímacích pohovorov, 11.6.2013</h2>
+<h2>Výsledky prijímacích pohovorov, denná forma 11.-13.6.2013, externá forma 14.6.2013</h2>
 <div id="denna-forma"<?php if ($vybranaForma != 'denna') echo ' style="display:none;"'?>>
 <p><a href="javascript:hide('denna-forma');show('externa-forma');void(0);">zobraz výsledky pre externú formu</a></p>
 <h2>Denná forma štúdia</h2>
