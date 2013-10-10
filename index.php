@@ -7,7 +7,7 @@ require 'include/header.php';
 <p>    
 Prijímacie konanie sa koná v priestoroch 
     Fakulty matematiky, fyziky a informatiky Univerzity Komenského v Bratislave.
-    Účastníci prijímacieho konania dostali bližšie pokyny o mieste a čase 
+    Účastníci prijímacieho konania obdržia bližšie pokyny o mieste a čase 
     v ktorom sa treba dostaviť na prijímacie skúšky poštou.
 </p>
     
