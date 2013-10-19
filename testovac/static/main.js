@@ -389,7 +389,9 @@ function doClose(timedOut) {
     }
 
     if (timedOut) {
-      showGlobalMessage('Váš čas vypršal. Doteraz zadané odpovede boli uložené.');
+      showGlobalMessage(Tester.config.demoPid ?
+          'Váš čas vypršal.' :
+          'Váš čas vypršal. Doteraz zadané odpovede boli uložené.');
       return;
     }
 
@@ -404,7 +406,9 @@ function doClose(timedOut) {
         showGlobalMessage('Chyba pri komunikácii so serverom. Kontaktujte technický dozor.');
       }
       else {
-        showGlobalMessage('Vaše odpovede boli uložené.');
+        showGlobalMessage(Tester.config.demoPid ?
+            'Váš test bol odovzdaný.<br>Jedná sa o skúšobný test, ktorý nebude vyhodnocovaný.' :
+            'Vaše odpovede boli uložené.');
       }
     });
   }
