@@ -70,7 +70,7 @@ Tester.showLoginForm = function (demoPid, showQuestions) {
       append($('<span class="pid" />').text(demoPid));
   }
   else {
-    $('<p/>').appendTo($form).text('Vaše ID je napísané na vašom náramku.');
+    $('<p/>').appendTo($form).text('Vaše ID je napísané na vašom náramku. (Zadávajte aj s pomlčkami.)');
   }
   $form.on('submit', function (event) {
     Tester.doLogin($pidInput.val(), loginSuccess, loginFailure);
@@ -198,6 +198,7 @@ function showQuestions(questions, state) {
     var $body = $('<div/>').html(q.body);
     $body.find('br, hr').replaceWith(' ');   // add a space in place of every <br> and <hr>
     var $li = $('<li/>').appendTo($ol);
+    $('<div>&nbsp;</div>').css({width:0,height:0}).appendTo($li); // workaround for https://bugs.webkit.org/show_bug.cgi?id=13332 - numbers not showing in the <li>
     tocLinks[i] = Tester.fakelink().
       text($body.text()).
       on('click', function (event) { goToQuestion(i); }).
@@ -383,7 +384,7 @@ function doClose(timedOut) {
 
   function attemptClose() {
     if (Tester.eventsBegin != Tester.eventsEnd) {
-      sendEvents();
+      saveEvents();
       setTimeout(attemptClose, 500);
       return;
     }

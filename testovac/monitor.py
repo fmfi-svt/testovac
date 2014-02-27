@@ -1,18 +1,29 @@
 
 import os
+import sys
 import time
 from models import Users
 from .settings import exam
+from termcolor import colored
 
 
 columns = 2
 
 
+login_block_file = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+                                'loginblock')
+
+
+def maybecolor(text, color, when):
+    return colored(text, color, attrs=['bold']) if when else text
+
+
 def monitor(app):
+    print "Prihlasovanie:", maybecolor("zakazane", "green", True) if os.path.exists(login_block_file) else maybecolor("POVOLENE", "red", True)
+    print
+
     db = app.DbSession()
     now = int(time.time())
-
-    print 'Vytlacene:', db.query(Users).filter_by(printed=True).count()
 
     results = db.execute('''SELECT
         u.pid, COUNT(e.serial), COUNT(DISTINCT e.qorder, e.qsubord),
@@ -27,43 +38,57 @@ def monitor(app):
     num = 0
     for row in results:
         their_time = now - row.begintime
+        delta_time = their_time
 
         if row.submitted:
-            subdesc = 'odovzdane '
+            subdesc = colored('odovzdane  ', 'red', attrs=['bold'])
             num_submitted += 1
         elif their_time > exam.server_time_limit:
-            subdesc = 'expirovane'
+            subdesc = colored('expirovane ', 'red', attrs=['bold'])
             num_expired += 1
         else:
-            subdesc = 'cas: %02d:%02d' % (their_time // 60, their_time % 60)
+            subdesc = 'cas: %+03d:%02d' % (their_time // 60, their_time % 60)
 
         if row[1]:
-            idledesc = '%02d:%02d' % (row[3] // 60, row[3] % 60)
+            idledesc = '%+03d:%02d' % (row[3] // 60, row[3] % 60)
+            delta_time -= row[3]
         else:
-            idledesc = ' N/A '
+            idledesc = '  N/A '
 
-        line = '{} {} odp: {:3d} (ev: {:3d} last: {})'.format(
-            row.pid, subdesc, row[2], row[1], idledesc)
+        line = '{} {} odp: {} (ev: {:3d} last: {})'.format(
+            row.pid, subdesc,
+            maybecolor('%3d' % row[2], 'green', row[2] == 116),
+            row[1],
+            maybecolor(idledesc, 'yellow', delta_time > 10*60))
 
         num += 1
         if num % columns == 0:
             print line
         else:
-            print line + ' | ',
+            print line, '|',
 
     if num % columns != 0: print ''
     print ''
 
     print 'Celkovy pocet: %2d' % num
-    print ' - odovzdane : %2d' % num_submitted
-    print ' - expirovane: %2d' % num_expired
+    print maybecolor(' - odovzdane : %2d' % num_submitted, 'red', num_submitted > 0)
+    print maybecolor(' - expirovane: %2d' % num_expired, 'red', num_expired > 0)
     print ' - vyplna    : %2d' % (num - num_submitted - num_expired)
+
+    print
+    print 'Vytlacenych:', '%4d' % db.query(Users).filter_by(printed=True).count()
 
     db.close()
 
 monitor.help = '  $0 monitor'
 
 
+def monitorwatch(app):
+    os.execlp('watch', 'watch', '-c', sys.argv[0], 'monitor')
+monitorwatch.help = '  $0 monitorwatch'
+
+
 commands = {
     'monitor': monitor,
+    'monitorwatch': monitorwatch,
 }

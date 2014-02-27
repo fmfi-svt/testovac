@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ -z "$1" ]
+then
+  echo "printfinished backup_dir"
+  echo "  e.g. printfinished Pon1"
+  exit 85
+fi
+
+cd "$(dirname "$0")"   # utils/
+cd ..   # h-server/
+
+echo "Creating PDFs ..."
+./console.py printfinished --notprinted
+
+echo "Printing ..."
+./utils/tlac
+
+#read -p "After successful printing press [Enter] to move PDFs into backup dir ..."
+
+if [ ! -d spool/$1/ ]
+then
+  echo "Creating new backup directory spool/$1/"
+  mkdir spool/$1/
+fi
+
+echo "Moving PDFs into spool/$1/"
+mv spool/*.pdf spool/$1/
+chmod 600 spool/$1/*
