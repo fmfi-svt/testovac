@@ -4,7 +4,6 @@ import sys
 import time
 from models import Users
 from .settings import exam
-from termcolor import colored
 
 
 columns = 2
@@ -14,8 +13,9 @@ login_block_file = os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                 'loginblock')
 
 
+colors = dict(grey=30, red=31, green=32, yellow=33, blue=34, magenta=35, cyan=36, white=37)
 def maybecolor(text, color, when):
-    return colored(text, color, attrs=['bold']) if when else text
+    return '\033[1;{}m{}\033[0m'.format(colors[color], text) if when else text
 
 
 def monitor(app):
@@ -38,13 +38,13 @@ def monitor(app):
     num = 0
     for row in results:
         their_time = now - row.begintime
-        delta_time = their_time
+        delta_time = their_time   # delta_time == cas od posledneho eventu
 
         if row.submitted:
-            subdesc = colored('odovzdane  ', 'red', attrs=['bold'])
+            subdesc = maybecolor('odovzdane  ', 'red', True)
             num_submitted += 1
         elif their_time > exam.server_time_limit:
-            subdesc = colored('expirovane ', 'red', attrs=['bold'])
+            subdesc = maybecolor('expirovane ', 'red', True)
             num_expired += 1
         else:
             subdesc = 'cas: %+03d:%02d' % (their_time // 60, their_time % 60)
