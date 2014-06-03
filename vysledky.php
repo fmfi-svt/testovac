@@ -1,6 +1,4 @@
 <?php
-header('Location: /');
-exit;
 
 $page = 'vysledky';
 require 'include/header.php';
@@ -95,18 +93,29 @@ if ($vybranyKod!==null && empty($body[$vybranaForma][$vybranyKod])) {
 <table>
 <tr><td>poradie</td><td>pid</td><td>body</td></tr>
 <?php
-function vypisTabulku($body, $forma, $vybranaForma, $vybranyKod) {
+function vypisTabulku($body, $forma, $vybranaForma, $vybranyKod, $minSkore = null) {
 	$poradie = 0;
 	$vypisporadie = 0;
 	$posledne = -1;
 	foreach ($body[$forma] as $pid => $skore) {
 		$poradie++;
 		if ($skore != $posledne) $vypisporadie = $poradie; 
+                $isFirstUnaccepted = $minSkore && $posledne >= $minSkore && $skore < $minSkore;
 		$posledne = $skore;
 		if ($vybranaForma == $forma && $vybranyKod == $pid) {
-			echo '<tr class="selected-score">';
+                    if ($isFirstUnaccepted) {
+                        echo '<tr class="first-unaccepted selected-score">';
+                    } else {
+                        echo '<tr class="selected-score">';
+                    }
 		}
-		else echo "<tr>";
+                else {
+                    if ($isFirstUnaccepted) {
+                        echo '<tr class="first-unaccepted">';
+                    } else {
+                        echo "<tr>";
+                    }
+                }
 		$escapedPid = htmlspecialchars($pid, 0, 'UTF-8');
 		printf("<td id=\"%s\" align=right>%d.</td><td>%s</td><td>%.03f</td></tr>\n",
 			pid2anchor($pid), $vypisporadie, $escapedPid, $skore);

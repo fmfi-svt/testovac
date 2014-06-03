@@ -525,3 +525,7 @@ list-style-type:disc;
 .csc-sitemap ul li ul li a,.content_menu ul li a {
 font-weight:400;
 }
+
+.first-unaccepted {
+    border-top: medium solid black;
+}
