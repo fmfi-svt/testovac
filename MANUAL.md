@@ -51,7 +51,9 @@ Na konci prijímacích pohovorov vytlačiť ohodnotené testy, vytlačiť
     ./console.py bucketstats > stats.csv
     ./console.py printevaluatedexam --all
 
+
 FAQ
+---
 
 Q: Ako zablokovať otázku?
 
