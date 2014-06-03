@@ -51,6 +51,14 @@ Na konci prijímacích pohovorov vytlačiť ohodnotené testy, vytlačiť
     ./console.py bucketstats > stats.csv
     ./console.py printevaluatedexam --all
 
+Info page
+---------
+Pre zobrazenie výsledov treba:
+
+1. Nahrať súbory s bodmi (`cbody.php` a `hbody.php`) do adresára `body` (vetva `info-page`).
+2. V súbore `vysledky.php` zakomentovať riadky 2 a 3.
+
+Pre pridanie čiary oddeľujúcej prijatých a neprijatých uchádzačov v tabuľke je potrebné zadať minimálny počet bodov ako 4. argument vo volaní funkcie `vypisTabulku()`. Bez tohto argumentu sa nezobrazí žiadna čiara.
 
 FAQ
 ---
