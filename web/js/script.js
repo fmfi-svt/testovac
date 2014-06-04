@@ -206,7 +206,7 @@ jQuery(document).ready(function($) {
                     piderror = true;
                 } else if (response['vhcheck'] === 'pidok') {
                     var c = (parseInt(pid[3]) + parseInt(pid[7])) % 10; // kontrola, ci je pid z toho roku
-                    if (c === 3) {
+                    if (c === (new Date()).getFullYear() % 10) {
                         pidrocnikerror = false;
                         piderror = false;
                     } else {
