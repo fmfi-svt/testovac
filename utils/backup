@@ -1,12 +1,5 @@
 #!/bin/bash
 
-USB_KEY=REMOVED
-USB_MNT=/media/`whoami`/$USB_KEY
-USB_DIR=${USB_MNT}/`date +%Y`/H-server/
-DB_USER=REMOVED
-DB_PASS=REMOVED
-DB_NAME=REMOVED
-
 cd "$(dirname "$0")"   # utils/
 cd ..   # h-server/
 
@@ -17,11 +10,31 @@ then
   exit 85
 fi
 
+mountpoints=( $( mount | grep -o '[^ ]*/media/[^ ]*' ) )
+if [ "${#mountpoints[@]}" != 1 ]; then
+  echo "Cannot find USB mount point"
+  mount | grep -o '[^ ]*/media/[^ ]*'
+  exit 1
+fi
+
+USB_MNT=${mountpoints[0]}
+USB_DIR=${USB_MNT}/`date +%Y`/H-server/
+
 if ! [ -d "$USB_MNT" ]
 then
   echo "USB key not mounted! Exiting."
   exit 1
 fi
+
+db=$(sed -rn 's|^.*create_engine..mysql://([^:]+):([^@]+)@localhost/([a-z_]+).*$|\1 \2 \3|p' testovac/local_settings.py)
+if [ "$db" == "" ]; then
+  echo "Cannot extract password from testovac/local_settings.py"
+  exit 1
+fi
+db=($db)
+DB_USER=${db[0]}
+DB_PASS=${db[1]}
+DB_NAME=${db[2]}
 
 DB_FILE_BACKUP=${USB_DIR}${1}.sql
 PDF_DIR=$PWD/spool/$1/
