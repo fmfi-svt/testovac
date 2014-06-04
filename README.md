@@ -55,8 +55,8 @@ Naklonujte repozitár so štandardnou HTTPS adresou:
 `source ~/venv/bin/activate`.
 
 Defaultná konfigurácia MySQL (okrem zopár distribúcii ako ArchLinux)
-nezvláda UTF-8. Do `/etc/mysql/conf.d/` treba pridať
-https://raw.githubusercontent.com/fmfi-svt/arena/master/mysql/nechceme-sproste-kodovanie.cnf
+nezvláda UTF-8. Do `/etc/mysql/conf.d/` treba pridať `mysql-kodovanie.cnf`
+(pôvodne zo ŠVT arény)
 alebo vhodný ekvivalent. Zlé kódovania sú nákazlivé, takže ak bola databáza
 vyrobená predtým, radšej treba celú databázu dropnúť a vyrobiť nanovo.
 Testovací príkaz: `SHOW VARIABLES LIKE 'character_set%';`

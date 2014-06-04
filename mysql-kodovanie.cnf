@@ -1,0 +1,28 @@
+# plusminus skopirovane z anketa.fmph my.cnf
+# navyse pozmenene aby to behalo s novym mysql serverom
+
+[client]
+default-character-set = utf8
+
+[mysqld]
+
+
+# character set and collation
+
+#default-collation = utf8_slovak_ci
+init_connect='SET collation_connection = utf8_slovak_ci'
+init_connect='SET NAMES utf8'
+#default-character-set=utf8
+character-set-server = utf8
+collation-server = utf8_slovak_ci 
+skip-character-set-client-handshake
+
+# storage engine
+
+innodb_file_per_table
+default-storage-engine=innodb
+
+[mysql]
+default-character-set=utf8
+
+
