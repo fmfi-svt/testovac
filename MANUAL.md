@@ -55,7 +55,7 @@ Na konci prijímacích pohovorov vytlačiť ohodnotené testy, vytlačiť
 
 Info page
 ---------
-Pre zobrazenie výsledov treba:
+Pre zobrazenie výsledkov treba:
 
 1. Nahrať súbory s bodmi (`cbody.php` a `hbody.php`) do adresára `body` (vetva `info-page`).
 2. V súbore `vysledky.php` zakomentovať riadky 2 a 3.
