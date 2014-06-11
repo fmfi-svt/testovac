@@ -21,10 +21,10 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <p>
 <table class="harmonogram">
 <tr><th>Registrácia poslucháreň C</th><th>Poučenie uchádzačov</th><th>Vypracovanie testu</th></tr>
-<tr><td>07:45 - 08:25 hod.</td><td>08:30 - 08:45 hod.</td><td>08:45 - 09:45 hod.</td></tr>
-<tr><td>09:15 - 09:55 hod.</td><td>10:00 - 10:15 hod.</td><td>10:15 - 11:15 hod.</td></tr>
-<tr><td>11:45 - 12:25 hod.</td><td>12:30 - 12:45 hod.</td><td>12:45 - 13:45 hod.</td></tr>
-<tr><td>13:15 - 13:55 hod.</td><td>14:00 - 14:15 hod.</td><td>14:15 - 15:15 hod.</td></tr>
+<tr><td>07:30 - 08:25 hod.</td><td>08:30 - 08:45 hod.</td><td>08:45 - 09:45 hod.</td></tr>
+<tr><td>09:30 - 10:25 hod.</td><td>10:30 - 10:45 hod.</td><td>10:45 - 11:45 hod.</td></tr>
+<tr><td>11:30 - 12:25 hod.</td><td>12:30 - 12:45 hod.</td><td>12:45 - 13:45 hod.</td></tr>
+<tr><td>13:30 - 14:25 hod.</td><td>14:30 - 14:45 hod.</td><td>14:45 - 15:45 hod.</td></tr>
 </table>
 </p>
 <h2>Plán budovy</h2>
@@ -40,7 +40,7 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <li>uchádzač si vylosuje náramok s prezentačným číslom;</li>
 <li>službukonajúci personál pripevní uchádzačovi náramok na ruku;</li>
 <li>uchádzač je povinný si náramok ponechať na ruke počas prítomnosti v budove;</li>
-<li>uvedené prezentačné číslo bude pre uchádzača slúžiť ako prístupový kód k výsledkom, ktoré budú zverejnené na webovej stránke podľa vnútorného predpisu Univerzity Komenského č. 6/2011;</li>
+<li>uvedené prezentačné číslo bude pre uchádzača slúžiť ako prístupový kód k výsledkom, ktoré budú zverejnené na webovej stránke podľa vnútorného predpisu Právnickej fakulty UK č. 6/2013;</li>
 <li>poškodenie náramku môže byť dôvodom k vylúčeniu z prijímacej skúšky;</li>
 <li>registračný systém je fyzicky oddelený od testovacieho systému.</li>
 </ul>
@@ -80,7 +80,8 @@ Na vyhľadanie spojenia odporúčame použiť stránku <a href="http://imhd.zozn
 <li>po odovzdaní testu program bude informovať uchádzača, aby sa dostavil do priestorov určených na podpis vytlačených testov;</li>
 <li>uchádzač po dostavení sa do priestorov určených na podpis testov čaká na vyzvanie, aby po predložení dokladov totožnosti skontroloval a podpísal vytlačený test;</li>
 <li>podpísaním každej strany testu sa skončí prijímacia skúška;</li>
-<li>priebežné a finálne poradie uchádzačov bude zverejnené na webe podľa vnútorného predpisu Univerzity Komenského č. 6/2011.</li>
+<li>priebežné a finálne poradie uchádzačov bude zverejnené na webe podľa vnútorného predpisu Právnickej fakulty UK
+ č. 6/2013.</li>
 </ul>
 </p>
 <?php
