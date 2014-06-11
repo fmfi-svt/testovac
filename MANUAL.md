@@ -30,7 +30,6 @@ Spraviť kolečko po počítačoch
 a osobne skontrolovať či sedí kód na náramku s 
 kódom prihláseného.
 6. Keď sa všetci prihlásia, spustiť príkaz na automatické tlačenie odovzdaných testov: 
-
     `./console.py printwatch <den><skupina>`
     napr. 
     `./console.py printwatch Pon1`
@@ -47,8 +46,8 @@ Na konci dňa exportovať vypočítané body, uploadnuť na stránku.
 
     ./console.py exportresults > hbody.php
 
-Na konci prijímacích pohovorov vytlačiť ohodnotené testy, vytlačiť
-štatistiku a urobiť export do AIS.
+Na konci prijímacích pohovorov vyrobiť PDF pre ohodnotené testy, vytlačiť
+štatistiku a urobiť export do AIS. Potom vhodne uložiť na USB kľúč.
 
     ./console.py bucketstats > stats.csv
     ./console.py printevaluatedexam --all
@@ -58,7 +57,7 @@ Info page
 Pre zobrazenie výsledkov treba:
 
 1. Nahrať súbory s bodmi (`cbody.php` a `hbody.php`) do adresára `body` (vetva `info-page`).
-2. V súbore `vysledky.php` zakomentovať riadky 2 a 3.
+2. Na vrchu `vysledky.php` zakomentovať riadky `header('Location: /'); exit;`
 
 Pre pridanie čiary oddeľujúcej prijatých a neprijatých uchádzačov v tabuľke je potrebné zadať minimálny počet bodov ako 4. argument vo volaní funkcie `vypisTabulku()`. Bez tohto argumentu sa nezobrazí žiadna čiara.
 
@@ -68,27 +67,23 @@ FAQ
 Q: Ako zablokovať otázku?
 
 A: Je potrebné zistiť v databáze číslo otázky a spustiť
-
-    ./console.py disable <pid> <qorder>
+`./console.py disable <pid> <qorder>`
 
 Q: Čo robiť v prípade zrakovo postihnutých účastníkov?
 
 A: Je potrebné im vytlačiť test veľkým fontom.
-
-    ./console.py printexamlarge <pid>
+`./console.py printexamlarge <pid>`
 
 Q: Ako vytlačiť jeden konkrétny ohodnotený test?
 
 A: 
-
-    ./console.py printevaluatedexam <pid>
+`./console.py printevaluatedexam <pid>`
 
 
 Q: Ako pridať čas konkrétnemu účastníkovi v prípade technických porúch?
 
 A:
-
-    ./console.py givetime <pid> <extra minutes>
+`./console.py givetime <pid> <extra minutes>`
 
 Q: Čo so zmenami v kóde?
 
