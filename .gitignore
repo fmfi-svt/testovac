@@ -5,3 +5,4 @@ output/*
 !output/praflogocol.eps
 logs/*
 /nbproject/private/
+*.py[co]
