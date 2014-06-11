@@ -5,6 +5,8 @@ C-server
 --------
 1. Po každej registrácií treba spustiť `./batch.sh print <den><cislo>` napr.
 `./batch.sh print Pon1`
+Skript vytlačí iba tie strany, ktoré ešte neboli vytlačené.
+
 2. Na konci dňa `./batch.sh export <den>` napr. `./batch.sh export Pon` 
 
 
@@ -23,15 +25,15 @@ obrazovku vyžadujúcu zadanie PIDu.
 5. Monitorovať priebeh prijímačiek - sledovať či sa účastníci prihlásili,
 či sa priebežne zvyšuje počet vyplnených odpovedí, či sa testy automaticky
 odovzdajú po vypršaní časového limitu.
-    `./console.py monitor`
+    `./console.py monitorwatch`
 Spraviť kolečko po počítačoch 
 a osobne skontrolovať či sedí kód na náramku s 
 kódom prihláseného.
-6. Keď niekto finálne odovzdá test, spustiť príkaz na tlačenie. 
+6. Keď sa všetci prihlásia, spustiť príkaz na automatické tlačenie odovzdaných testov: 
 
-    `utils/printfinished <den><skupina>`
+    `./console.py printwatch <den><skupina>`
     napr. 
-    `utils/printfinished Pon1`
+    `./console.py printwatch Pon1`
 Vytlačený test spárovať s titulnou stranou a scvaknúť.
 7. Keď všetci odovzdajú, odniesť na podpis. 
 8. Spustiť zálohu na USB kľúč.
