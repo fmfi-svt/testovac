@@ -1,6 +1,4 @@
 <?php
-#header('Location: /');
-#exit;
 
 $page = 'vysledky';
 require 'include/header.php';
@@ -11,9 +9,9 @@ function pid2anchor($pid) {
 
 ?>
 
-<h1>Výsledky</h1>
+<h1>Priebežné výsledky prijímacích pohovorov 11.6.2014</h1>
 <p>
-    Priebežné a finálne poradie uchádzačov bude zverejnené na tejto stránke podľa vnútorného predpisu Univerzity Komenského č. 6/2011.
+    Priebežné a finálne poradie uchádzačov bude zverejnené na tejto stránke podľa vnútorného predpisu Právnickej fakulty Univerzity Komenského č. 6/2013.
 </p>
 
 <p>
@@ -71,7 +69,9 @@ doručené do vlastných rúk.
 		window.scroll(0, curtop - offset);
 	}
 	window.onload = function() {
+		<?php if (!empty($vybranyKod)) { ?>
 		scrollTo("<?php echo pid2anchor($vybranyKod); ?>", 50);
+		<?php } ?>
 	}
 </script>
 <hr/>
@@ -88,7 +88,7 @@ if ($vybranyKod!==null && empty($body[$vybranaForma][$vybranyKod])) {
 ?>
 </p>
 <hr/>
-<h2>Výsledky prijímacích pohovorov, denná forma 11.-13.6.2013, externá forma 14.6.2013</h2>
+<!--<h2>Výsledky prijímacích pohovorov, denná forma 11. &ndash; 12.6.2014, externá forma 13.6.2014</h2>-->
 <div id="denna-forma"<?php if ($vybranaForma != 'denna') echo ' style="display:none;"'?>>
 <p><a href="javascript:hide('denna-forma');show('externa-forma');void(0);">zobraz výsledky pre externú formu</a></p>
 <h2>Denná forma štúdia</h2>

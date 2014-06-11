@@ -1,5 +1,7 @@
 <?php
+	$vidno_vysledky = true;
 	if (empty($page)) $page = 'miesto';
+	if ($page == 'vysledky' && !$vidno_vysledky) { header('Location: /'); exit; }
 ?>
 <!--?xml version="1.0" encoding="utf-8"?-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -47,7 +49,7 @@
 			<ul>
 				<li><a href="index.php" title="Miesto konania" class="<?php echo ($page=="miesto"?"selected":"")?>">Priebeh</a></li>
 				<li><a href="demo.php" title="Demo" class="<?php echo ($page=="demo"?"selected":"")?>">Ukážka testu</a></li>
-				<?php /* <li><a href="vysledky.php" title="Výsledky" class="<?php echo ($page=="vysledky"?"selected":"")?>">Výsledky</a></li> */ ?>
+				<?php if ($vidno_vysledky) { ?><li><a href="vysledky.php" title="Výsledky" class="<?php echo ($page=="vysledky"?"selected":"")?>">Výsledky</a></li><?php } ?>
 				<li><a href="kontakt.php" title="Kontakt" class="<?php echo ($page=="kontakt"?"selected":"")?>">Kontakt</a></li>
 			</ul>
 		</div>
