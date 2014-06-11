@@ -1,4 +1,6 @@
 <?php
+header('Location: /');
+exit;
 
 $page = 'vysledky';
 require 'include/header.php';
