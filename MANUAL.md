@@ -57,7 +57,8 @@ Info page
 Pre zobrazenie výsledkov treba:
 
 1. Nahrať súbory s bodmi (`cbody.php` a `hbody.php`) do adresára `body` (vetva `info-page`).
-2. Na vrchu `vysledky.php` zakomentovať riadky `header('Location: /'); exit;`
+2. Vhodne upraviť texty a nadpisy vo `vysledky.php` podľa Vinkových inštrukcií.
+2. V `include/header.php` nastaviť `$vidno_vysledky` na `true`.
 
 Pre pridanie čiary oddeľujúcej prijatých a neprijatých uchádzačov v tabuľke je potrebné zadať minimálny počet bodov ako 4. argument vo volaní funkcie `vypisTabulku()`. Bez tohto argumentu sa nezobrazí žiadna čiara.
 
