@@ -17,6 +17,7 @@ fi
 
 USER=$(cat config.php | grep '\$user =' | cut -d"'" -f2)
 PASS=$(cat config.php | grep '\$pass =' | cut -d"'" -f2)
+DBNAME=$(cat config.php | grep '\$dbname =' | cut -d"'" -f2)
 
 mkdir "$BACKUPDIR/$BATCH"
 
@@ -40,5 +41,5 @@ case "$1" in
 	;;
 esac
 
-mysqldump -u "$USER" --password="$PASS" testovac >"$BACKUPDIR/$BATCH/db.sql"
+mysqldump -u "$USER" --password="$PASS" "$DBNAME" >"$BACKUPDIR/$BATCH/db.sql"
 cp "logs/log.log" "$BACKUPDIR/$BATCH/log.log"
