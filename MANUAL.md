@@ -61,6 +61,21 @@ Pre zobrazenie výsledkov treba:
 
 Pre pridanie čiary oddeľujúcej prijatých a neprijatých uchádzačov v tabuľke je potrebné zadať minimálny počet bodov ako 4. argument vo volaní funkcie `vypisTabulku()`. Bez tohto argumentu sa nezobrazí žiadna čiara.
 
+
+Vyhodnotenie
+------------
+
+Na konci treba zhotoviť celkové výsledky a dať ich na USB kľúč.
+
+* `cbody.php` a `hbody.php` vygenerovať podľa postupu vyššie. (Tie netreba ukladať na USB.)
+* `ais-export/PraF-{denne,ext}.TXT` je zoznam uchádzačov, čo niekto nejako vytiahne z AISu.
+* `out_{denna,externa}_{1,2}.xml` sa vygeneruje pomocou `exportais.py` (na C serveri) - spusti ho a uvidíš usage.
+* `out_{denna,externa}_csv.csv` sa vygeneruje pomocou `exportvysledkycsv.py` (na C serveri) - spusti ho a uvidíš usage.
+* `vysledky20XX.xls` treba v Exceli vyrobiť z CSV súborov. Má mať štyri karty: "Denná forma podľa mena", "Denná forma podľa poradia", "Externá forma podľa mena" a "Externá forma podľa poradia". Riadky v CSV nie sú zoradené, takže to treba spraviť v Exceli. Jednotlivé karty potom treba vyexportovať do `vysledky20XX-{den,ext}-{meno,poradie}.pdf`.
+* `stat-{denna,externa,spolu}.csv` treba vyrobiť pomocou `./console.py bucketstats YYYY-MM-DD YYYY-MM-DD`.
+* `flaw-vyhodnotenie.xls` treba vyrobiť zo `stat*.csv` tak, že interné ID okruhov zmeníme na mená z otázkového XML, a pridáme k tomu súčty a pekný graf. Z toho potom treba spraviť `flaw-vyhodnotenie-{denna,externa}.pdf`.
+
+
 FAQ
 ---
 
