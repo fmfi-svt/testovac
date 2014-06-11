@@ -5,7 +5,7 @@ C-server
 --------
 1. Po každej registrácií treba spustiť `./batch.sh print <den><cislo>` napr.
 `./batch.sh print Pon1`
-Skript vytlačí iba tie strany, ktoré ešte neboli vytlačené.
+Skript vytlačí iba tie strany, ktoré ešte neboli vytlačené. Reťazec `<den><cislo>` musí byť unikátny.
 
 2. Na konci dňa `./batch.sh export <den>` napr. `./batch.sh export Pon` 
 
