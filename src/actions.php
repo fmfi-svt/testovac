@@ -23,7 +23,7 @@ class Repository {
             (SELECT *,@rank := @rank+1 AS rank 
             FROM Students 
             ORDER BY priezvisko,meno) as LOL
-            ORDER BY case when pid is NULL then 0 else 1 end,priezvisko,meno;');
+            ORDER BY case when pid is NULL then 0 else 1 end,forma_studia,priezvisko,meno;');
         return $query2;
     }
 
