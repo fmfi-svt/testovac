@@ -10,6 +10,9 @@ from models import (Users, CurrentEvents, Subquestions,
 from jinja2 import Template
 import time
 
+printwatch_time_limit = 2 * 60    # ked clovek odovzda test, pockam kym ich bude este zopar, ale ak nikto neodovzda tolkoto sekund tak ho predsalen vytlacim
+printwatch_count_limit = 3    # ked uz sa nazbiera tolkoto vyplnenych testov tak ich vytlacim
+
 
 # allow changing the binary with an environment variable
 pdfcslatex = os.getenv('PDFCSLATEX', 'pdfcslatex')
@@ -153,7 +156,6 @@ def notification(title, message=None):
     check_call(args)
 
 def printwatch(app, backup_dir_name):
-    time_limit = 2 * 60
     first_pid = None
     printed_batches = []
     while True:
@@ -169,7 +171,7 @@ def printwatch(app, backup_dir_name):
             if is_first_pid:
                 first_pid = time.time()
             time_delta = time.time() - first_pid
-            if time_delta > time_limit or len(pids) > 10 or vyplna == 0:
+            if time_delta >= printwatch_time_limit or len(pids) >= printwatch_count_limit or vyplna == 0:
                 notification('Tlacim %d testov' % len(pids))
                 printfinished_pids(db, pids)
                 send_to_printer_and_backup(pids, backup_dir_name)
