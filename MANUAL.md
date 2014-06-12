@@ -9,6 +9,8 @@ Skript vytlačí iba tie strany, ktoré ešte neboli vytlačené. Reťazec `<den
 
 2. Na konci dňa `./batch.sh export <den>` napr. `./batch.sh export Pon` 
 
+Pre vytvorenie nového používateľa treba pridať záznam do súboru `users.php`.
+
 
 H-server
 --------
