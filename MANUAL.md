@@ -11,6 +11,8 @@ Skript vytlačí iba tie strany, ktoré ešte neboli vytlačené. Reťazec `<den
 
 Pre vytvorenie nového používateľa treba pridať záznam do súboru `users.php`.
 
+Pre správne fungovanie sessions treba skontrolovať maximálnu dobu ich životnosti v súbore `/etc/php5/apache2/php.ini`, parameter `session.gc_maxlifetime`. Mal by byť nastavený aspoň na hodnotu 86400 (sekúnd). PHP v Ubuntu 14.04 má cron script, ktorý podľa tohto parametra maže session súbory na disku.
+
 
 H-server
 --------
