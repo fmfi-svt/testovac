@@ -9,7 +9,7 @@ function pid2anchor($pid) {
 
 ?>
 
-<h1>Priebežné výsledky prijímacích pohovorov 11.6.2014</h1>
+<h1>Výsledky prijímacích pohovorov 11.-12.6.2014</h1>
 <p>
     Priebežné a finálne poradie uchádzačov bude zverejnené na tejto stránke podľa vnútorného predpisu Právnickej fakulty Univerzity Komenského č. 6/2013.
 </p>
@@ -124,7 +124,7 @@ function vypisTabulku($body, $forma, $vybranaForma, $vybranyKod, $minSkore = nul
 	}
 }
 
-vypisTabulku($body, 'denna', $vybranaForma, $vybranyKod);
+vypisTabulku($body, 'denna', $vybranaForma, $vybranyKod, 1564);
 ?>
 </table>
 </div>
