@@ -1,6 +1,5 @@
 <?php
 
-ini_set('session.gc_maxlifetime', 86400);
 session_set_cookie_params(86400);
 session_start();
 require_once __DIR__ . '/../src/flash.php';
@@ -70,6 +69,9 @@ if (current_user() === null) {
         redirect(array('action' => 'login'));
     }
     else {
+        if (ini_get('session.gc_maxlifetime') < 86400) {
+            echo 'CHYBA: session.gc_maxlifetime ma prilis nizku hodnotu, treba v php.ini nastavit aspon 86400 aby cron skript nemazal predcasne sessiony.';
+        }
         renderTemplate('login.php');
     }
 }
