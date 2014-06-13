@@ -9,7 +9,7 @@ function pid2anchor($pid) {
 
 ?>
 
-<h1>Výsledky prijímacích pohovorov 11.-12.6.2014</h1>
+<h1>Výsledky prijímacích pohovorov 11.-13.6.2014</h1>
 <p>
     Priebežné a finálne poradie uchádzačov bude zverejnené na tejto stránke podľa vnútorného predpisu Právnickej fakulty Univerzity Komenského č. 6/2013.
 </p>
