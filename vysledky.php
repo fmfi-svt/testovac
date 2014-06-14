@@ -20,6 +20,10 @@ je rozhodnutie dekana o výsledku prijímacieho konania, ktoré bude uchádzačo
 doručené do vlastných rúk.
 </p>
 
+<p>
+Na základe kritérií prijímacieho konania pre akademický rok 2014/2015 sa predpokladá prijatie 350 uchádzačov na dennú formu štúdia.
+</p>
+
 <?php
     @include_once __DIR__."/body/cbody.php";
     @include_once __DIR__."/body/hbody.php";
@@ -124,7 +128,7 @@ function vypisTabulku($body, $forma, $vybranaForma, $vybranyKod, $minSkore = nul
 	}
 }
 
-vypisTabulku($body, 'denna', $vybranaForma, $vybranyKod, 1564);
+vypisTabulku($body, 'denna', $vybranaForma, $vybranyKod, 1621);
 ?>
 </table>
 </div>
