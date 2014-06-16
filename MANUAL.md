@@ -80,6 +80,15 @@ Na konci treba zhotoviť celkové výsledky a dať ich na USB kľúč.
 * `stat-{denna,externa,spolu}.csv` treba vyrobiť pomocou `./console.py bucketstats YYYY-MM-DD YYYY-MM-DD`.
 * `flaw-vyhodnotenie.xls` treba vyrobiť zo `stat*.csv` tak, že interné ID okruhov zmeníme na mená z otázkového XML, a pridáme k tomu súčty a pekný graf. Z toho potom treba spraviť `flaw-vyhodnotenie-{denna,externa}.pdf`.
 
+AIS - export/import
+-------------------
+Import údajov do AISu:
+
+* VSPK033 -> bežec -> Import kódu prihlášky -> Načítať identifikáciu prihlášok zo súboru
+* VSPK033 -> bežec -> Import bodov a konania do predmetov uchádzača -> Načítať iba body predmetov zo súboru
+* VSPK033 -> bežec -> Prepočítať poradie (usporiadať podľa počtu bodov: Zostupne)
+* VSPK033 -> bežec -> Prepočítať výsledkovú listinu
+
 
 FAQ
 ---
