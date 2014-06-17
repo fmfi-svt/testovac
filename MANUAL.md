@@ -82,12 +82,16 @@ Na konci treba zhotoviť celkové výsledky a dať ich na USB kľúč.
 
 AIS - export/import
 -------------------
+Export údajov z AISu:
+
+* VSPK004 -> [tlačiareň] -> Exporty (txt) -> Kompletné údaje
+
 Import údajov do AISu:
 
-* VSPK033 -> bežec -> Import kódu prihlášky -> Načítať identifikáciu prihlášok zo súboru
-* VSPK033 -> bežec -> Import bodov a konania do predmetov uchádzača -> Načítať iba body predmetov zo súboru
-* VSPK033 -> bežec -> Prepočítať poradie (usporiadať podľa počtu bodov: Zostupne)
-* VSPK033 -> bežec -> Prepočítať výsledkovú listinu
+* VSPK033 -> [bežec] -> Import kódu prihlášky -> Načítať identifikáciu prihlášok zo súboru
+* VSPK033 -> [bežec] -> Import bodov a konania do predmetov uchádzača -> Načítať iba body predmetov zo súboru
+* VSPK033 -> [bežec] -> Prepočítať poradie (usporiadať podľa počtu bodov: Zostupne)
+* VSPK033 -> [bežec] -> Prepočítať výsledkovú listinu
 
 
 FAQ
