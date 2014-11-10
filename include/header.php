@@ -1,5 +1,5 @@
 <?php
-	$vidno_vysledky = true;
+	$vidno_vysledky = false;
 	if (empty($page)) $page = 'miesto';
 	if ($page == 'vysledky' && !$vidno_vysledky) { header('Location: /'); exit; }
 ?>
