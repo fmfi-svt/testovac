@@ -20,3 +20,18 @@ workdiroch. V bežných prípadoch sa väčšinou viac hodia samostatné clones.
 
   [git-new-workdir]: http://nuclearsquid.com/writings/git-new-workdir/
 
+
+ToDo
+----
+
+### Image
+  - Remote shutdown/reboot
+  - Vypnut screensaver (aby nezhasinala obrazovka)
+  - Zabezpecit, aby bol zapnuty numlock
+
+### Testovac
+  - Doplnanie pomlciek a zobrazenie vzoru
+  - Kontrola roku v PIDoch
+
+### console.py
+  - Autocomplete prikazov
