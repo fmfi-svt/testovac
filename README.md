@@ -36,3 +36,6 @@ ToDo
 ### console.py
   - Autocomplete prikazov
   - Problem so zobrazovanim prihlasenych pouzivatelov, ktori este do testu netukli (monitor)
+
+### H server
+  - Zvazit dalsi monitor
