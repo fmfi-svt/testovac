@@ -1,0 +1,6 @@
+_consolepy()
+{
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "bucketstats bucketstars disable givetime login import initschema droptables monitorwatch monitor printwatch pritevaluatedexam printfinished printexamlarge exportresults serve" -- $cur) )
+}
+complete -F _consolepy './console.py'
