@@ -19,6 +19,7 @@ $line = fgets($file);
  
 try {
     while ($buffer = fgets($file)) {
+        $buffer = trim($buffer);
         $split_line = preg_split("/[;]/", $buffer);
  
         $priezvisko = trim($split_line[0], "'\"");
@@ -26,7 +27,6 @@ try {
         $datum = trim($split_line[2], "'\"");
         $priemer1 = trim($split_line[3], "'\"");
         $priemer2 = trim($split_line[4], "'\"");
-        $split_line[5] = str_replace("\n", '', $split_line[5]);
         $forma = trim($split_line[5], "'\"");
  
         if ($datum === '') {
