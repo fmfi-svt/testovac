@@ -25,17 +25,23 @@ ToDo
 ----
 
 ### Image
-  - Remote shutdown/reboot
+  - Remote shutdown/reboot (asi UDP nech mozeme broadcastovat) (a ak sa da, iba ak neprebieha test)
+  - Remote guest login (asi UDP nech mozeme broadcastovat)
   - Vypnut screensaver (aby nezhasinala obrazovka)
   - Zabezpecit, aby bol zapnuty numlock
 
 ### Testovac
-  - Doplnanie pomlciek a zobrazenie vzoru
+  - Doplnanie pomlciek (zvazit) a zobrazenie vzoru
   - Kontrola roku v PIDoch
+  - Autocomplete prikazov console.py
+  - Monitor ma asi nejaky problem, ze ak su viaceri useri co nemaju ziadne eventy, nezobrazi vsetkych
 
-### console.py
-  - Autocomplete prikazov
-  - Problem so zobrazovanim prihlasenych pouzivatelov, ktori este do testu netukli (monitor)
+### Info page
+  - Mat v info page nejaku utilitu, co skontroluje ze cbody.php a hbody.php maju rovnaku mnozinu PIDov.
+  - Pridat vo vysledky.php exception pre pripady, ze PID je v cbody.php a nie v hbody.php (opacnu uz mame).
 
-### H server
+### C server
+  - Otestovat zmenu 04ddc8b45d55dcd3df4e3db9e139055b27818aa4 v C serveri - importStudents maze CR aj LF (predtym sa v databaze ukladalo CR)
+
+### H server (fyzicky)
   - Zvazit dalsi monitor
