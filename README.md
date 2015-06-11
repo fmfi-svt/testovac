@@ -29,6 +29,7 @@ ToDo
   - Remote guest login (asi UDP nech mozeme broadcastovat)
   - Vypnut screensaver (aby nezhasinala obrazovka)
   - Zabezpecit, aby bol zapnuty numlock
+  - Zabezpecit, aby WakeOnLan prezil restart, vid [ArchLinux Wiki](https://wiki.archlinux.org/index.php/Wake-on-LAN)
 
 ### Testovac
   - Doplnanie pomlciek (zvazit) a zobrazenie vzoru
