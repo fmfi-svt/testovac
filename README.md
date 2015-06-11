@@ -41,7 +41,7 @@ ToDo
   - Pridat vo vysledky.php exception pre pripady, ze PID je v cbody.php a nie v hbody.php (opacnu uz mame).
 
 ### C server
-  - Otestovat zmenu 04ddc8b45d55dcd3df4e3db9e139055b27818aa4 v C serveri - importStudents maze CR aj LF (predtym sa v databaze ukladalo CR)
+  - Otestovat zmenu 04ddc8 v C serveri - importStudents maze CR aj LF (predtym sa v databaze ukladalo ^M vo forma_studia)
 
 ### H server (fyzicky)
   - Zvazit dalsi monitor
